@@ -1,0 +1,15 @@
+{
+  "name": "2800-202310-dtc08",
+  "version": "1.0.0",
+  "description": "* ...\r ## 1. Project Description\r State your app in a nutshell, or one-sentence pitch. Give some elaboration on what the core features are.  \r * ...\r * ...\r * ...",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
