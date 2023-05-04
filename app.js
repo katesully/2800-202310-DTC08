@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 const ejs = require('ejs');
-app.set('views', __dirname + '/view');
+app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.use(express.urlencoded({ extended: false }))
