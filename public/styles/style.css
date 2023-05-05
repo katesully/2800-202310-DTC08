@@ -7,11 +7,13 @@ html {
 }
 
 body {
+    /* padding-top: 63px;
+    padding-bottom: 63px; */
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    /* background-color: rgb(85, 89, 102); */
-    /* color: rgb(85, 89, 102); */
+    flex-grow: 1;
+    
 }
 
 .footer-box {
@@ -19,7 +21,16 @@ body {
     flex-grow: 1;
 }
 
-.colour-nav {
+.block-height-63 {
+    height: 63px;
+}
+
+.block-width-36 {
+    /* height: 36px; */
+    width: 36px;
+}
+
+.colour-navbar {
     background-color: #458A92;
 }
 
