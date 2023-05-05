@@ -1,0 +1,29 @@
+html {
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    /* background-color: rgb(85, 89, 102); */
+    /* color: rgb(85, 89, 102); */
+}
+
+.footer-box {
+    display: flex; 
+    flex-grow: 1;
+}
+
+.colour-nav {
+    background-color: #458A92;
+}
+
+.material-symbols-outlined {
+    font-size: 36px;
+    color: rgb(245, 245, 245);
+}
