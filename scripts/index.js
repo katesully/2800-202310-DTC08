@@ -3,8 +3,8 @@ function saveLanguageAndShowSignup() {
   // Show login and signup buttons
   const loginButton = document.getElementById("login-button");
   const signupButton = document.getElementById("signup-button");
-  loginButton.style.display = "block";
-  signupButton.style.display = "block";
+  loginButton.style.display = "inline-block";
+  signupButton.style.display = "inline-block";
 }
 
 
