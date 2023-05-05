@@ -38,11 +38,15 @@ function populateLanguageDropdown() {
 // Call the populateDropdown function to start populating the dropdown
 populateLanguageDropdown();
 
-function saveItemDocumentIDAndRedirect() {
-  let params = new URL(window.location.href) //get the url from the search bar
-  let ID = $('#my-dropdown').val(); //get the value of the dropdown
-  console.log("dropdown:", ID)
-  localStorage.setItem('itemDocID', ID);
-  window.location.href = 'profilelistwithresource.html';
-  console.log(window.location.href)
-}
+// when the user selects a language, display login and signup buttons
+dropdown.addEventListener("change", (event) => {
+    const language = event.target.value;
+    if (language) {
+        document.getElementById("login").style.display = "block";
+        document.getElementById("signup").style.display = "block";
+    } else {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("signup").style.display = "none";
+    }
+    });
+    
