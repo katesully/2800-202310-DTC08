@@ -2,7 +2,7 @@
 const dropdown = document.getElementById("language-dropdown");
 
 // Get the collection reference for the desired collection
-const collectionRef = db.collection("languages");
+const collectionRef = db.collection("Languages");
 
 
 function populateLanguageDropdown() {

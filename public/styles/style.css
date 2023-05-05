@@ -2,7 +2,9 @@ html {
     box-sizing: border-box;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: inherit;
 }
 
@@ -17,7 +19,7 @@ body {
 }
 
 .footer-box {
-    display: flex; 
+    display: flex;
     flex-grow: 1;
 }
 
@@ -32,6 +34,7 @@ body {
 
 .colour-navbar {
     background-color: #458A92;
+    color: white;
 }
 
 .material-symbols-outlined {
