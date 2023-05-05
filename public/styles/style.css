@@ -1,0 +1,22 @@
+html {
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh
+}
+
+.footer-box {
+    display: flex; 
+    flex-grow: 1;
+}
+
+/* test {
+    asdfadsf
+} */
