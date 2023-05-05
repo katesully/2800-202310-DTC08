@@ -9,7 +9,9 @@ html {
 body {
     display: flex;
     flex-direction: column;
-    height: 100vh
+    height: 100vh;
+    /* background-color: rgb(85, 89, 102); */
+    /* color: rgb(85, 89, 102); */
 }
 
 .footer-box {
@@ -17,6 +19,11 @@ body {
     flex-grow: 1;
 }
 
-/* test {
-    asdfadsf
-} */
+.colour-nav {
+    background-color: #458A92;
+}
+
+.material-symbols-outlined {
+    font-size: 36px;
+    color: rgb(245, 245, 245);
+}
