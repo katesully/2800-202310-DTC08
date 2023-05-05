@@ -1,44 +1,74 @@
+<head>
+  <style>
+    .card-img {
+      filter: brightness(30%);
+    }
+  </style>
+
+</head>
+ 
+  
   <%- include('components/header.ejs') %> 
   <body>
     <%- include('components/navbar_header.ejs') %>
-    <h2>NewJourney</h2>
+   <br>
+    <h2 style="text-align: center;">NewJourney</h2>
 
+    <img src="Welcomes.png" alt="welcomes" style="
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.2;
+    background-position: center center;
+    z-index: -1;
+  ">
 
-      <img src="Welcomes.png" alt="I__" style="
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  opacity: 0.2;
-  background-position: center center;
-  background-color: rgba(0, 0, 0, 0.8);
-  z-index: -1;
-">
-
-
-
-
-    <br /><br />
     <div class="container">
       <div class="container-fluid card card-shadow">
         <div class="container">
-          <div class="container dropdown-container">
-            <label for="language-dropdown">English</label>
+          <div class="container dropdown-container mt-3">
+            <label for="my-dropdown">Change language or OK to continue </label>
+            <br>
             <select id="language-dropdown"></select>
+          </div>
+          <div class="container main-button">
+            <button
+              type="button"
+              class="btn btn-light"
+              onclick="saveLanguageAndShowSignup()">
+              OK
+            </button>
           </div>
         </div>
       </div>
     </div>
     <br />
-    <span class="material-symbols-outlined"> map </span>
-    <span class="material-symbols-outlined"> map </span>
-    <span class="material-symbols-outlined"> map </span>
 
+    <button type="button" id="login-button" class="btn btn-secondary" style="display: none;">Login</button>
+    <button type="button" id="signup-button" class="btn btn-primary" style="display: none;">Signup</button>
+
+    <div class="card" style="border-radius: 10px;">
+      <img src="background_family_1.png" class="card-img" alt="Background image">
+      <div class="card-img-overlay">
+        <h5 class="card-title text-white">Helping you on your new path</h5>
+        <p class="card-text text-white">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam ab veritatis aspernatur
+           cupiditate sed, eaque libero officia et tenetur mollitia tempora illum aperiam 
+           repellat minima perferendis cum earum maiores quasi.</p>
+      </div>
+    </div>
+    <br>
+    <br>
+
+<p style="text-align: center;">
+Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque molestias soluta, dolore dignissimos, 
+ipsum incidunt maxime in expedita porro sapiente fug
+</p>
   
-
+  
     <%- include('components/footer.ejs') %>
 
     <script src="./scripts/index.js"></script>
