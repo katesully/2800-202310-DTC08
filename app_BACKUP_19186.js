@@ -15,11 +15,13 @@ app.get(['/', '/home'], (req, res) => {
     // }
 });
 
+<<<<<<< HEAD
 app.get('/signup', (req, res) => {
     res.render('./signup.ejs');
-
+=======
 app.get('/login', (req, res) => {
     res.render('./login.ejs');
+>>>>>>> Oceaan_login_page
 });
 
 module.exports = app;
