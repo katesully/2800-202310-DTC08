@@ -2,7 +2,7 @@
 const dropdown = document.getElementById("language-dropdown");
 
 // Get the collection reference for the desired collection
-const collectionRef = db.collection("languages");
+const collectionRef = db.collection("Languages");
 
 
 function populateLanguageDropdown() {
@@ -38,15 +38,10 @@ function populateLanguageDropdown() {
 // Call the populateDropdown function to start populating the dropdown
 populateLanguageDropdown();
 
-// when the user selects a language, display login and signup buttons
-dropdown.addEventListener("change", (event) => {
-    const language = event.target.value;
-    if (language) {
-        document.getElementById("login").style.display = "block";
-        document.getElementById("signup").style.display = "block";
-    } else {
-        document.getElementById("login").style.display = "none";
-        document.getElementById("signup").style.display = "none";
-    }
-    });
-    
+function saveLanguageAndShowSignup() {
+  // Show login and signup buttons
+  const loginButton = document.getElementById("login-button");
+  const signupButton = document.getElementById("signup-button");
+  loginButton.style.display = "block";
+  signupButton.style.display = "block";
+}
