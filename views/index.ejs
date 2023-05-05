@@ -4,12 +4,15 @@
       filter: brightness(30%);
     }
   </style>
+
+</head>
  
   
   <%- include('components/header.ejs') %> 
   <body>
     <%- include('components/navbar_header.ejs') %>
-    <h2>NewJourney</h2>
+   <br>
+    <h2 style="text-align: center;">NewJourney</h2>
 
     <img src="Welcomes.png" alt="welcomes" style="
     position: absolute;
@@ -25,21 +28,18 @@
     z-index: -1;
   ">
 
-
-
-    <br /><br />
     <div class="container">
       <div class="container-fluid card card-shadow">
         <div class="container">
-          <div class="container dropdown-container">
+          <div class="container dropdown-container mt-3">
             <label for="my-dropdown">Change language or OK to continue </label>
             <br>
             <select id="language-dropdown"></select>
           </div>
-          <div class="container main-button mt-3">
+          <div class="container main-button">
             <button
               type="button"
-              class="btn btn-info btn-sm rounded-pill p-2"
+              class="btn btn-light"
               onclick="saveLanguageAndShowSignup()">
               OK
             </button>
@@ -48,11 +48,6 @@
       </div>
     </div>
     <br />
-    <!-- <span class="material-symbols-outlined"> map </span>
-    <span class="material-symbols-outlined"> map </span>
-    <span class="material-symbols-outlined"> map </span> -->
-
-
 
     <button type="button" id="login-button" class="btn btn-secondary" style="display: none;">Login</button>
     <button type="button" id="signup-button" class="btn btn-primary" style="display: none;">Signup</button>
