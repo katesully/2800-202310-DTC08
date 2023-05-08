@@ -7,7 +7,6 @@ function saveLanguageAndShowSignup() {
   signupButton.style.display = "inline-block";
 }
 
-
 // Get a reference to the HTML dropdown element where we will display the values
 const dropdown = document.getElementById("language-dropdown");
 
