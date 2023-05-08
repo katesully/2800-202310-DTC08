@@ -3,10 +3,9 @@ function saveLanguageAndShowSignup() {
   // Show login and signup buttons
   const loginButton = document.getElementById("login-button");
   const signupButton = document.getElementById("signup-button");
-  loginButton.style.display = "block";
-  signupButton.style.display = "block";
+  loginButton.style.display = "inline-block";
+  signupButton.style.display = "inline-block";
 }
-
 
 // Get a reference to the HTML dropdown element where we will display the values
 const dropdown = document.getElementById("language-dropdown");

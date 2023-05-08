@@ -1,4 +1,91 @@
-  <%- include('components/headHTML.ejs') %> 
+<head>
+  <style>
+    .card-img {
+      filter: brightness(30%);
+    }
+    .main-button {
+  display: flex;
+}
+
+.main-button button {
+  display: inline-block;
+}
+
+
+/* CSS */
+#login-button {
+  background-color: #fff;
+  border: 1px solid #d5d9d9;
+  border-radius: 8px;
+  box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+  box-sizing: border-box;
+  color: #0f1111;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Amazon Ember",sans-serif;
+  font-size: 13px;
+  line-height: 29px;
+  padding: 0 10px 0 11px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  width: 100px;
+}
+
+#login-button:hover {
+  background-color: #f7fafa;
+}
+
+#login-button:focus {
+  border-color: #008296;
+  box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+  outline: 0;
+}
+
+#signup-button {
+  background-color: #F0C919;
+  border: 1px solid #d5d9d9;
+  border-radius: 8px;
+  box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+  box-sizing: border-box;
+  color: #0f1111;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Amazon Ember",sans-serif;
+  font-size: 13px;
+  line-height: 29px;
+  padding: 0 10px 0 11px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  width: 100px;
+}
+
+#signup-button:hover {
+  background-color: #f7fafa;
+}
+
+#signup-button:focus {
+  border-color: #008296;
+  box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+  outline: 0;
+}
+
+
+  </style>
+  
+</head>
+ 
+  
+  <%- include('components/header.ejs') %> 
   <body>
     <%- include('components/navbar_header.ejs') %>
    <br>
@@ -16,16 +103,20 @@
     background-position: center center;
     z-index: -1;
   ">
+  <br>
+  <br>
+  <br>
+
 
     <div class="container">
       <div class="container-fluid card card-shadow">
-        <div class="container">
+        <div class="container d-flex align-items-center justify-content-between">
           <div class="container dropdown-container mt-3">
             <label for="my-dropdown">Change language or OK to continue </label>
             <br>
-            <select id="language-dropdown"></select>
+            <select id="language-dropdown" style="max-height: 200px; overflow-y: auto;"></select>
           </div>
-          <div class="container main-button">
+          <div class="container main-button mt-3">
             <button
               type="button"
               class="btn btn-light"
@@ -38,8 +129,15 @@
     </div>
     <br />
 
-    <button type="button" id="login-button" class="btn btn-secondary" style="display: none;">Login</button>
-    <button type="button" id="signup-button" class="btn btn-primary" style="display: none;">Signup</button>
+    <div class="d-flex justify-content-center mt-1 mb-1">
+      <button type="button" id="login-button" class="btn btn-secondary mx-2" style="display: none; width: 100px" onclick="window.location.href='/login'">Login</button>
+      <button type="button" id="signup-button" class="btn btn-primary mx-2" style="display: none; width: 100px" onclick="window.location.href='/signup'">Signup</button>
+    </div>
+    <br>
+   
+    
+    
+
 
     <div class="card" style="border-radius: 10px;">
       <img src="background_family_1.png" class="card-img" alt="Background image">
@@ -53,10 +151,10 @@
     <br>
     <br>
 
-<p style="text-align: center;">
+<!-- <p style="text-align: center;">
 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque molestias soluta, dolore dignissimos, 
 ipsum incidunt maxime in expedita porro sapiente fug
-</p>
+</p> -->
   
   
     <%- include('components/footer.ejs') %>
