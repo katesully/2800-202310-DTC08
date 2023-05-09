@@ -1,3 +1,39 @@
+
+
+
+const app = new Vue({
+  el: '#app',
+  data: {
+    translatedContent: ''
+  },
+  mounted() {
+    // set the default language to the user's preferred language
+    const userLanguage = navigator.language.slice(0, 2);
+    this.translateContent(userLanguage);
+  },
+  methods: {
+    translateContent(targetLanguage) {
+      // call your translation API here and update the translatedContent data property
+      // using the content data property and targetLanguage parameter
+      // for example, using the Google Translate API:
+      const apiKey = 'YOUR_API_KEY_HERE';
+      const sourceLanguage = 'en'; // assume the source language is English
+      const contentToTranslate = this.content[sourceLanguage];
+      axios.post(`https://translation.googleapis.com/language/translate/v2?key=${apiKey}`, {
+        q: contentToTranslate,
+        target: targetLanguage
+      }).then(response => {
+        this.translatedContent = response.data.data.translations[0].translatedText;
+      }).catch(error => {
+        console.error(error);
+      });
+    }
+  }
+});
+
+
+
+
 function saveLanguageAndShowSignup() {
   console.log("saveLanguageAndShowSignup called");
   // Show login and signup buttons
@@ -46,4 +82,5 @@ function populateLanguageDropdown() {
 
 // Call the populateDropdown function to start populating the dropdown
 populateLanguageDropdown();
+
 

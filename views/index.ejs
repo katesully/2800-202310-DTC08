@@ -1,4 +1,13 @@
+
+
 <head>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="./scripts/index.js"></script>
+    <script src="./scripts/firebase_authentication.js"></script>
+
+</head>
   <style>
     .card-img {
       filter: brightness(30%);
@@ -8,8 +17,11 @@
 }
 
 .main-button button {
-  display: inline-block;
+  display: inline-block;  
 }
+
+
+
 
 
 /* CSS */
@@ -85,11 +97,20 @@
 </head>
  
   
-  <%- include('components/header.ejs') %> 
+  <%- include('components/headHTML.ejs') %> 
   <body>
     <%- include('components/navbar_header.ejs') %>
    <br>
     <h2 style="text-align: center;">NewJourney</h2>
+
+<!-- translate automatically to users device language  -->
+
+    <div id="app">
+      <!-- <div v-html="translatedContent"></div> -->
+    </div>
+
+
+
 
     <img src="Welcomes.png" alt="welcomes" style="
     position: absolute;
@@ -107,6 +128,8 @@
   <br>
   <br>
 
+
+<!-- language choice dropdown  -->
 
     <div class="container">
       <div class="container-fluid card card-shadow">
@@ -136,20 +159,23 @@
     <br>
    
     
-    
+    <!-- explanation card -->
 
 
     <div class="card" style="border-radius: 10px;">
       <img src="background_family_1.png" class="card-img" alt="Background image">
       <div class="card-img-overlay">
         <h5 class="card-title text-white">Helping you on your new path</h5>
-        <p class="card-text text-white">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam ab veritatis aspernatur
-           cupiditate sed, eaque libero officia et tenetur mollitia tempora illum aperiam 
-           repellat minima perferendis cum earum maiores quasi.</p>
+        <p class="card-text text-white intro-text">I had a some lorem text in here but I want to check the translations so I am going to 
+          be writing some random english instead and check how it goes with the google api translation and see what happens I hope it goes well
+           repellat minima perferendis cum earum maiores quasi lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur architecto temporibus quos non magni veniam corporis nesciunt a exercitationem est. Possimus quos, exercitationem doloremque officia sapiente cumque repudiandae? Doloribus, nemo.
+           .</p>
       </div>
     </div>
     <br>
     <br>
+
+
 
 <!-- <p style="text-align: center;">
 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque molestias soluta, dolore dignissimos, 
@@ -159,8 +185,7 @@ ipsum incidunt maxime in expedita porro sapiente fug
   
     <%- include('components/footer.ejs') %>
 
-    <script src="./scripts/index.js"></script>
-    <script src="./scripts/firebase_authentication.js"></script>
+    
     <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
   </body>
 </html>
