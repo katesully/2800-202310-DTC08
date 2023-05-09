@@ -1,7 +1,40 @@
-<%- include('components/header.ejs') %>
+<%- include('components/headHTML.ejs') %>
     <link rel="stylesheet" type="text/css" href="./styles/signup.css" />
     <link rel="stylesheet" type="text/css" href="./styles/style.css" />
     <script src="/scripts/signup.js" type="text/javascript"></script>
+
+    <div id="google_translate_element style=display: none;"></div>
+
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+    }
+    </script>
+    
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    
+
+    <script type="text/javascript">
+        function closeTranslatePopup() {
+          const popup = document.querySelector('#VIpgJd-ZVi9od-ORHb');
+          if (popup) {
+            setTimeout(function() {
+              popup.parentNode.removeChild(popup);
+            }, 500); // close popup after .5 seconds
+          }
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+          new google.translate.TranslateElement({ 
+            pageLanguage: 'en', 
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE 
+          }, 'google_translate_element');
+          closeTranslatePopup();
+        });
+      </script>
+    
+   
+
+
     <div class="container d-flex flex-column">
         <img src="logo.png">
         <h1>Sign Up</h1>

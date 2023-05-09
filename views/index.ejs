@@ -105,7 +105,7 @@
 
 <!-- translate automatically to users device language  -->
 
-<div id="google_translate_element"></div>
+
 
 <script type="text/javascript">
   function googleTranslateElementInit() {
@@ -138,17 +138,16 @@
       <div class="container-fluid card card-shadow">
         <div class="container d-flex align-items-center justify-content-between">
           <div class="container dropdown-container mt-3">
-            <label for="my-dropdown">Change language or OK to continue </label>
-            <br>
-            <select id="language-dropdown" style="max-height: 200px; overflow-y: auto;"></select>
+           <!-- <label for="my-dropdown">Change language or OK to continue </label>
+            <br> -->
+            <!-- <select id="language-dropdown" style="max-height: 200px; overflow-y: auto;"></select> -->
           </div>
           <div class="container main-button mt-3">
-            <button
-              type="button"
-              class="btn btn-light"
-              onclick="saveLanguageAndShowSignup()">
-              OK
+            <button type="button" class="btn btn-light" onclick="saveLanguageAndShowSignup()" style="height: 100px;">
+              <img src="ok-green.png" alt="OK" style="height: 100%;">
             </button>
+
+            <div id="google_translate_element"></div>
           </div>
         </div>
       </div>
