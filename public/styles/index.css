@@ -1,3 +1,19 @@
+/* body{
+top: 0px !important; 
+position: static !important; 
+}
+
+.VIpgJd-ZVi9od-ORHb{
+display:none !important
+} */
+
+.goog-te-banner-frame.skiptranslate {
+    display: none !important;
+    } 
+body {
+    top: 0px !important; 
+    }
+
 #login-button {
   background-color: #fff;
   border: 1px solid #d5d9d9;
@@ -105,3 +121,4 @@
   max-height: 00px !important;
   overflow-y: auto !important;
 }
+
