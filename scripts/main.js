@@ -1,9 +1,4 @@
-// const axios = require('axios');
-//import dotenv from 'dotenv';
-// const dotenv = require('dotenv');
-// require('dotenv').config()
-// const API_KEY = process.env.OPENAI_API_KEY;
-const API_KEY = "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"
+
 const submitBtn = document.getElementById('submitBtn');
 
 async function getMessage() {
@@ -30,23 +25,12 @@ async function getMessage() {
     }
 }
 
+// const populateMessage = (data) => {
+//     console.log(data);
+//     const message = data.usage.choices.message.content;
+//     console.log(message);
+//     const messageDiv = document.getElementById('roadmapGoesHere');
+//     messageDiv.innerHTML = message;
+// }
+
 submitBtn.addEventListener('click', getMessage);
-
-
-// const API_KEY = 'your_api_key_here';
-// const API_URL = 'https://api.chatgpt.com/v1/';
-
-// axios.get(API_URL + 'chat', {
-//     headers: {
-//         Authorization: `Bearer ${API_KEY}`
-//     },
-//     params: {
-//         message: 'Hello, ChatGPT! How are you'
-//     }
-// })
-//     .then(response => {
-//         console.log(response.data);
-//     })
-//     .catch(error => {
-//         console.log(error);
-//     });
