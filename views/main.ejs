@@ -29,10 +29,10 @@
                         do I get a credit card?"</button>
                 </ul>
             </div>
-            <div class="input-field">
-                <input type="text" placeholder="What do you need help with?" id="textInput">
-                <i class="fas fa-paper-plane" id="submitBtn"></i>
-            </div>
+            <form class="input-field" action="/sendRequest" method="post">
+                <input type="text" class="form-control" placeholder="What do you need help with?" id="textInput" name="textInput">
+                <button type="submit" value="Submit" class="btn"><i class="fas fa-paper-plane d-block" id="submitBtn"></i></button>
+            </form>
         </div>
 
 
