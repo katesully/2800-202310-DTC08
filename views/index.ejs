@@ -1,4 +1,13 @@
+
+
 <head>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="./scripts/index.js"></script>
+    <script src="./scripts/firebase_authentication.js"></script>
+
+</head>
   <style>
     .card-img {
       filter: brightness(30%);
@@ -8,81 +17,28 @@
 }
 
 .main-button button {
-  display: inline-block;
+  display: inline-block;  
+}
+
+
+element.style {
+    z-index: 2147383647;
+}
+
+.VIpgJd-ZVi9od-ORHb-oEVmcd{
+   display: none;
 }
 
 
 /* CSS */
-#login-button {
-  background-color: #fff;
-  border: 1px solid #d5d9d9;
-  border-radius: 8px;
-  box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
-  box-sizing: border-box;
-  color: #0f1111;
-  cursor: pointer;
-  display: inline-block;
-  font-family: "Amazon Ember",sans-serif;
-  font-size: 13px;
-  line-height: 29px;
-  padding: 0 10px 0 11px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: middle;
-  width: 100px;
-}
 
-#login-button:hover {
-  background-color: #f7fafa;
-}
-
-#login-button:focus {
-  border-color: #008296;
-  box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
-  outline: 0;
-}
-
-#signup-button {
-  background-color: #F0C919;
-  border: 1px solid #d5d9d9;
-  border-radius: 8px;
-  box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
-  box-sizing: border-box;
-  color: #0f1111;
-  cursor: pointer;
-  display: inline-block;
-  font-family: "Amazon Ember",sans-serif;
-  font-size: 13px;
-  line-height: 29px;
-  padding: 0 10px 0 11px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: middle;
-  width: 100px;
-}
-
-#signup-button:hover {
-  background-color: #f7fafa;
-}
-
-#signup-button:focus {
-  border-color: #008296;
-  box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
-  outline: 0;
-}
 
 
   </style>
+
   
 </head>
+
  
   
   <%- include('components/headHTML.ejs') %> 
@@ -90,6 +46,19 @@
     <%- include('components/navbar_header.ejs') %>
    <br>
     <h2 style="text-align: center;">NewJourney</h2>
+
+<!-- translate automatically to users device language  -->
+
+
+
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+  }
+  </script>
+  
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 
     <img src="Welcomes.png" alt="welcomes" style="
     position: absolute;
@@ -104,25 +73,25 @@
     z-index: -1;
   ">
   <br>
-  <br>
-  <br>
+  
 
+
+<!-- language choice dropdown  -->
 
     <div class="container">
       <div class="container-fluid card card-shadow">
         <div class="container d-flex align-items-center justify-content-between">
           <div class="container dropdown-container mt-3">
-            <label for="my-dropdown">Change language or OK to continue </label>
-            <br>
-            <select id="language-dropdown" style="max-height: 200px; overflow-y: auto;"></select>
+           <!-- <label for="my-dropdown">Change language or OK to continue </label>
+            <br> -->
+            <!-- <select id="language-dropdown" style="max-height: 200px; overflow-y: auto;"></select> -->
           </div>
           <div class="container main-button mt-3">
-            <button
-              type="button"
-              class="btn btn-light"
-              onclick="saveLanguageAndShowSignup()">
-              OK
+            <button type="button" class="btn btn-light" onclick="saveLanguageAndShowSignup()" style="height: 50px;">
+              <img src="ok-green.png" alt="OK" style="height: 100%;">
             </button>
+
+            <div id="google_translate_element"></div>
           </div>
         </div>
       </div>
@@ -136,20 +105,23 @@
     <br>
    
     
-    
+    <!-- explanation card -->
 
 
     <div class="card" style="border-radius: 10px;">
       <img src="background_family_1.png" class="card-img" alt="Background image">
       <div class="card-img-overlay">
         <h5 class="card-title text-white">Helping you on your new path</h5>
-        <p class="card-text text-white">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam ab veritatis aspernatur
-           cupiditate sed, eaque libero officia et tenetur mollitia tempora illum aperiam 
-           repellat minima perferendis cum earum maiores quasi.</p>
+        <p class="card-text text-white intro-text">I had a some lorem text in here but I want to check the translations so I am going to 
+          be writing some random english instead and check how it goes with the google api translation and see what happens I hope it goes well
+           repellat minima perferendis cum earum maiores quasi lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur architecto temporibus quos non magni veniam corporis nesciunt a exercitationem est. Possimus quos, exercitationem doloremque officia sapiente cumque repudiandae? Doloribus, nemo.
+           .</p>
       </div>
     </div>
     <br>
     <br>
+
+
 
 <!-- <p style="text-align: center;">
 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque molestias soluta, dolore dignissimos, 
@@ -159,8 +131,7 @@ ipsum incidunt maxime in expedita porro sapiente fug
   
     <%- include('components/footer.ejs') %>
 
-    <script src="./scripts/index.js"></script>
-    <script src="./scripts/firebase_authentication.js"></script>
+    
     <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
   </body>
 </html>
