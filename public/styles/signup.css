@@ -7,3 +7,10 @@ img {
     margin-top: 15px;
     margin-bottom: 25%;
 }
+
+.goog-te-banner-frame.skiptranslate {
+    display: none !important;
+    } 
+body {
+    top: 0px !important; 
+    }

@@ -1,18 +1,4 @@
-/* body{
-top: 0px !important; 
-position: static !important; 
-}
 
-.VIpgJd-ZVi9od-ORHb{
-display:none !important
-} */
-
-.goog-te-banner-frame.skiptranslate {
-    display: none !important;
-    } 
-body {
-    top: 0px !important; 
-    }
 
 #login-button {
   background-color: #fff;

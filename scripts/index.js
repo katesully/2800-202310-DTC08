@@ -1,4 +1,6 @@
-
+setTimeout(function() {
+  document.cookie = "googtrans=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+}, 1000);
 
 
 
@@ -31,6 +33,15 @@
 //     }
 //   }
 // });
+
+// Force hiding of "original text" popup for menus, etc. (very annoying)
+jQuery(selector).bind(
+  "mouseenter mouseleave",
+  function (event) {
+    if (event.type === 'mouseenter') { google_trans_tt.css('z-index', -1000); }
+    else { google_trans_tt.css('z-index', 1000); }
+  }
+);
 
 
 
