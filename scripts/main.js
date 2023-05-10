@@ -3,8 +3,10 @@
 // const dotenv = require('dotenv');
 // require('dotenv').config()
 // const API_KEY = process.env.OPENAI_API_KEY;
-const API_KEY = "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"
-const submitBtn = document.getElementById('submitBtn');
+const API_KEY = "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"
+// const submitBtn = document.getElementById('submitBtn');
+
+
 
 async function getMessage() {
     console.log('clicked');
@@ -30,7 +32,7 @@ async function getMessage() {
     }
 }
 
-submitBtn.addEventListener('click', getMessage);
+// submitBtn.addEventListener('click', getMessage);
 
 
 // const API_KEY = 'your_api_key_here';
