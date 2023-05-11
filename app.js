@@ -42,8 +42,8 @@ async function getMessage(message) {
         },
         body: JSON.stringify({
             model: "gpt-3.5-turbo",
-            messages: [{ 
-                role: "user", 
+            messages: [{
+                role: "user",
                 content: `Give me a step by step guide on ${message} the form of (with no preambles or postambles):
                 Title: How to ...
                 Description: A step by step guide on how to ...
@@ -51,7 +51,7 @@ async function getMessage(message) {
                 2. ...
                 3. ...
                 ...
-                ` 
+                `
             }],
             max_tokens: 500,
         })
@@ -80,7 +80,7 @@ function createRoadmapObject(message) {
     roadmapObject.description = messageArray[1].split(": ")[1];
 
     for (var i = 2; i < messageArray.length; i++) {
-            roadmapObject.steps.push(messageArray[i].split(". ")[1]);
+        roadmapObject.steps.push(messageArray[i].split(". ")[1]);
     }
 
     return roadmapObject;
@@ -92,7 +92,12 @@ app.post('/sendRequest', async (req, res) => {
 
     let returnMessage = await getMessage(userInput);
     let roadmapObject = createRoadmapObject(returnMessage.choices[0].message.content);
-    res.send(roadmapObject);
+    res.render('./components/roadmap.ejs', {
+        step1: roadmapObject.steps[0],
+        step2: roadmapObject.steps[1],
+        step3: roadmapObject.steps[2],
+        step4: roadmapObject.steps[3]
+    });
 
 });
 
