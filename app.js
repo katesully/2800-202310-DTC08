@@ -43,7 +43,7 @@ async function getMessage(message) {
             model: "gpt-3.5-turbo",
             messages: [{ 
                 role: "user", 
-                content: `Give me a step by step guide on ${message} the form of (with no preambles):
+                content: `Give me a step by step guide on ${message} the form of (with no preambles or postambles):
                 Title: How to ...
                 Description: A step by step guide on how to ...
                 1. ...
@@ -89,8 +89,7 @@ app.post('/sendRequest', async (req, res) => {
 
     let returnMessage = await getMessage(userInput);
     let roadmapObject = createRoadmapObject(returnMessage.choices[0].message.content);
-    console.log(returnMessage.choices[0].message);
-    console.log(roadmapObject)
+    res.send(roadmapObject);
 
 });
 
