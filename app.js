@@ -27,6 +27,10 @@ app.get('/login', (req, res) => {
     res.render('./login.ejs');
 });
 
+app.get('/settings', (req, res) => {
+    res.render('./settings.ejs');
+});
+
 app.get('/main', (req, res) => {
     res.render('./main.ejs');
 });
