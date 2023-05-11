@@ -67,7 +67,7 @@ async function getMessage(message) {
     }
 }
 
-// Parse through API response to create roadmap object
+// Parse through API response to create a roadmap object
 function createRoadmapObject(message) {
     var roadmapObject = {
         title: "",
