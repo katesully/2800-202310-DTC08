@@ -34,7 +34,12 @@ element.style {
   display: none;
 }
 
-.VIpgJd-ZVi9od-14eHX-hSRGPD{
+
+#google_translate_element > :first-child {
+  font-size: 0;
+}
+
+.VIpgJd-ZVi9od-l4eHX-hSRGPD{
   display: none;
 }
 
@@ -52,8 +57,8 @@ element.style {
   <%- include('components/headHTML.ejs') %> 
   <body>
     <%- include('components/navbar_header.ejs') %>
-   <br>
-    <h2 style="text-align: center;">NewJourney</h2>
+
+    <h1 id="title" style="text-align: center;">NewJourney</h1>
 
 <!-- translate automatically to users device language  -->
 
@@ -85,21 +90,20 @@ element.style {
 
 
 <!-- language choice dropdown  -->
+<h5 style="text-align: center;"> Select your language to begin </h5>
 
     <div class="container">
       <div class="container-fluid card card-shadow">
         <div class="container d-flex align-items-center justify-content-between">
           <div class="container dropdown-container mt-3">
-           <!-- <label for="my-dropdown">Change language or OK to continue </label>
-            <br> -->
-            <!-- <select id="language-dropdown" style="max-height: 200px; overflow-y: auto;"></select> -->
           </div>
+          <div id="google_translate_element"></div>
+          <br>
           <div class="container main-button mt-3">
             <button type="button" class="btn btn-light" onclick="saveLanguageAndShowSignup()" style="height: 50px;">
               <img src="ok-green.png" alt="OK" style="height: 100%;">
             </button>
 
-            <div id="google_translate_element"></div>
           </div>
         </div>
       </div>
@@ -116,7 +120,7 @@ element.style {
     <!-- explanation card -->
 
 
-    <div class="card" style="border-radius: 10px;">
+    <div class="card" id="backgroundCard" style="border-radius: 10px; display: none">
       <img src="background_family_1.png" class="card-img" alt="Background image">
       <div class="card-img-overlay">
         <h5 class="card-title text-white">Helping you on your new path</h5>
