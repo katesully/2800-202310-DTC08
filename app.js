@@ -5,6 +5,7 @@ require('dotenv').config();
 const API_KEY = process.env.OPENAI_API_KEY;
 
 const ejs = require('ejs');
+const { parse } = require('dotenv');
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
@@ -42,12 +43,12 @@ async function getMessage(message) {
             model: "gpt-3.5-turbo",
             messages: [{ 
                 role: "user", 
-                content: `Can you give me a step by step guide on ${message} the form of(include the curly brackets):
-                Title: {How to ...}
-                Description: {A step by step guide on how to ...}
-                1. {...}
-                2. {...}
-                3. {...}
+                content: `Give me a step by step guide on ${message} the form of (with no preambles):
+                Title: How to ...
+                Description: A step by step guide on how to ...
+                1. ...
+                2. ...
+                3. ...
                 ...
                 ` 
             }],
