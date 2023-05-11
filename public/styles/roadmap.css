@@ -1,0 +1,81 @@
+#roadmapGoesHere ul {
+    list-style: none;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+
+}
+
+.hidden {
+    display: none !important;
+}
+
+#roadmapGoesHere li {
+    display: inline-block;
+    margin: 0 20px;
+    border: 1px solid #ccc;
+    padding: 50px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+#roadmapGoesHere li:hover {
+    transform: translateY(-10px);
+}
+
+#step1 {
+    transform: skewX(15deg);
+
+}
+
+#step2 {
+    transform: skewX(-15deg);
+}
+
+#step3 {
+    transform: skewX(15deg);
+}
+
+#step4 {
+    transform: skewX(-15deg);
+}
+
+.rotate-out {
+    animation: rotate_out 3s;
+}
+
+.rotate-in {
+    animation: rotate_in 3s;
+}
+
+@keyframes rotate_out {
+    0% {
+        /* transform-origin: 2px; */
+        transform-origin: bottom;
+        transform: rotateX(180deg) skewX(15deg);
+    }
+
+    100% {
+        /* transform-origin: 2px; */
+        transform-origin: bottom;
+        transform: rotateX(0deg) skewX(15deg);
+
+    }
+}
+
+@keyframes rotate_in {
+    0% {
+        /* transform-origin: 2px; */
+        transform-origin: top;
+        transform: rotateX(-180deg) skewX(-15deg);
+    }
+
+    100% {
+        /* transform-origin: 2px; */
+        transform-origin: top;
+        transform: rotateX(0deg) skewX(-15deg);
+    }
+}
