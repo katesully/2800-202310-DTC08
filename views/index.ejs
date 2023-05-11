@@ -10,33 +10,7 @@
 
 </head>
   <style>
-    .card-img {
-      filter: brightness(30%);
-    }
-    .main-button {
-  display: flex;
-}
 
-.main-button button {
-  display: inline-block;  
-}
-
-
-element.style {
-    z-index: 2147383647;
-}
-
-.VIpgJd-ZVi9od-ORHb-oEVmcd{
-   display: none;
-} 
-
-#goog-gt-{
-  display: none;
-}
-
-.VIpgJd-ZVi9od-14eHX-hSRGPD{
-  display: none;
-}
 
 /* CSS */
 
@@ -51,12 +25,12 @@ element.style {
   
   <%- include('components/headHTML.ejs') %> 
   <body>
-    <%- include('components/navbar_header.ejs') %>
-   <br>
-    <h2 style="text-align: center;">NewJourney</h2>
+    <%- include('components/navbar_header_before_signin.ejs') %>
+
+    <h1 id="title" style="text-align: center;">NewJourney</h1>
 
 <!-- translate automatically to users device language  -->
-
+<link rel="stylesheet" type="text/css" href="./styles/index.css" />
 
 
 <script type="text/javascript">
@@ -85,21 +59,20 @@ element.style {
 
 
 <!-- language choice dropdown  -->
+<h5 style="text-align: center;"> Select your language to begin </h5>
 
     <div class="container">
       <div class="container-fluid card card-shadow">
         <div class="container d-flex align-items-center justify-content-between">
           <div class="container dropdown-container mt-3">
-           <!-- <label for="my-dropdown">Change language or OK to continue </label>
-            <br> -->
-            <!-- <select id="language-dropdown" style="max-height: 200px; overflow-y: auto;"></select> -->
           </div>
+          <div id="google_translate_element"></div>
+          <br>
           <div class="container main-button mt-3">
             <button type="button" class="btn btn-light" onclick="saveLanguageAndShowSignup()" style="height: 50px;">
               <img src="ok-green.png" alt="OK" style="height: 100%;">
             </button>
 
-            <div id="google_translate_element"></div>
           </div>
         </div>
       </div>
@@ -116,7 +89,7 @@ element.style {
     <!-- explanation card -->
 
 
-    <div class="card" style="border-radius: 10px;">
+    <div class="card" id="backgroundCard" style="border-radius: 10px; display: none">
       <img src="background_family_1.png" class="card-img" alt="Background image">
       <div class="card-img-overlay">
         <h5 class="card-title text-white">Helping you on your new path</h5>
@@ -128,16 +101,6 @@ element.style {
     </div>
     <br>
     <br>
-
-
-
-<!-- <p style="text-align: center;">
-Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque molestias soluta, dolore dignissimos, 
-ipsum incidunt maxime in expedita porro sapiente fug
-</p> -->
-  
-  
-    <%- include('components/footer.ejs') %>
 
     
     
