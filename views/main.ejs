@@ -43,13 +43,19 @@
                         <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
                         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                     </svg>Examples</h2>
-                <ul class="flex flex-col gap-3.5 w-full sm:max-w-md m-auto colour-yellow"><button
-                        class="w-full bg-gray-50 dark:bg-white/5 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-900">"What
-                        is a tenancy agreement?"</button><button
-                        class="w-full bg-gray-50 dark:bg-white/5 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-900">"How
-                        do I navigate the city using transit?"</button><button
-                        class="w-full bg-gray-50 dark:bg-white/5 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-900">"How
-                        do I get a credit card?"</button>
+                <ul class="flex flex-col gap-3.5 w-full sm:max-w-md m-auto colour-yellow">
+                    <form id="exampleForm1" method="POST" action="/sendRequest">
+                        <input type="hidden" name="hiddenField" value="What is a tenancy agreement in Vancouver BC">
+                    </form>
+                    <form id="exampleForm2" method="POST" action="/sendRequest">
+                        <input type="hidden" name="hiddenField" value="How do I navigate the Vancouver BC using transit?">
+                    </form>
+                    <form id="exampleForm3" method="POST" action="/sendRequest">
+                        <input type="hidden" name="hiddenField" value="How do I get a credit card in Vancouver BC?">
+                    </form>
+                    <button type="submit" form="exampleForm1" id="textInput" name="textInput" class="w-full bg-gray-50 dark:bg-white/5 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-900">"What is a tenancy agreement?"</button>
+                    <button type="submit" form="exampleForm2" class="w-full bg-gray-50 dark:bg-white/5 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-900" id="textInput" name="textInput">"How do I navigate the city using transit?"</button>
+                    <button type="submit" form="exampleForm3" class="w-full bg-gray-50 dark:bg-white/5 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-900" id="textInput" name="textInput">"How do I get a credit card?"</button>
                 </ul>
             </div>
             <form class="input-field" action="/sendRequest" method="post">
