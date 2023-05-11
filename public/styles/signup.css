@@ -20,3 +20,7 @@ element.style {
     background-color: #458A92;
     color: white;
 }
+
+#login-form {
+    margin-bottom: 100px;
+}

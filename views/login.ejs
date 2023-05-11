@@ -26,7 +26,7 @@
     <div class="container d-flex flex-column">
         <img src="LogoHeaderBar.png" id="logo">
         <h1>Login</h1>
-        <form>
+        <form id="login-form">
             <div class="form-group">
                 <label for="usernameInput">Username</label>
                 <input type="email" class="form-control" id="usernameInput" placeholder="Enter username"
@@ -38,6 +38,7 @@
                     name="passwordInput" autocomplete="current-password">
             </div>
             <button type="submit" class="btn colour-nav">Submit</button>
+            <p>Don't have an account? <a href="/signup">Sign up</a></p>
         </form>
     </div>
     <%- include('components/footer.ejs') %>
