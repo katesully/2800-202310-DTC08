@@ -1,21 +1,38 @@
 <%- include('components/headHTML.ejs') %>
-    <link rel="stylesheet" type="text/css" href="./styles/style.css" />
-    <link rel="stylesheet" type="text/css" href="./styles/signup.css" />
-    <script src="/scripts/signup.js" type="text/javascript"></script>
-    <div class="container d-flex flex-column">
-        <img src="logo.png">
-        <h1>Login</h1>
-        <form>
-            <div class="form-group">
-                <label for="usernameInput">Username</label>
-                <input type="email" class="form-control" id="usernameInput" placeholder="Enter username">
-            </div>
-            <div class="form-group">
-                <label for="passwordInput">Password</label>
-                <input type="password" class="form-control" id="passwordInput" placeholder="Password"
-                    name="passwordInput">
-            </div>
-            <button type="submit" class="btn colour-nav">Submit</button>
-        </form>
-    </div>
-    <%- include('components/footer.ejs') %>
+
+<body>
+  <%- include('components/navbar_header.ejs') %>
+
+  <div class="container d-flex flex-column pt-5">
+    <section id="loginSection">
+      <h1>Login</h1>
+      <form>
+        <div class="form-group">
+          <label for="usernameInput">Username</label>
+          <input type="text" class="form-control" id="usernameInput" placeholder="Enter Username">
+        </div>
+        <div class="form-group">
+          <label for="emailInput">Email</label>
+          <input type="email" class="form-control" id="emailInput" placeholder="Enter Email" required>
+        </div>
+        <div class="form-group">
+          <label for="passwordInput">Password</label>
+          <input type="password" class="form-control" id="passwordInput" placeholder="Password" name="passwordInput" required>
+        </div>
+        <div id="divLoginError" class="group">
+          <div id="lblLoginErrorMessage" class="errorlabel">Error message</div>
+        </div>
+        <button type="button" id="btnLogin" class="btn colour-nav">Login</button>
+        <button type="button" id="btnSignUp" class="btn colour-nav">Sign up</button>
+      </form>
+    </section>
+  </div>
+
+  
+
+
+  <%- include('components/footer.ejs') %>
+  <script type="module" src="/scripts/login.js" type="text/javascript"></script>
+</body>
+
+</html>

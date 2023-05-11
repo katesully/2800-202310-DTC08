@@ -25,14 +25,14 @@ body {
     filter: brightness(30%);
 }
 
-.main-button {
+/* .main-button {
     display: flex;
 }
   
 .main-button button {
     display: inline-block;  
 }
-  
+   */
 element.style {
     z-index: 2147383647;
 }
@@ -40,4 +40,16 @@ element.style {
 .VIpgJd-ZVi9od-ORHb-oEVmcd{
      display: none;
 }
-  
+
+.errorlabel {
+	font-size: 18px;
+	padding: 10px 10px 10px 5px;
+	-webkit-appearance: none;
+	display: block;
+	background: #fafafa;
+	color: #ff0000;
+	width: 100%;
+	border: none;
+	border-radius: 0;
+	border-bottom: 1px solid #ff0000;
+}

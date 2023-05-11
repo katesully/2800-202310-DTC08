@@ -32,6 +32,11 @@ body {
     width: 36px;
 }
 
+.block-width-48 {
+    width: 64px;
+    height: 21px;
+}
+
 .colour-navbar {
     background-color: #458A92;
     color: white;

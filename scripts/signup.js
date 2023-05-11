@@ -1,6 +1,19 @@
 // this code was written by Oceaan with help from
 //https://stackoverflow.com/questions/21727317/how-to-check-confirm-password-field-in-form-without-reloading-page
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js";
+import { app } from './firebase_authentication.js'
+// var firebase = require('firebase');
+// var firebaseui = require('firebaseui');
+var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+ui.start('#firebaseui-auth-container', {
+  signInOptions: [
+    {
+      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID, 
+      requireDisplayName: false
+    }
+  ]
+});
 
 const auth = getAuth();
 createUserWithEmailAndPassword(auth, email, password)
