@@ -14,62 +14,47 @@
         src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 
-
 </head>
-<style>
-
-
-    .VIpgJd-ZVi9od-ORHb-oEVmcd {
-        display: none;
-    }
-
-    #goog-gt- {
-        display: none;
-    }
-
-    .VIpgJd-ZVi9od-14eHX-hSRGPD {
-        display: none;
-    }
-
-    /* CSS */
-</style>
-
-
-</head>
-
 
 
 <%- include('components/headHTML.ejs') %>
+<link rel="stylesheet" type="text/css" href="./styles/settings.css" />
 
     <body>
         <%- include('components/navbar_header.ejs') %>
-            <br>
+           
+
+            <h1 style="text-align: center;">User Information </h1>
+
+            <div>
+                <h5 style="text-align: center;">Update your Preferred Language</h5>
+                <div id="google_translate_element" style="text-align: center;"></div>
+            </div>
            
             <div class="container">
-                <h1>User Information </h1>
+               
                 <form>
                     <fieldset class="mb-3" id="personalInfoFields" disabled>
-                       
                         <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" id="nameInput" class="form-control" placeholder="Enter your name">
+                            <label>Name:    </label>
+                            ///
                         </div>
                         <div class="form-group">
-                            <label>Username</label>
-                            <input type="text" id="neighbourhoodInput" class="form-control" placeholder="Enter your neighbourhood">
+                            <label>Username:    </label>
+                            ///
                         </div>
                         <div class="form-group">
-                            <label>Password</label>
-                            <input type="text" id="cityInput" class="form-control" placeholder="Enter your city">
+                            <label>City: </label>
+                            <input type="text" id="cityInput" class="form-control" placeholder="Enter your City">
                         </div>
                         <div class="form-group">
-                            <label>Update your Preferred Language</label>
-                            <div id="google_translate_element"></div>
+                            <label>Password:    </label>
+                            <input type="text" id="cityInput" class="form-control" placeholder="Enter your new password">
                         </div>
-                       
+                               
                     </fieldset>
                     <div class="d-flex justify-content-end mt-5">
-                        <button type="button" class="btn btn-secondary" onclick="editUserInfo()">Edit</button>
+                        <button type="button" class="btn btn-secondary" onclick="editUserInfo()">Update Info</button>
                         <span style="width: 10px"></span>
                         <button type="button" class="btn btn-info" onclick="saveUserInfo()">Save</button>
                     </div>
@@ -77,14 +62,17 @@
             
                 
                 </form>
-                <div>
+                <!-- <div>
                     <a class="btn btn-secondary" href="../login.html" id="logout-button">Logout</a>
                 </div>
-            </div>
+            </div> -->
 
 
 
-
+<br>
+<br>
+<br>
+<br>
             
 
       
