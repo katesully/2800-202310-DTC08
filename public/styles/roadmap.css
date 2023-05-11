@@ -28,6 +28,7 @@
 
 #step1 {
     transform: skewX(15deg);
+
 }
 
 #step2 {
@@ -42,31 +43,39 @@
     transform: skewX(-15deg);
 }
 
-
 .rotate-out {
-    animation: rotate_out 2s ease-in-out;
+    animation: rotate_out 3s;
 }
 
 .rotate-in {
-    animation: rotate_in 2s ease-in-out;
+    animation: rotate_in 3s;
 }
 
 @keyframes rotate_out {
     0% {
-        transform: translateY(20%) skewX(15deg);
+        transform-origin: 2px;
+        transform-origin: bottom;
+        transform: rotateX(180deg) skewX(15deg);
     }
 
     100% {
-        transform: translateY(0%) skewX(15deg);
+        transform-origin: 2px;
+        transform-origin: bottom;
+        transform: rotateX(0deg) skewX(15deg);
+
     }
 }
 
 @keyframes rotate_in {
     0% {
-        transform: translateY(360deg) skewX(-15deg);
+        transform-origin: 2px;
+        transform-origin: top;
+        transform: rotateX(-180deg) skewX(-15deg);
     }
 
     100% {
-        transform: translateY(0deg) skewX(-15deg);
+        transform-origin: 2px;
+        transform-origin: top;
+        transform: rotateX(0deg) skewX(-15deg);
     }
 }
