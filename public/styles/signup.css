@@ -1,6 +1,15 @@
-img {
-    padding: 90px;
-    align-self: center;
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+body {
+    top: 0px !important; 
 }
 
 .btn {
@@ -10,7 +19,25 @@ img {
 
 .goog-te-banner-frame.skiptranslate {
     display: none !important;
-    } 
-body {
-    top: 0px !important; 
-    }
+} 
+
+.card-img {
+    filter: brightness(30%);
+}
+
+.main-button {
+    display: flex;
+}
+  
+.main-button button {
+    display: inline-block;  
+}
+  
+element.style {
+    z-index: 2147383647;
+}
+
+.VIpgJd-ZVi9od-ORHb-oEVmcd{
+     display: none;
+}
+  
