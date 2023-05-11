@@ -92,7 +92,7 @@ app.post('/sendRequest', async (req, res) => {
 
     let returnMessage = await getMessage(userInput);
     let roadmapObject = createRoadmapObject(returnMessage.choices[0].message.content);
-    res.render('./components/roadmap.ejs', {
+    res.render('./main.ejs', {
         step1: roadmapObject.steps[0],
         step2: roadmapObject.steps[1],
         step3: roadmapObject.steps[2],

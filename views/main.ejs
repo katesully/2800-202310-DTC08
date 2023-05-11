@@ -62,6 +62,9 @@
 
         <!-- div for GPT's answer -->
         <div id="roadmapGoesHere">
+            <% if (typeof step1 !=='undefined' ) { %>
+                <%- include('components/roadmap.ejs', {step1: step1, step2: step2, step3: step3, step4: step4}) %>
+                    <% } %>
         </div>
 
 
