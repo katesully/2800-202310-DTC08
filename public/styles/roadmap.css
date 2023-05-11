@@ -27,29 +27,46 @@
 }
 
 #step1 {
-    transform: skewX(15deg)
+    transform: skewX(15deg);
 }
 
 #step2 {
-    transform: skewX(-15deg)
+    transform: skewX(-15deg);
 }
 
 #step3 {
-    transform: skewX(15deg)
+    transform: skewX(15deg);
 }
 
 #step4 {
-    transform: skewX(-15deg)
+    transform: skewX(-15deg);
 }
 
 
+.rotate-out {
+    animation: rotate_out 2s ease-in-out;
+}
 
-/* @keyframes flip_down {
+.rotate-in {
+    animation: rotate_in 2s ease-in-out;
+}
+
+@keyframes rotate_out {
     0% {
-        transform: rotateX(180deg);
+        transform: translateY(20%) skewX(15deg);
     }
 
     100% {
-        transform: rotateX(0deg);
+        transform: translateY(0%) skewX(15deg);
     }
-} */
+}
+
+@keyframes rotate_in {
+    0% {
+        transform: translateY(360deg) skewX(-15deg);
+    }
+
+    100% {
+        transform: translateY(0deg) skewX(-15deg);
+    }
+}
