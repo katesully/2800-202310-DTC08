@@ -1,16 +1,17 @@
 <link rel="stylesheet" href="./styles/roadmap.css" type="text/css">
 <h1>Roadmap</h1>
 <ul>
-    <li id="step1" class="rotate-out">
-        <%= step1 %>
-    </li>
-    <li id="step2" class="rotate-in">
-        <%= step2 %>
-    </li>
-    <li id="step3" class="rotate-out">
-        <%= step3 %>
-    </li>
-    <li id="step4" class="rotate-in">
-        <%= step4 %>
-    </li>
+    <% steps.forEach(function(step, index) { %>
+        <% if (index % 2==0) { %>
+            <li class="rotate-out even">
+                <% } else { %>
+            <li class="rotate-in odd">
+                <% } %>
+                    <h2>Step <%= index + 1 %>
+                    </h2>
+                    <p>
+                        <%= step %>
+                    </p>
+            </li>
+            <% }); %>
 </ul>

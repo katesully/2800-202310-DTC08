@@ -1,3 +1,7 @@
+.hidden {
+    display: none !important;
+}
+
 #roadmapGoesHere ul {
     list-style: none;
     text-align: center;
@@ -26,22 +30,15 @@
     transform: translateY(-10px);
 }
 
-#step1 {
+.even {
     transform: skewX(15deg);
 
 }
 
-#step2 {
+.odd {
     transform: skewX(-15deg);
 }
 
-#step3 {
-    transform: skewX(15deg);
-}
-
-#step4 {
-    transform: skewX(-15deg);
-}
 
 .rotate-out {
     animation: rotate_out 3s;

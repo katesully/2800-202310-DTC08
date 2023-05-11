@@ -107,10 +107,8 @@ app.post('/sendRequest', async (req, res) => {
     console.log('step 9')
     console.log(roadmapObject)
     res.render('./main.ejs', {
-        step1: roadmapObject.steps[0],
-        step2: roadmapObject.steps[1],
-        step3: roadmapObject.steps[2],
-        step4: roadmapObject.steps[3]
+        steps: roadmapObject.steps.slice(0, roadmapObject.steps.length),
+        displayFlag: true
     });
 
 });
