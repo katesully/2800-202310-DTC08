@@ -53,13 +53,13 @@
 
 @keyframes rotate_out {
     0% {
-        transform-origin: 2px;
+        /* transform-origin: 2px; */
         transform-origin: bottom;
         transform: rotateX(180deg) skewX(15deg);
     }
 
     100% {
-        transform-origin: 2px;
+        /* transform-origin: 2px; */
         transform-origin: bottom;
         transform: rotateX(0deg) skewX(15deg);
 
@@ -68,13 +68,13 @@
 
 @keyframes rotate_in {
     0% {
-        transform-origin: 2px;
+        /* transform-origin: 2px; */
         transform-origin: top;
         transform: rotateX(-180deg) skewX(-15deg);
     }
 
     100% {
-        transform-origin: 2px;
+        /* transform-origin: 2px; */
         transform-origin: top;
         transform: rotateX(0deg) skewX(-15deg);
     }
