@@ -31,6 +31,7 @@ app.get('/main', (req, res) => {
     res.render('./main.ejs');
 });
 
+// Interface with OpenAI API
 async function getMessage(message) {
     console.log('clicked');
     const options = {
@@ -66,6 +67,7 @@ async function getMessage(message) {
     }
 }
 
+// Parse through API response to create roadmap object
 function createRoadmapObject(message) {
     var roadmapObject = {
         title: "",
@@ -84,6 +86,7 @@ function createRoadmapObject(message) {
     return roadmapObject;
 }
 
+// Send request to OpenAI API and return roadmap object
 app.post('/sendRequest', async (req, res) => {
     var userInput = req.body.textInput;
 
