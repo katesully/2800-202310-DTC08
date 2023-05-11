@@ -4,32 +4,30 @@ function populateUserInfo() {
     firebase.auth().onAuthStateChanged(user => {
         // Check if user is signed in:
         if (user) {
+            // Go to the correct user document by referencing the user UID
+            currentUser = db.collection("users").doc(user.uid);
+            // Get the document for the current user.
+            currentUser.get().then(userDoc => {
+                // Get the data fields of the user
+                var userName = userDoc.data().name;
+                var userUserName = userDoc.data().username;
+                var userCity = userDoc.data().city;
+                var userPassword = userDoc.data().password;
 
-            //go to the correct user document by referencing to the user uid
-            currentUser = db.collection("users").doc(user.uid)
-            //get the document for current user.
-            currentUser.get()
-                .then(userDoc => {
-                    //get the data fields of the user
-                    var userName = userDoc.data().name;
-                    var userUserName = userDoc.data().neighbourhood;
-                    var userCity = userDoc.data().city;
-                    var userPassword = userDoc.data().phone;
-
-                    //if the data fields are not empty, then write them in to the form.
-                    if (userName != null) {
-                        document.getElementById("nameInput").value = userName;
-                    }
-                    if (userNeighbourhood != null) {
-                        document.getElementById("userNameInput").value = userUserName;
-                    }
-                    if (userCity != null) {
-                        document.getElementById("cityInput").value = userCity;
-                    }
-                    if (userPhone != null) {
-                        document.getElementById("passwordInput").value = userPassword;
-                    }
-                })
+                // If the data fields are not empty, then write them into the form.
+                if (userName) {
+                    document.getElementById("nameInput").value = userName;
+                }
+                if (userUserName) {
+                    document.getElementById("userNameInput").value = userUserName;
+                }
+                if (userCity) {
+                    document.getElementById("cityInput").value = userCity;
+                }
+                if (userPassword) {
+                    document.getElementById("passwordInput").value = userPassword;
+                }
+            });
         } else {
             // No user is signed in.
             console.log("No user is signed in");
@@ -37,7 +35,7 @@ function populateUserInfo() {
     });
 }
 
-//call the function to run it 
+// Call the function to run it
 populateUserInfo();
 
 function editUserInfo() {
