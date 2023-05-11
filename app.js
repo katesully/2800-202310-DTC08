@@ -65,11 +65,31 @@ async function getMessage(message) {
     }
 }
 
+function createRoadmapObject(message) {
+    var roadmapObject = {
+        title: "",
+        description: "",
+        steps: []
+    };
+
+    var messageArray = message.split("\n").filter(line => line.length > 0);
+    roadmapObject.title = messageArray[0].split(": ")[1];
+    roadmapObject.description = messageArray[1].split(": ")[1];
+
+    for (var i = 2; i < messageArray.length; i++) {
+            roadmapObject.steps.push(messageArray[i].split(". ")[1]);
+    }
+
+    return roadmapObject;
+}
+
 app.post('/sendRequest', async (req, res) => {
     var userInput = req.body.textInput;
 
     let returnMessage = await getMessage(userInput);
+    let roadmapObject = createRoadmapObject(returnMessage.choices[0].message.content);
     console.log(returnMessage.choices[0].message);
+    console.log(roadmapObject)
 
 });
 
