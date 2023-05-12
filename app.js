@@ -60,6 +60,7 @@ app.get('/signup', (req, res) => {
 })
 
 app.post('/signup', async (req, res) => {
+    console.log(req.body)
     const schemaCreateUser = Joi.object({
         username: Joi.string()
             .alphanum()
@@ -108,12 +109,14 @@ app.post('/signup', async (req, res) => {
         const newUser = new usersModel({
             username: req.body.username,
             password: hashedPassword,
-            type: "non-administrator"
+            type: "non-administrator",
+            email: req.body.Email
         })
         req.session.GLOBAL_AUTHENTICATED = true;
         req.session.loggedUsername = req.body.username;
         req.session.loggedPassword = hashedPassword;
         req.session.loggedType = "non-administrator";
+        req.session.loggedEmail = req.body.Email;
         await newUser.save();
         console.log(`New user created: ${newUser}`);
         res.redirect('/main');
@@ -156,6 +159,7 @@ app.post('/login', async (req, res) => {
         req.session.loggedUsername = req.body.username;
         req.session.loggedPassword = userresult.password;
         req.session.loggedType = userresult?.type;
+        req.session.loggedEmail = userresult.email;
         console.log("app.post(\'\/login\'): Current session cookie:", req.cookies)
         res.redirect('/main');
     } else {
@@ -173,11 +177,20 @@ app.post('/login', async (req, res) => {
 
 
 app.get('/settings', (req, res) => {
-    res.render('./settings.ejs');
+    if (req.session.GLOBAL_AUTHENTICATED) {
+        res.render('./settings.ejs', { username: req.session.loggedUsername, email: req.session.loggedEmail });
+    } else {
+        res.redirect('/login');
+    }
 });
 
 app.get('/main', (req, res) => {
-    res.render('./main.ejs');
+    if (req.session.GLOBAL_AUTHENTICATED) {
+        res.render('./main.ejs');
+    }
+    else {
+        res.redirect('/login');
+    }
 });
 
 // Interface with OpenAI API
@@ -260,14 +273,36 @@ app.get('/passwordReset', (req, res) => {
 
 app.get('/savedRoadmaps', (req, res) => {
     const roadmapsTemp = [
-        {title: "Temp Roadmap 1", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body:{}}, {title: "Temp Roadmap 2", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body:{}},{title: "Temp Roadmap 3", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body:{}},
-        {title: "Temp Roadmap 4", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body:{}},
-        {title: "Temp Roadmap 5", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body:{}},
-        {title: "Temp Roadmap 6", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body:{}},
-        {title: "Temp Roadmap 7", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body:{}}
+        { title: "Temp Roadmap 1", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} }, { title: "Temp Roadmap 2", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} }, { title: "Temp Roadmap 3", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} },
+        { title: "Temp Roadmap 4", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} },
+        { title: "Temp Roadmap 5", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} },
+        { title: "Temp Roadmap 6", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} },
+        { title: "Temp Roadmap 7", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} }
     ];
-
-    res.render('./savedRoadmaps.ejs', {savedList: roadmapsTemp});
+    if (req.session.GLOBAL_AUTHENTICATED) {
+        res.render('./savedRoadmaps.ejs', { savedList: roadmapsTemp });
+    }
+    else {
+        res.redirect('/login')
+    }
 });
+
+app.get('/logout', function (req, res, next) {
+    console.log("Before Logout: Session User:", req.session.loggedUsername, "; ", "Session Password: ", req.session.loggedPassword);
+    console.log("Logging out. . .")
+    req.session.loggedUsername = null;
+    req.session.loggedPassword = null;
+    req.session.loggedEmail = null;
+    req.session.GLOBAL_AUTHENTICATED = false;
+    console.log("After Logout: Session User:", req.session.loggedUsername, "; ", "Session Password: ", req.session.loggedPassword);
+    req.session.destroy((err) => {
+        if (err) {
+            return console.log(err);
+        }
+        res.clearCookie('connect.sid');
+        res.redirect('/');
+    });
+})
+
 
 module.exports = app;

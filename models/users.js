@@ -10,6 +10,7 @@ const usersSchema = new mongoose.Schema({
     },
     "password": String,
     "type": String,
+    "email": String
 });
 
 const usersModel = mongoose.model('user', usersSchema)
