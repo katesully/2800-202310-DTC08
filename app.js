@@ -1,11 +1,18 @@
 const express = require('express');
 const app = express();
-
+const session = require('express-session');
 require('dotenv').config();
 const API_KEY = process.env.OPENAI_API_KEY;
 const usersModel = require('./models/users.js');
+const MongoStore = require('connect-mongo');
+const cookieParser = require('cookie-parser');
+const bcrypt = require('bcrypt');
+const Joi = require('joi');
 const ejs = require('ejs');
 const { parse } = require('dotenv');
+
+
+
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
