@@ -3,7 +3,7 @@ const app = express();
 
 require('dotenv').config();
 const API_KEY = process.env.OPENAI_API_KEY;
-
+const usersModel = require('./models/users.js');
 const ejs = require('ejs');
 const { parse } = require('dotenv');
 app.set('views', __dirname + '/views');
