@@ -1,15 +1,14 @@
+.VIpgJd-ZVi9od-ORHb-oEVmcd {
+    display: none;
+}
 
-    .VIpgJd-ZVi9od-ORHb-oEVmcd {
-        display: none;
-    }
+#goog-gt- {
+    display: none;
+}
 
-    #goog-gt- {
-        display: none;
-    }
-
-    .VIpgJd-ZVi9od-l4eHX-hSRGPD {
-        display: none;
-    }
+.VIpgJd-ZVi9od-l4eHX-hSRGPD {
+    display: none;
+}
 
 #goog-gt- {
     display: none !important;
@@ -27,7 +26,6 @@
 
 * {
     box-sizing: border-box;
-    overflow-y: auto;
 }
 
 h5 {
@@ -52,15 +50,6 @@ h1 {
 
 }
 
-
-
-#logout-button {
-    float:right;
-    margin-bottom: 60px;
-    margin-right: 0px;
-    margin-left: 85%;
-}
-
 @media screen and (min-width: 768px) {
     #personalInfoFields {
         display: flex;
@@ -70,6 +59,4 @@ h1 {
     .form-group {
         width: 50%;
     }
-
-
 }
