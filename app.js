@@ -177,7 +177,11 @@ app.post('/login', async (req, res) => {
 
 
 app.get('/settings', (req, res) => {
-    res.render('./settings.ejs', { username: req.session.loggedUsername, email: req.session.loggedEmail });
+    if (req.session.GLOBAL_AUTHENTICATED) {
+        res.render('./settings.ejs', { username: req.session.loggedUsername, email: req.session.loggedEmail });
+    } else {
+        res.redirect('/login');
+    }
 });
 
 app.get('/main', (req, res) => {
@@ -185,7 +189,7 @@ app.get('/main', (req, res) => {
         res.render('./main.ejs');
     }
     else {
-        res.redirect('/')
+        res.redirect('/login');
     }
 });
 
@@ -269,8 +273,12 @@ app.get('/savedRoadmaps', (req, res) => {
         { title: "Temp Roadmap 6", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} },
         { title: "Temp Roadmap 7", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} }
     ];
-
-    res.render('./savedRoadmaps.ejs', { savedList: roadmapsTemp });
+    if (req.session.GLOBAL_AUTHENTICATED) {
+        res.render('./savedRoadmaps.ejs', { savedList: roadmapsTemp });
+    }
+    else {
+        res.redirect('/login')
+    }
 });
 
 app.get('/logout', function (req, res, next) {
