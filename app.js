@@ -133,8 +133,8 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/resetPassword', (req, res) => {
-        res.render('resetPassword.ejs')
-    }
+    res.render('resetPassword.ejs')
+}
 );
 
 
@@ -276,9 +276,13 @@ app.post('/sendRequest', async (req, res) => {
 });
 
 app.get('/passwordReset', (req, res) => {
-    
-    res.render('./savedRoadmaps.ejs', {savedList: roadmapsTemp});
+
+    res.render('./savedRoadmaps.ejs', { savedList: roadmapsTemp });
 });
+
+app.get('/newpassword', (req, res) => {
+    res.render('./newpassword.ejs')
+})
 
 
 app.get('/savedRoadmaps', (req, res) => {
