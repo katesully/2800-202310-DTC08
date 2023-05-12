@@ -75,7 +75,7 @@ async function authorizedResetPassword(req, res, next) {
 
    // might have to change to update
   const link = `${clientURL}/passwordReset?token=${resetToken}&id=${user._id}`;
-  sendResetEmail(user.email,"Password Reset Request",{name: user.name,link: link,});
+  sendResetEmail(user.email,"Password Reset Request",{link: link,});
   return link;
 
 }
