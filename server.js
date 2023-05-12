@@ -7,8 +7,8 @@ const mongoose = require('mongoose');
 
 async function main() {
     // make sure you add database name in the connection string
-    await mongoose.connect('mongodb://127.0.0.1:27017/newjourney');
-    // await mongoose.connect(`mongodb+srv://${process.env.ATLAS_DB_USERNAME}:${process.env.ATLAS_DB_PASSWORD}@cluster1.ncanyuw.mongodb.net/comp2537w2?retryWrites=true&w=majority`);
+    // await mongoose.connect('mongodb://127.0.0.1:27017/newjourney');
+    await mongoose.connect(`mongodb+srv://${process.env.ATLAS_DB_USERNAME}:${process.env.ATLAS_DB_PASSWORD}@${process.env.ATLAS_DB_HOST}/newjourney?retryWrites=true&w=majority`);
     console.log(`server.js: Successfully connected to MongoDB Database.`);
     app.listen(process.env.PORT || 3000, () => {
       console.log(`server.js: Server is running on port ${process.env.PORT} and listening for HTTP requests`);
