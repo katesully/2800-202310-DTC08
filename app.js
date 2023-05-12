@@ -22,7 +22,7 @@ app.use(session({
     saveUninitialized: false,
     store: MongoStore.create({
         mongoUrl: `mongodb+srv://${process.env.ATLAS_DB_USERNAME}:${process.env.ATLAS_DB_PASSWORD}@${process.env.ATLAS_DB_HOST}/?retryWrites=true&w=majority`,
-        // mongoUrl: `mongodb://127.0.0.1:27017/comp2537w2`,
+        // mongoUrl: `mongodb://127.0.0.1:27017/newjourney`,
         crypto: {
             secret: process.env.MONGO_SESSION_SECRET,
         },
