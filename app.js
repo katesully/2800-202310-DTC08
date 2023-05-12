@@ -53,7 +53,7 @@ app.get(['/', '/home'], (req, res) => {
 app.get('/signup', (req, res) => {
     console.log("app.get(\'\/createUser\'): Current session cookie-id:", req.cookies)
     if (req.session.GLOBAL_AUTHENTICATED) {
-        res.redirect('/protectedRoute');
+        res.redirect('/main');
     } else {
         res.render('./signup.ejs');
     }
@@ -119,8 +119,6 @@ app.post('/signup', async (req, res) => {
         res.redirect('/main');
     }
 })
-
-
 
 
 app.get('/login', (req, res) => {
