@@ -12,7 +12,6 @@ function populateUserInfo() {
         var userName = userDoc.data().name;
         // var userUserName = userDoc.data().username;
         var userCity = userDoc.data().city;
-        var userPassword = userDoc.data().password;
         var userLanguage = userDoc.data().language;
 
         // If the data fields are not empty, then write them into the form.
@@ -25,9 +24,7 @@ function populateUserInfo() {
         if (userCity) {
           document.getElementById("cityInput").value = userCity;
         }
-        if (userPassword) {
-          document.getElementById("passwordInput").value = userPassword;
-        }
+
         if (userLanguage) {
           document.getElementById("languageInput").value = userLanguage;
         }
@@ -52,7 +49,6 @@ function saveUserInfo() {
     // Get values from the form
     var userName = document.getElementById('nameInput').value;
     var userCity = document.getElementById('cityInput').value;
-    var userPassword = document.getElementById('passwordInput').value;
     var language = navigator.language || navigator.userLanguage;
     console.log(language);
 
@@ -60,7 +56,6 @@ function saveUserInfo() {
     db.collection("users").doc(user.uid).update({
       name: userName,
       city: userCity,
-      password: userPassword,
       language: language
     })
       .then(function () {
@@ -71,4 +66,40 @@ function saveUserInfo() {
       });
   });
 }
+
+// Function to handle password change
+function handleChangePassword(currentPassword, newPassword) {
+  const user = auth.currentUser;
+  const credential = firebase.auth.EmailAuthProvider.credential(
+    user.email,
+    currentPassword
+  );
+
+  // Reauthenticate the user
+  user.reauthenticateWithCredential(credential)
+    .then(() => {
+      // User successfully reauthenticated, update the password
+      user.updatePassword(newPassword)
+        .then(() => {
+          // Password updated successfully
+          console.log('Password updated.');
+        })
+        .catch((error) => {
+          // An error occurred while updating the password
+          console.error('Error updating password:', error);
+        });
+    })
+    .catch((error) => {
+      // An error occurred while reauthenticating the user
+      console.error('Error reauthenticating user:', error);
+    });
+}
+
+// Example usage: Call the handleChangePassword function when the form is submitted
+// const changePasswordForm = document.getElementById('password-div');
+changePassword = function () {
+  const currentPassword = document.getElementById('current-password-input').innerText;
+  const newPassword = document.getElementById('new-password-input').innerText;
+  handleChangePassword(currentPassword, newPassword);
+};
 
