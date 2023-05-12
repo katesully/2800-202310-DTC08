@@ -13,6 +13,7 @@ function populateUserInfo() {
         // var userUserName = userDoc.data().username;
         var userCity = userDoc.data().city;
         var userPassword = userDoc.data().password;
+        var userLanguage = userDoc.data().language;
 
         // If the data fields are not empty, then write them into the form.
         if (userName) {
@@ -26,6 +27,9 @@ function populateUserInfo() {
         }
         if (userPassword) {
           document.getElementById("passwordInput").value = userPassword;
+        }
+        if (userLanguage) {
+          document.getElementById("languageInput").value = userLanguage;
         }
       });
     } else {
@@ -47,16 +51,17 @@ function saveUserInfo() {
   firebase.auth().onAuthStateChanged(function (user) {
     // Get values from the form
     var userName = document.getElementById('nameInput').value;
-    var userUserName = document.getElementById('userNameInput').value;
     var userCity = document.getElementById('cityInput').value;
     var userPassword = document.getElementById('passwordInput').value;
+    var language = navigator.language || navigator.userLanguage;
+    console.log(language);
 
     // Asynch call to save the form fields into Firestore
     db.collection("users").doc(user.uid).update({
       name: userName,
-      username: userUserName,
       city: userCity,
-      password: userPassword
+      password: userPassword,
+      language: language
     })
       .then(function () {
         console.log('Saved user profile info');
