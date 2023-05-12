@@ -1,17 +1,47 @@
 const express = require('express');
 const app = express();
-
+const session = require('express-session');
 require('dotenv').config();
 const API_KEY = process.env.OPENAI_API_KEY;
-
+const usersModel = require('./models/users.js');
+const MongoStore = require('connect-mongo');
+const cookieParser = require('cookie-parser');
+const bcrypt = require('bcrypt');
+const Joi = require('joi');
 const ejs = require('ejs');
 const { parse } = require('dotenv');
+
+
+
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
+app.use(session({
+    secret: process.env.NODE_SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+        mongoUrl: `mongodb+srv://${process.env.ATLAS_DB_USERNAME}:${process.env.ATLAS_DB_PASSWORD}@${process.env.ATLAS_DB_HOST}/?retryWrites=true&w=majority`,
+        // mongoUrl: `mongodb://127.0.0.1:27017/newjourney`,
+        crypto: {
+            secret: process.env.MONGO_SESSION_SECRET,
+        },
+        mongoOptions: {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        },
+        dbName: 'sessionStoreDB',
+        collectionName: 'sessions',
+        ttl: 60 * 60 * 1, // 1 hour
+        autoRemove: 'native'
+    })
+}));
+
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }))
 app.use(express.static(__dirname + "/public"));
 app.use(express.json())
+
 
 app.get(['/', '/home'], (req, res) => {
     // if (req.session.GLOBAL_AUTHENTICATED) {
@@ -19,13 +49,128 @@ app.get(['/', '/home'], (req, res) => {
     // }
 });
 
+
 app.get('/signup', (req, res) => {
-    res.render('./signup.ejs');
-});
+    console.log("app.get(\'\/createUser\'): Current session cookie-id:", req.cookies)
+    if (req.session.GLOBAL_AUTHENTICATED) {
+        res.redirect('/main');
+    } else {
+        res.render('./signup.ejs');
+    }
+})
+
+app.post('/signup', async (req, res) => {
+    const schemaCreateUser = Joi.object({
+        username: Joi.string()
+            .alphanum()
+            .max(30)
+            .trim()
+            .min(1)
+            .strict()
+            .required(),
+        password: Joi.string()
+            .required()
+    })
+    try {
+        const resultUsername = await schemaCreateUser.validateAsync(req.body);
+    } catch (err) {
+        if (err.details[0].context.key == "username") {
+            console.log(err.details)
+            let createUserFailHTML = `
+            <br />
+            <h3>Error: Username can only contain letters and numbers and must not be empty - Please try again</h3>
+            <input type="button" value="Try Again" onclick="window.location.href='/signup'" />
+            `
+            return res.send(createUserFailHTML)
+        }
+        if (err.details[0].context.key == "password") {
+            console.log(err.details)
+            let createUserFailHTML = `
+            <br />
+            <h3>Error: Password is empty - Please try again</h3>
+            <input type="button" value="Try Again" onclick="window.location.href='/signup'" />
+            `
+            return res.send(createUserFailHTML)
+        }
+    }
+    const userresult = await usersModel.findOne({
+        username: req.body.username
+    })
+    if (userresult) {
+        let createUserFailHTML = `
+            <br />
+            <h3>Error: User already exists - Please try again</h3>
+            <input type="button" value="Try Again" onclick="window.location.href='/signup'" />
+            `
+        res.send(createUserFailHTML)
+    } else {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const newUser = new usersModel({
+            username: req.body.username,
+            password: hashedPassword,
+            type: "non-administrator"
+        })
+        req.session.GLOBAL_AUTHENTICATED = true;
+        req.session.loggedUsername = req.body.username;
+        req.session.loggedPassword = hashedPassword;
+        req.session.loggedType = "non-administrator";
+        await newUser.save();
+        console.log(`New user created: ${newUser}`);
+        res.redirect('/main');
+    }
+})
+
 
 app.get('/login', (req, res) => {
-    res.render('./login.ejs');
+    if (req.session.GLOBAL_AUTHENTICATED) {
+        res.redirect('/main');
+    } else {
+        res.render('login.ejs')
+    }
 });
+
+app.post('/login', async (req, res) => {
+    console.log(`Username entered: ${req.body.username}`);
+    console.log(`Password entered: ${req.body.password}`);
+    const schema = Joi.object({
+        username: Joi.string()
+            .required(),
+        password: Joi.string()
+            .required()
+    })
+    try {
+        const value = await schema.validateAsync({ username: req.body.username, password: req.body.password });
+    }
+    catch (err) {
+        console.log(err.details);
+        console.log("Username or password is invalid")
+        return
+    }
+
+    const userresult = await usersModel.findOne({
+        username: req.body.username
+    });
+    console.log(userresult);
+    if (userresult && bcrypt.compareSync(req.body.password, userresult.password)) {
+        req.session.GLOBAL_AUTHENTICATED = true;
+        req.session.loggedUsername = req.body.username;
+        req.session.loggedPassword = userresult.password;
+        req.session.loggedType = userresult?.type;
+        console.log("app.post(\'\/login\'): Current session cookie:", req.cookies)
+        res.redirect('/main');
+    } else {
+        let loginFailHTML = `
+        <br />
+        <a href="/">Home</a>
+        <h1>Invalid username or password</h1>
+        <input type="button" value="Try Again" onclick="window.history.back()" />
+        <br />
+        `
+        console.log("app.post(\'\/login\'): Current session cookie-id:", req.cookies)
+        res.send(loginFailHTML);
+    }
+});
+
 
 app.get('/settings', (req, res) => {
     res.render('./settings.ejs');
