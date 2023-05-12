@@ -15,6 +15,7 @@
         src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <link rel="stylesheet" type="text/css" href="./styles/settings.css" />
 
+
     <body>
         <%- include('components/navbar_header.ejs') %>
 
@@ -31,13 +32,14 @@
                 <form>
                     <fieldset class="mb-3" id="personalInfoFields" disabled>
                         <div class="form-group">
-                            <label>Name: </label>
-                            <input type="text" id="nameInput" class="form-control" placeholder="Enter your name">
+                            <label>Username: <%= username %></label>
+                            <!-- <input type="text" id="nameInput" class="form-control" placeholder="Enter your name"> -->
                         </div>
                         <div class="form-group">
-                            <label>Language: </label>
-                            <input type="text" id="languageInput" class="form-control"
-                                placeholder="Enter your preferred language">
+                            <label>Language: <span id="languageDisplay"></span>
+                            </label>
+                            <!-- <input type="text" id="languageInput" class="form-control" -->
+                            <!-- placeholder="Enter your preferred language"> -->
                         </div>
                         <div class="form-group">
                             <label>City: </label>
@@ -81,5 +83,16 @@
 
 
     </body>
+    <script type="text/javascript">
+        // Detect and store the language
+        var language = navigator.language || navigator.userLanguage;
+
+        // Use the language variable as needed
+        console.log('Detected language:', language);
+
+        //display language in element languageDisplay
+        var languageDisplay = document.getElementById("languageDisplay");
+        languageDisplay.innerHTML = language;
+    </script>
 
     </html>
