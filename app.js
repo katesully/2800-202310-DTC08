@@ -273,4 +273,22 @@ app.get('/savedRoadmaps', (req, res) => {
     res.render('./savedRoadmaps.ejs', { savedList: roadmapsTemp });
 });
 
+app.get('/logout', function (req, res, next) {
+    console.log("Before Logout: Session User:", req.session.loggedUsername, "; ", "Session Password: ", req.session.loggedPassword);
+    console.log("Logging out. . .")
+    req.session.loggedUsername = null;
+    req.session.loggedPassword = null;
+    req.session.loggedEmail = null;
+    req.session.GLOBAL_AUTHENTICATED = false;
+    console.log("After Logout: Session User:", req.session.loggedUsername, "; ", "Session Password: ", req.session.loggedPassword);
+    req.session.destroy((err) => {
+        if (err) {
+            return console.log(err);
+        }
+        res.clearCookie('connect.sid');
+        res.redirect('/');
+    });
+})
+
+
 module.exports = app;
