@@ -1,0 +1,73 @@
+<style>
+  .VIpgJd-ZVi9od-ORHb-oEVmcd {
+    display: none;
+  }
+</style>
+
+<%- include('components/headHTML.ejs') %>
+  <link rel="stylesheet" type="text/css" href="./styles/signup.css" />
+  <link rel="stylesheet" type="text/css" href="./styles/style.css" />
+  <script src="/scripts/signup.js" type="text/javascript"></script>
+
+
+  <div id="google_translate_element style=display: none;"></div>
+
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+    }
+  </script>
+
+  <script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+  <script type="text/javascript">
+    function closeTranslatePopup() {
+      const popup = document.querySelector('#VIpgJd-ZVi9od-ORHb');
+      if (popup) {
+        setTimeout(function () {
+          popup.parentNode.removeChild(popup);
+        }, 500); // close popup after .5 seconds
+      }
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+      closeTranslatePopup();
+    });
+  </script>
+
+
+
+
+  <div class="container d-flex flex-column">
+    <img src="LogoHeaderBar.png" id="logo">
+    <h1>Sign Up</h1>
+    <form id="login-form">
+      <div class="form-group">
+        <label for="usernameInput">Username</label>
+        <input type="email" class="form-control" id="usernameInput" placeholder="Enter username">
+      </div>
+      <div class="form-group">
+        <label for="emailInput">Email address</label>
+        <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" placeholder="Enter email">
+      </div>
+      <div class="form-group">
+        <label for="passwordInput">Password</label>
+        <input type="password" class="form-control" id="passwordInput" placeholder="Password" name="passwordInput"
+          onkeyup=check()>
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" class="form-control" id="confirmPassword" placeholder="Password" name="confirmPassword"
+          onkeyup=check()>
+        <span id="message"></span>
+
+      </div>
+      <button type="submit" class="btn colour-nav">Submit</button>
+    </form>
+  </div>
+  <%- include('components/footer.ejs') %>

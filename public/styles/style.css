@@ -1,0 +1,43 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+body {
+    /* padding-top: 63px;
+    padding-bottom: 63px; */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    
+}
+
+.footer-box {
+    display: flex;
+    flex-grow: 1;
+}
+
+.block-height-63 {
+    height: 63px;
+}
+
+.block-width-36 {
+    /* height: 36px; */
+    width: 36px;
+}
+
+.colour-navbar {
+    background-color: #458A92;
+    color: white;
+}
+
+.material-symbols-outlined {
+    font-size: 36px;
+    color: rgb(245, 245, 245);
+}

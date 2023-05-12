@@ -1,0 +1,75 @@
+
+    .VIpgJd-ZVi9od-ORHb-oEVmcd {
+        display: none;
+    }
+
+    #goog-gt- {
+        display: none;
+    }
+
+    .VIpgJd-ZVi9od-l4eHX-hSRGPD {
+        display: none;
+    }
+
+#goog-gt- {
+    display: none !important;
+}
+
+    #google_translate_element > :first-child {
+  font-size: 0;
+}
+
+:root {
+    --theme: #83BCD4;
+    --darkerTheme: #5C8A94;
+    --contrastorange: #F0C919;
+}
+
+* {
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+h5 {
+    color: var(--theme);
+}
+
+h1 {
+    color: var(--darkerTheme);
+    margin-top: 100px;
+    text-align: center;
+    padding: 5px;
+}
+
+.btn-secondary {
+    background-color: var(--contrastorange);
+    border: none;
+    color: white;
+}
+
+.form-group {
+    padding: 10px;
+
+}
+
+
+
+#logout-button {
+    float:right;
+    margin-bottom: 60px;
+    margin-right: 0px;
+    margin-left: 85%;
+}
+
+@media screen and (min-width: 768px) {
+    #personalInfoFields {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .form-group {
+        width: 50%;
+    }
+
+
+}

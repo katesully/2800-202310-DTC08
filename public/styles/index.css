@@ -1,0 +1,28 @@
+
+
+
+    .card-img {
+      filter: brightness(30%);
+    }
+    .main-button {
+  display: flex;
+}
+
+.main-button button {
+  display: inline-block;  
+}
+
+
+.VIpgJd-ZVi9od-ORHb-oEVmcd{
+   display: none;
+} 
+
+
+#google_translate_element > :first-child {
+  font-size: 0;
+}
+
+.VIpgJd-ZVi9od-l4eHX-hSRGPD{
+  display: none;
+}
+
