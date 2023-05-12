@@ -1,74 +1,71 @@
+<%- include('components/headHTML.ejs') %>
+
+<body>
+
+  <style>
+    .VIpgJd-ZVi9od-ORHb-oEVmcd {
+      display: none;
+
+      .card-img {
+        filter: brightness(30%);
+      }
+
+      .main-button {
+        display: flex;
+      }
+
+      .main-button button {
+        display: inline-block;
+      }
 
 
-<head>
+      element.style {
+        z-index: 2147383647;
+      }
+
+      .VIpgJd-ZVi9od-ORHb-oEVmcd {
+        display: none;
+      }
+
+      #goog-gt- {
+        display: none;
+      }
+
+      .VIpgJd-ZVi9od-14eHX-hSRGPD {
+        display: none;
+      }
+
+      /* CSS */
+  </style>
 
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="./scripts/index.js"></script>
-    <!-- <script src="./scripts/firebase_authentication.js"></script>  -->
+  <!-- <script src="./scripts/firebase_authentication.js"></script>  -->
+  <%- include('components/navbar_header.ejs') %>
 
 
-</head>
-  <style>
-    .card-img {
-      filter: brightness(30%);
+
+
+  <br>
+  <h2 style="text-align: center;">NewJourney</h2>
+
+  <!-- translate automatically to users device language  -->
+
+
+
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en'
+      }, 'google_translate_element');
     }
-    .main-button {
-  display: flex;
-}
-
-.main-button button {
-  display: inline-block;  
-}
-
-
-element.style {
-    z-index: 2147383647;
-}
-
-.VIpgJd-ZVi9od-ORHb-oEVmcd{
-   display: none;
-} 
-
-#goog-gt-{
-  display: none;
-}
-
-.VIpgJd-ZVi9od-14eHX-hSRGPD{
-  display: none;
-}
-
-/* CSS */
-
-
-
-  </style>
-
-  
-</head>
-
- 
-  
-  <%- include('components/headHTML.ejs') %> 
-  <body>
-    <%- include('components/navbar_header.ejs') %>
-   <br>
-    <h2 style="text-align: center;">NewJourney</h2>
-
-<!-- translate automatically to users device language  -->
-
-
-
-<script type="text/javascript">
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-  }
   </script>
-  
+
   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 
-    <img src="Welcomes.png" alt="welcomes" style="
+  <img src="Welcomes.png" alt="welcomes" style="
     position: absolute;
     top: 0;
     left: 0;
@@ -81,68 +78,67 @@ element.style {
     z-index: -1;
   ">
   <br>
-  
 
 
-<!-- language choice dropdown  -->
 
-    <div class="container">
-      <div class="container-fluid card card-shadow">
-        <div class="container d-flex align-items-center justify-content-between">
-          <div class="container dropdown-container mt-3">
-           <!-- <label for="my-dropdown">Change language or OK to continue </label>
+  <!-- language choice dropdown  -->
+
+  <div class="container">
+    <div class="container-fluid card card-shadow">
+      <div class="container d-flex align-items-center justify-content-between">
+        <div class="container dropdown-container mt-3">
+          <!-- <label for="my-dropdown">Change language or OK to continue </label>
             <br> -->
-            <!-- <select id="language-dropdown" style="max-height: 200px; overflow-y: auto;"></select> -->
-          </div>
-          <div class="container main-button mt-3">
-            <button type="button" class="btn btn-light" onclick="saveLanguageAndShowSignup()" style="height: 50px;">
-              <img src="ok-green.png" alt="OK" style="height: 100%;">
-            </button>
+          <!-- <select id="language-dropdown" style="max-height: 200px; overflow-y: auto;"></select> -->
+        </div>
+        <div class="container main-button mt-3">
+          <button type="button" class="btn btn-light" onclick="saveLanguageAndShowSignup()" style="height: 50px;">
+            <img src="ok-green.png" alt="OK" style="height: 100%;">
+          </button>
 
-            <div id="google_translate_element"></div>
-          </div>
+          <div id="google_translate_element"></div>
         </div>
       </div>
     </div>
-    <br />
+  </div>
+  <br />
 
-    <div class="d-flex justify-content-center mt-1 mb-1">
-      <button type="button" id="login-button" class="btn btn-secondary mx-2" style="display: none; width: 100px" onclick="window.location.href='/login'">Login</button>
-      <button type="button" id="signup-button" class="btn btn-primary mx-2" style="display: none; width: 100px" onclick="window.location.href='/signup'">Signup</button>
+  <div class="d-flex justify-content-center mt-1 mb-1">
+    <button type="button" id="login-button" class="btn btn-secondary mx-2" style="display: none; width: 100px" onclick="window.location.href='/login'">Login</button>
+    <button type="button" id="signup-button" class="btn btn-primary mx-2" style="display: none; width: 100px" onclick="window.location.href='/signup'">Signup</button>
+  </div>
+  <br>
+
+
+  <!-- explanation card -->
+
+
+  <div class="card" style="border-radius: 10px;">
+    <img src="background_family_1.png" class="card-img" alt="Background image">
+    <div class="card-img-overlay">
+      <h5 class="card-title text-white">Helping you on your new path</h5>
+      <p class="card-text text-white intro-text">I had a some lorem text in here but I want to check the translations so I am going to
+        be writing some random english instead and check how it goes with the google api translation and see what happens I hope it goes well
+        repellat minima perferendis cum earum maiores quasi lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur architecto temporibus quos non magni veniam corporis nesciunt a exercitationem est. Possimus quos, exercitationem doloremque officia sapiente cumque repudiandae? Doloribus, nemo.
+        .</p>
     </div>
-    <br>
-   
-    
-    <!-- explanation card -->
-
-
-    <div class="card" style="border-radius: 10px;">
-      <img src="background_family_1.png" class="card-img" alt="Background image">
-      <div class="card-img-overlay">
-        <h5 class="card-title text-white">Helping you on your new path</h5>
-        <p class="card-text text-white intro-text">I had a some lorem text in here but I want to check the translations so I am going to 
-          be writing some random english instead and check how it goes with the google api translation and see what happens I hope it goes well
-           repellat minima perferendis cum earum maiores quasi lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur architecto temporibus quos non magni veniam corporis nesciunt a exercitationem est. Possimus quos, exercitationem doloremque officia sapiente cumque repudiandae? Doloribus, nemo.
-           .</p>
-      </div>
-    </div>
-    <br>
-    <br>
+  </div>
+  <br>
+  <br>
 
 
 
-<!-- <p style="text-align: center;">
+  <!-- <p style="text-align: center;">
 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque molestias soluta, dolore dignissimos, 
 ipsum incidunt maxime in expedita porro sapiente fug
 </p> -->
-  
-  
-    <%- include('components/footer.ejs') %>
 
-    
-    
-  </body>
+
+  <%- include('components/footer.ejs') %>
+
+
+  <script src="./scripts/index.js"></script>
+  <script src="./scripts/firebase_authentication.js"></script>
+</body>
+
 </html>
-
-
-

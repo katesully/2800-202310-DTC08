@@ -6,6 +6,7 @@ const API_KEY = process.env.OPENAI_API_KEY;
 
 const ejs = require('ejs');
 const { parse } = require('dotenv');
+const checkAuth = require('./scripts/firebase_authentication.js');
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
@@ -13,11 +14,44 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.static(__dirname + "/public"));
 app.use(express.json())
 
-app.get(['/', '/home'], (req, res) => {
-    // if (req.session.GLOBAL_AUTHENTICATED) {
-    res.render('./index.ejs');
-    // }
+
+// const authenticatedOnly = (req, res, next) => {
+//     if (!req.session.GLOBAL_AUTHENTICATED) {
+//         res.redirect('/notLoggedIn')
+//     } else {
+//         next();
+//     }
+// };
+const authenticatedOnly = (req, res, next) => {
+    GLOBAL_AUTHENTICATED = checkAuth();
+    if (!GLOBAL_AUTHENTICATED) {
+        // res.redirect('/notLoggedIn')
+        res.render('/index.ejs')
+    } else {
+        next();
+    }
+};
+
+
+// use authenticatedOnly middleware on all routes except for /login and /signup
+app.use((req, res, next) => {
+    if (req.path === '/login' || req.path === '/signup') {
+        next();
+    } else {
+        authenticatedOnly(req, res, next);
+    }
 });
+
+
+app.get(['/', '/home'], (req, res) => {
+    if (GLOBAL_AUTHENTICATED) {
+        res.redirect('/main');
+    } else {
+        console.log("\'\/\', \'\/home\': Current session cookie:", req.cookies)
+        res.render('./index.ejs');
+    }
+});
+
 
 app.get('/signup', (req, res) => {
     res.render('./signup.ejs');
