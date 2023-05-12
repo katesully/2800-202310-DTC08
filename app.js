@@ -177,7 +177,7 @@ app.post('/login', async (req, res) => {
 
 
 app.get('/settings', (req, res) => {
-    res.render('./settings.ejs', { username: req.session.loggedUsername });
+    res.render('./settings.ejs', { username: req.session.loggedUsername, email: req.session.loggedEmail });
 });
 
 app.get('/main', (req, res) => {
