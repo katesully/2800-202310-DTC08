@@ -1,22 +1,23 @@
 <%- include('components/headHTML.ejs') %>
-
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="./scripts/index.js"></script>
-    <script src="./scripts/firebase_authentication.js"></script>
-    <script src="./scripts/settings.js"></script>
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
-        }
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="./scripts/index.js"></script>
+<script src="./scripts/firebase_authentication.js"></script>
+<script src="./scripts/settings.js"></script>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+    }
     </script>
 
-    <script type="text/javascript"
-        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <link rel="stylesheet" type="text/css" href="./styles/settings.css" />
+<script type="text/javascript"
+src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<link rel="stylesheet" type="text/css" href="./styles/settings.css" />
 
-    <body>
-        <%- include('components/navbar_header.ejs') %>
+
+<body>
+
+        <%- include('components/navbar_header_logout.ejs') %>
 
 
             <h1 style="text-align: center;">User Information </h1>
@@ -31,30 +32,29 @@
                 <form>
                     <fieldset class="mb-3" id="personalInfoFields" disabled>
                         <div class="form-group">
-                            <label>Name: </label>
-                            <input type="text" id="nameInput" class="form-control" placeholder="Enter your name">
+                            <label>Username </label>
+                            <h2>
+                                <%= username %>
+                            </h2>
+                            <!-- <input type="text" id="nameInput" class="form-control" placeholder="Enter your name"> -->
                         </div>
                         <div class="form-group">
-                            <label>Language: </label>
-                            <input type="text" id="languageInput" class="form-control"
-                                placeholder="Enter your preferred language">
+                            <label>Language </label>
+                            <h2 id="languageDisplay"></h2>
+                            <!-- <input type="text" id="languageInput" class="form-control" -->
+                            <!-- placeholder="Enter your preferred language"> -->
                         </div>
                         <div class="form-group">
-                            <label>City: </label>
-                            <input type="text" id="cityInput" class="form-control" placeholder="Enter your City">
-                        </div>
-                        <div class="form-group">
-                            <label>Password: </label>
-                            <input type="text" id="passwordInput" class="form-control"
-                                placeholder="Enter your new password">
+                            <label>Email</label>
+                            <h2>
+                                <%= email %>
+                            </h2>
+                            <!-- <input type="text" id="languageInput" class="form-control" -->
+                            <!-- placeholder="Enter your preferred language"> -->
                         </div>
 
+
                     </fieldset>
-                    <div class="d-flex justify-content-end mt-5">
-                        <button type="button" class="btn btn-secondary" onclick="editUserInfo()">Update Info</button>
-                        <span style="width: 10px"></span>
-                        <button type="button" class="btn btn-info" onclick="saveUserInfo()">Save</button>
-                    </div>
                     <br>
 
 
@@ -81,5 +81,16 @@
 
 
     </body>
+    <script type="text/javascript">
+        // Detect and store the language
+        var language = navigator.language || navigator.userLanguage;
+
+        // Use the language variable as needed
+        console.log('Detected language:', language);
+
+        //display language in element languageDisplay
+        var languageDisplay = document.getElementById("languageDisplay");
+        languageDisplay.innerHTML = language;
+    </script>
 
     </html>
