@@ -9,9 +9,12 @@ const { parse } = require('dotenv');
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
+
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }))
 app.use(express.static(__dirname + "/public"));
 app.use(express.json())
+
 
 app.get(['/', '/home'], (req, res) => {
     // if (req.session.GLOBAL_AUTHENTICATED) {
@@ -19,9 +22,79 @@ app.get(['/', '/home'], (req, res) => {
     // }
 });
 
+
 app.get('/signup', (req, res) => {
-    res.render('./signup.ejs');
-});
+    console.log("app.get(\'\/createUser\'): Current session cookie-id:", req.cookies)
+    if (req.session.GLOBAL_AUTHENTICATED) {
+        res.redirect('/protectedRoute');
+    } else {
+        res.render('./signup.ejs');
+    }
+})
+
+app.post('/createUser', async (req, res) => {
+    const schemaCreateUser = Joi.object({
+        username: Joi.string()
+            .alphanum()
+            .max(30)
+            .trim()
+            .min(1)
+            .strict()
+            .required(),
+        password: Joi.string()
+            .required()
+    })
+    try {
+        const resultUsername = await schemaCreateUser.validateAsync(req.body);
+    } catch (err) {
+        if (err.details[0].context.key == "username") {
+            console.log(err.details)
+            let createUserFailHTML = `
+            <br />
+            <h3>Error: Username can only contain letters and numbers and must not be empty - Please try again</h3>
+            <input type="button" value="Try Again" onclick="window.location.href='/signup'" />
+            `
+            return res.send(createUserFailHTML)
+        }
+        if (err.details[0].context.key == "password") {
+            console.log(err.details)
+            let createUserFailHTML = `
+            <br />
+            <h3>Error: Password is empty - Please try again</h3>
+            <input type="button" value="Try Again" onclick="window.location.href='/signup'" />
+            `
+            return res.send(createUserFailHTML)
+        }
+    }
+    const userresult = await usersModel.findOne({
+        username: req.body.username
+    })
+    if (userresult) {
+        let createUserFailHTML = `
+            <br />
+            <h3>Error: User already exists - Please try again</h3>
+            <input type="button" value="Try Again" onclick="window.location.href='/signup'" />
+            `
+        res.send(createUserFailHTML)
+    } else {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const newUser = new usersModel({
+            username: req.body.username,
+            password: hashedPassword,
+            type: "non-administrator"
+        })
+        req.session.GLOBAL_AUTHENTICATED = true;
+        req.session.loggedUsername = req.body.username;
+        req.session.loggedPassword = hashedPassword;
+        req.session.loggedType = "non-administrator";
+        await newUser.save();
+        console.log(`New user created: ${newUser}`);
+        res.redirect('/main');
+    }
+})
+
+
+
 
 app.get('/login', (req, res) => {
     res.render('./login.ejs');
