@@ -265,6 +265,12 @@ app.post('/sendRequest', async (req, res) => {
 
 });
 
+app.get('/passwordReset', (req, res) => {
+    
+    res.render('./savedRoadmaps.ejs', {savedList: roadmapsTemp});
+});
+
+
 app.get('/savedRoadmaps', (req, res) => {
     const roadmapsTemp = [
         { title: "Temp Roadmap 1", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} }, { title: "Temp Roadmap 2", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} }, { title: "Temp Roadmap 3", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} },
