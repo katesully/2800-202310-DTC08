@@ -132,6 +132,12 @@ app.get('/login', (req, res) => {
     }
 });
 
+app.get('/resetPassword', (req, res) => {
+        res.render('resetPassword.ejs')
+    }
+);
+
+
 app.post('/login', async (req, res) => {
     console.log(`Username entered: ${req.body.username}`);
     console.log(`Password entered: ${req.body.password}`);
@@ -192,6 +198,8 @@ app.get('/main', (req, res) => {
         res.redirect('/login');
     }
 });
+
+
 
 // Interface with OpenAI API
 async function getMessage(message) {
