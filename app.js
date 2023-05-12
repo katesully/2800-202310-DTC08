@@ -192,7 +192,9 @@ app.get('/settings', (req, res) => {
 
 app.get('/main', (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
-        res.render('./main.ejs');
+        res.render('./main.ejs', {
+            username: req.session.loggedUsername,
+        });
     }
     else {
         res.redirect('/login');
