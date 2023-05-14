@@ -141,11 +141,6 @@ app.get('/login', (req, res) => {
     }
 });
 
-app.get('/resetPassword', (req, res) => {
-        res.render('resetPassword.ejs')
-    }
-);
-
 
 app.post('/login', async (req, res) => {
     console.log(`Username entered: ${req.body.username}`);
@@ -283,73 +278,127 @@ app.post('/sendRequest', async (req, res) => {
 });
 
 
+// Start password reset process
+
+app.get('/resetPassword', (req, res) => {
+    res.render('resetPassword.ejs')
+});
+
 const sendResetEmail = async (email, payload) => {
     try {
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: process.env.GMAIL_EMAIL,
-          pass: process.env.GMAIL_KEY
-        }
-      });
-  
-      var mailOptions = {
-        from: process.env.GMAIL_EMAIL,
-        to: email,
-        subject: 'Here is your password reset link!',
-        text: payload
-      };
-  
-      transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
-      });
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.GMAIL_EMAIL,
+                pass: process.env.GMAIL_KEY
+            }
+        });
+
+        var mailOptions = {
+            from: process.env.GMAIL_EMAIL,
+            to: email,
+            subject: 'Here is your password reset link!',
+            text: payload
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
     } catch (error) {
-      return error;
+        return error;
     }
-  }
-  
-  async function authorizedResetPassword(req, res, next) {
-    const user = await usersModel.findOne({ email });
-  
+}
+
+app.post('/sendResetEmail', async (req, res) =>{
+    const email = req.body.inputEmail;
+    console.log(email);
+
+    const user = await usersModel.findOne({ email: email });
+
+    console.log(user);
     if (!user) {
         throw new Error("User does not exist");
     }
     let token = await tokenModel.findOne({ userId: user._id });
-    if (token) { 
-          await token.deleteOne()
+    if (token) {
+        await token.deleteOne()
     };
-  
-    let resetToken = crypto.randomBytes(32).toString("hex");
-  
-    const hashedToken = await bcrypt.hash(resetToken, Number(bcryptSalt));
-  
-  
-    // might have to change to updateOne
-    await new tokenModel({
-      userId: user._id,
-      token: hashedToken,
-      createdAt: Date.now(),
-    }).save();
-  
-     // might have to change to update
-    const link = `${clientURL}/passwordReset?token=${resetToken}&id=${user._id}`;
-    sendResetEmail(user.email,"Password Reset Request",{link: link,});
-    return link;
-  
-  }
 
+    let resetToken = crypto.randomBytes(32).toString("hex");
+
+    const hashedToken = await bcrypt.hash(resetToken, Number(bcryptSalt));
+
+
+
+    await new tokenModel({
+        userId: user._id,
+        token: hashedToken,
+        createdAt: Date.now(),
+    }).save();
+
+
+    const link = `${clientURL}/passwordReset?token=${resetToken}&id=${user._id}`;
+    sendResetEmail(user.email, link);
+
+
+})
+
+// Get new password
 
 app.get('/passwordReset', async (req, res) => {
     const token = req.query.token;
-    const id = req.query.id;   
+    const id = req.query.id;
 
-    res.render('./passwordReset.ejs', {token: token, id: id});
+    res.render('./passwordReset.ejs', { token: token, id: id });
+});
+
+app.post('/confirmNewPassword', async (req, res) =>{
+    const token = req.body.token;
+    const id = req.body.userID;
+    const newPassword = req.body.newPassword;
+    const confirmPassword = req.body.confirmPassword;
+
+    console.log(token);
+    console.log(id);
+    console.log(newPassword);
+    
+
+    if (newPassword !== confirmPassword) {
+        return res.send("Passwords do not match");
+    }
+
+    const user = await usersModel.findOne({ _id: id });
+    if (!user) {
+        return res.send("User does not exist");
+    }
+
+    const tokenDoc = await tokenModel.findOne({ userId: user._id });
+    if (!tokenDoc) {
+        return res.send("Invalid or expired token");
+    }
+
+    const isValid = await bcrypt.compare(token, tokenDoc.token);
+    if (!isValid) {
+        return res.send("Invalid or expired token");
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, Number(bcryptSalt));
+
+    await usersModel.updateOne(
+        { _id: user._id },
+        { $set: { password: hashedPassword } }
+    );
+
+    await tokenModel.deleteOne({ userId: user._id });
+
+    res.redirect('/login');
 
 });
+
 
 
 app.get('/savedRoadmaps', (req, res) => {
