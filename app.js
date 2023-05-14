@@ -196,7 +196,9 @@ app.get('/settings', (req, res) => {
 
 app.get('/main', (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
-        res.render('./main.ejs');
+        res.render('./main.ejs', {
+            username: req.session.loggedUsername,
+        });
     }
     else {
         res.redirect('/login');
@@ -399,6 +401,15 @@ app.post('/confirmNewPassword', async (req, res) =>{
 
 });
 
+
+app.get('/passwordReset', (req, res) => {
+
+    res.render('./savedRoadmaps.ejs', { savedList: roadmapsTemp });
+});
+
+app.get('/newpassword', (req, res) => {
+    res.render('./newpassword.ejs')
+})
 
 
 app.get('/savedRoadmaps', (req, res) => {
