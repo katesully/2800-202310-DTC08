@@ -347,6 +347,7 @@ app.post('/sendResetEmail', async (req, res) =>{
     sendResetEmail(user.email, link);
 
 
+    
 })
 
 // Get new password
