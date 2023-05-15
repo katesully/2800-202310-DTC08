@@ -1,83 +1,89 @@
 <%- include('components/headHTML.ejs') %>
-<%- include('components/navbar_header_logout.ejs') %>
-    <link rel="stylesheet" type="text/css" href="./styles/main.css" />
+    <%- include('components/navbar_header_logout.ejs') %>
+        <link rel="stylesheet" type="text/css" href="./styles/main.css" />
 
-    <div id="google_translate_element style=display: none;"></div>
+        <div id="google_translate_element style=display: none;"></div>
 
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
-        }
-    </script>
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+            }
+        </script>
 
-    <script type="text/javascript"
-        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script type="text/javascript">
-        // Detect and store the language
-        var language = navigator.language || navigator.userLanguage;
-        // Use the language variable as needed
-        console.log('Detected language:', language);
-    </script>
+        <script type="text/javascript"
+            src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        <script type="text/javascript">
+            // Detect and store the language
+            var language = navigator.language || navigator.userLanguage;
+            // Use the language variable as needed
+            console.log('Detected language:', language);
+        </script>
 
+        <%if(typeof username !=='undefined' ) { %>
+            <h1> Welcome, <span id="namePlaceholder"><%- username %></span>!</h1>
+            <% } %>
 
-    <h1> Welcome, <span id="namePlaceholder"><%- username %></span>!</h1>
+                <!-- the code below was copied from the chatGPT website and subsequently edited by Oceaan -->
+                <div class="md:flex items-start text-center gap-3.5 container">
+                    <!-- div for GPT's answer -->
+                    <div id="roadmapGoesHere">
+                        <% if (typeof steps !=='undefined' ) { %>
+                            <%- include('components/roadmap.ejs', {steps: steps}) %>
+                                <% } %>
+                    </div>
+                    <div class="flex flex-col mb-8 md:mb-auto gap-3.5 flex-1">
+                        <div class="box colour-yellow">
+                            <h2
+                                class="flex gap-3 items-center m-auto text-lg font-normal md:flex-col md:gap-2 colour-yellow">
+                                <svg stroke="currentColor" fill="none" stroke-width="1.5" viewBox="0 0 24 24"
+                                    stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6" height="1em"
+                                    width="1em" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="5"></circle>
+                                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                </svg>Examples
+                            </h2>
+                            <ul class="container flex flex-col gap-3.5 w-full sm:max-w-md m-auto colour-yellow">
+                                <form id="exampleForm1" method="POST" action="/sendRequest">
+                                    <input type="hidden" name="hiddenField"
+                                        value="What is a tenancy agreement in Vancouver BC">
+                                </form>
+                                <form id="exampleForm2" method="POST" action="/sendRequest">
+                                    <input type="hidden" name="hiddenField"
+                                        value="How do I navigate the Vancouver BC using transit?">
+                                </form>
+                                <form id="exampleForm3" method="POST" action="/sendRequest">
+                                    <input type="hidden" name="hiddenField"
+                                        value="How do I get a credit card in Vancouver BC?">
+                                </form>
+                                <button type="submit" form="exampleForm1" id="textInput" name="textInput"
+                                    class="w-full bg-gray-50 dark:bg-white/5 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-900">"What
+                                    is a tenancy agreement?"</button>
+                                <button type="submit" form="exampleForm2"
+                                    class="w-full bg-gray-50 dark:bg-white/5 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-900"
+                                    id="textInput" name="textInput">"How do I navigate the city using transit?"</button>
+                                <button type="submit" form="exampleForm3"
+                                    class="w-full bg-gray-50 dark:bg-white/5 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-900"
+                                    id="textInput" name="textInput">"How do I get a credit card?"</button>
+                            </ul>
+                        </div>
+                        <form class="input-field" action="/sendRequest" method="post">
+                            <input type="text" class="form-control" placeholder="What do you need help with?"
+                                id="textInput" name="textInput">
+                            <button type="submit" value="Submit" class="btn m-auto"><i
+                                    class="fas fa-paper-plane d-block" id="submitBtn"></i></button>
+                        </form>
+                    </div>
+                </div>
+                <div class="spacer py-5"></div>
+                <script src="../scripts/main.js"></script>
+                <%- include('components/footer.ejs') %>
+                    </body>
 
-    <!-- the code below was copied from the chatGPT website and subsequently edited by Oceaan -->
-    <div class="md:flex items-start text-center gap-3.5 container">
-        <!-- div for GPT's answer -->
-        <div id="roadmapGoesHere">
-            <% if (typeof steps !=='undefined' ) { %>
-                <%- include('components/roadmap.ejs', {steps: steps}) %>
-                    <% } %>
-        </div>
-        <div class="flex flex-col mb-8 md:mb-auto gap-3.5 flex-1">
-            <div class="box colour-yellow">
-                <h2 class="flex gap-3 items-center m-auto text-lg font-normal md:flex-col md:gap-2 colour-yellow"><svg
-                        stroke="currentColor" fill="none" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round"
-                        stroke-linejoin="round" class="h-6 w-6" height="1em" width="1em"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>Examples</h2>
-                <ul class="container flex flex-col gap-3.5 w-full sm:max-w-md m-auto colour-yellow">
-                    <form id="exampleForm1" method="POST" action="/sendRequest">
-                        <input type="hidden" name="hiddenField" value="What is a tenancy agreement in Vancouver BC">
-                    </form>
-                    <form id="exampleForm2" method="POST" action="/sendRequest">
-                        <input type="hidden" name="hiddenField"
-                            value="How do I navigate the Vancouver BC using transit?">
-                    </form>
-                    <form id="exampleForm3" method="POST" action="/sendRequest">
-                        <input type="hidden" name="hiddenField" value="How do I get a credit card in Vancouver BC?">
-                    </form>
-                    <button type="submit" form="exampleForm1" id="textInput" name="textInput"
-                        class="w-full bg-gray-50 dark:bg-white/5 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-900">"What
-                        is a tenancy agreement?"</button>
-                    <button type="submit" form="exampleForm2"
-                        class="w-full bg-gray-50 dark:bg-white/5 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-900"
-                        id="textInput" name="textInput">"How do I navigate the city using transit?"</button>
-                    <button type="submit" form="exampleForm3"
-                        class="w-full bg-gray-50 dark:bg-white/5 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-900"
-                        id="textInput" name="textInput">"How do I get a credit card?"</button>
-                </ul>
-            </div>
-            <form class="input-field" action="/sendRequest" method="post">
-                <input type="text" class="form-control" placeholder="What do you need help with?" id="textInput"
-                    name="textInput">
-                <button type="submit" value="Submit" class="btn m-auto"><i class="fas fa-paper-plane d-block"
-                        id="submitBtn"></i></button>
-            </form>
-        </div>
-    </div>
-    <div class="spacer py-5"></div>
-    <script src="../scripts/main.js"></script>
-    <%- include('components/footer.ejs') %>
-</body>
-</html>
+                    </html>

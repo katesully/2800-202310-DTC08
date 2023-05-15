@@ -315,7 +315,7 @@ const sendResetEmail = async (email, payload) => {
     }
 }
 
-app.post('/sendResetEmail', async (req, res) =>{
+app.post('/sendResetEmail', async (req, res) => {
     const email = req.body.inputEmail;
     console.log(email);
 
@@ -347,7 +347,7 @@ app.post('/sendResetEmail', async (req, res) =>{
     sendResetEmail(user.email, link);
 
 
-    
+
 })
 
 // Get new password
@@ -359,7 +359,7 @@ app.get('/passwordReset', async (req, res) => {
     res.render('./passwordReset.ejs', { token: token, id: id });
 });
 
-app.post('/confirmNewPassword', async (req, res) =>{
+app.post('/confirmNewPassword', async (req, res) => {
     const token = req.body.token;
     const id = req.body.userID;
     const newPassword = req.body.newPassword;
@@ -368,7 +368,7 @@ app.post('/confirmNewPassword', async (req, res) =>{
     console.log(token);
     console.log(id);
     console.log(newPassword);
-    
+
 
     if (newPassword !== confirmPassword) {
         return res.send("Passwords do not match");
