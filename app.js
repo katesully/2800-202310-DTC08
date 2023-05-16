@@ -273,7 +273,9 @@ app.post('/sendRequest', async (req, res) => {
 
     console.log(roadmapObject)
     res.render('./main.ejs', {
-        steps: roadmapObject.steps.slice(0, roadmapObject.steps.length),
+        // steps: roadmapObject.steps.slice(0, roadmapObject.steps.length),
+        //only display steps that are not undefined
+        steps: roadmapObject.steps.filter(step => step !== undefined),
         displayFlag: true
     });
 
