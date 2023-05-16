@@ -13,5 +13,14 @@ checkboxes.forEach((checkbox) => {
     });
 });
 
+//add event listener to the sun
+const sun = document.getElementById("sun");
+sun.addEventListener("click", function () {
+    console.log("sun clicked");
+    //change the background color of the body
+    document.body.style.backgroundColor = "#f5f5f5";
+}
+);
+
 
 
