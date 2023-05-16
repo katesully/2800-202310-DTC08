@@ -97,13 +97,23 @@ h1 {
     display: none !important;
 }
 
+
 #sunray {
-  transition: transform 0.5s ease-in-out;
+  height: 30px; /* Start with a small height */
+  animation: expandHeight 5s ease-in-out; /* Use animation to gradually increase the height */
+  max-height: 150px; /* Set the maximum height for the image */
 }
 
-#sunray.clicked {
-  transform: scale(1.2);
+@keyframes expandHeight {
+  from {
+    height: 30px;
+  }
+  to {
+    height: 150px;
+  }
 }
+
+
 
 #expanding-ray {
     width: 0;
@@ -117,11 +127,8 @@ h1 {
     animation: displayRay 5s;
 }
 
-#sunray {
-    height:  100px;
-    transform: rotateY(120deg);
-    animation: increaseRaySize 5s;
-}
+
+
 
 #easter-egg p {
     font-size: 15px;
@@ -163,28 +170,6 @@ h1 {
     }
 }
 
-@keyframes IncreaseRaySize {
-    0% {
-        transform: scale(1, 1);
-    }
-
-    20% {
-        transform: scale(1.5, 1.5);
-    }
-
-    50% {
-        transform: scale(2, 2);
-    }
-
-    80% {
-        transform: scale(1.5, 1.5);
-    }
-
-    100% {
-        transform: scale(1, 1);
-    }
-}
-
 
 
 @keyframes displayRay {
@@ -193,7 +178,7 @@ h1 {
         height: 0;
         border-top: 1px solid transparent;
         border-bottom: 1px solid transparent;
-        border-left: 10px solid orange;
+        border-left: linear-gradient(red, yellow);
         position: absolute;
         margin-top: 20px;
         margin-left: 120px;
@@ -205,7 +190,7 @@ h1 {
         height: 0;
         border-top: 50px solid transparent;
         border-bottom: 50px solid transparent;
-        border-left: 150px solid orange;
+        border-left: linear-gradient(red, yellow);
         position: absolute;
         margin-top: -30px;
         margin-left: -22px;

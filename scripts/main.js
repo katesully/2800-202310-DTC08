@@ -20,18 +20,34 @@ sun.addEventListener("click", function () {
     // access circle element
     sun.classList.add("IncreaseSunSize");
 
-    //access element with id expanding-ray
+    // access element with id expanding-ray
     const expandingRay = document.getElementById("expanding-ray");
-    //remove hidden class from expanding-ray
-    expandingRay.classList.remove("hidden");
+    const expandingImageRay = document.getElementById("imageRay");
 
-    //after 5 seconds, add hidden class to expanding-ray
+    // remove hidden class from expanding-ray
+    expandingRay.classList.remove("hidden");
+    expandingImageRay.classList.remove("hidden");
+
+    // unhide sunray image
+    sunray.classList.remove('hidden');
+
+    // after 5 seconds, add hidden class to expanding-ray and sunray image
     setTimeout(function () {
         expandingRay.classList.add("hidden");
-    }
-        , 5000);
-}
-);
+        expandingImageRay.classList.add("hidden");
+        sunray.classList.add('hidden');
+    }, 5000);
+});
+
+
+
+
+
+
+
+
+
+
 
 const sunray = document.getElementById('sunray');
 sunray.addEventListener('click', function () {
