@@ -77,3 +77,26 @@ h1 {
 .VIpgJd-ZVi9od-ORHb-oEVmcd {
     display: none;
 }
+
+.IncreaseSunSize {
+    /* width: 10%;
+    height: 10%; */
+    border-radius: 50%;
+    background-color: #F0C919;
+    animation: IncreaseSunSize 5s ease-in-out infinite;
+}
+
+@keyframes IncreaseSunSize {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(2);
+  }
+}
+
+
+

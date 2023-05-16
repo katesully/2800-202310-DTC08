@@ -18,12 +18,8 @@ const sun = document.getElementById("sun");
 sun.addEventListener("click", function () {
     console.log("sun clicked");
     // access circle element
-    const circle = document.getElementById("circle");
-    // change r attribute of circle
-    circle.setAttribute("r", "10");
-
-    const ray1 = document.getElementById("ray1");
-    ray1.setAttribute("y2", "10");
+    sun.classList.add("IncreaseSunSize");
+   
 
 }
 );
