@@ -19,8 +19,6 @@ sun.addEventListener("click", function () {
     console.log("sun clicked");
     // access circle element
     sun.classList.add("IncreaseSunSize");
-   
-
 }
 );
 

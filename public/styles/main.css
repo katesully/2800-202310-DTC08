@@ -78,25 +78,43 @@ h1 {
     display: none;
 }
 
+#expanding-ray {
+    width: 0;
+    height: 0;
+    border-top: 50px solid transparent;
+    border-bottom: 50px solid transparent;
+    border-left: 150px solid orange;
+    position: absolute;
+    margin-left: -22px;
+    margin-top: -30px;
+}
+
 .IncreaseSunSize {
     /* width: 10%;
     height: 10%; */
     border-radius: 50%;
     background-color: #F0C919;
-    animation: IncreaseSunSize 5s ease-in-out infinite;
+    animation: IncreaseSunSize 5s ease-in-out;
 }
 
 @keyframes IncreaseSunSize {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.5);
-  }
-  100% {
-    transform: scale(2);
-  }
+    0% {
+        transform: scale(1);
+    }
+
+    20% {
+        transform: scale(1.5);
+    }
+
+    50% {
+        transform: scale(2);
+    }
+
+    80% {
+        transform: scale(1.5);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
-
-
-
