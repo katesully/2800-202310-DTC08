@@ -33,5 +33,7 @@ sun.addEventListener("click", function () {
 }
 );
 
-
-
+const sunray = document.getElementById('sunray');
+sunray.addEventListener('click', function () {
+    this.classList.toggle('clicked');
+});
