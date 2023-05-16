@@ -17,8 +17,14 @@ checkboxes.forEach((checkbox) => {
 const sun = document.getElementById("sun");
 sun.addEventListener("click", function () {
     console.log("sun clicked");
-    //change the background color of the body
-    document.body.style.backgroundColor = "#f5f5f5";
+    // access circle element
+    const circle = document.getElementById("circle");
+    // change r attribute of circle
+    circle.setAttribute("r", "10");
+
+    const ray1 = document.getElementById("ray1");
+    ray1.setAttribute("y2", "10");
+
 }
 );
 
