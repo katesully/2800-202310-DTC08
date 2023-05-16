@@ -85,8 +85,9 @@ h1 {
     border-bottom: 50px solid transparent;
     border-left: 150px solid orange;
     position: absolute;
-    margin-left: -22px;
     margin-top: -30px;
+    margin-left: -22px;
+    animation: displayRay 5s;
 }
 
 #easter-egg p {
@@ -127,4 +128,30 @@ h1 {
     100% {
         transform: scale(1);
     }
+}
+
+@keyframes displayRay {
+    0% {
+        width: 0;
+        height: 0;
+        border-top: 0px solid transparent;
+        border-bottom: 0px solid transparent;
+        border-left: 10px solid orange;
+        position: absolute;
+
+
+    }
+
+    100% {
+        width: 0;
+        height: 0;
+        border-top: 50px solid transparent;
+        border-bottom: 50px solid transparent;
+        border-left: 150px solid orange;
+        position: absolute;
+        margin-top: -30px;
+        margin-left: -22px;
+
+    }
+
 }
