@@ -85,12 +85,12 @@ h1 {
 #expanding-ray {
     width: 0;
     height: 0;
-    border-top: 50px solid transparent;
-    border-bottom: 50px solid transparent;
-    border-left: 150px solid orange;
+    border-top: 60px solid transparent;
+    border-bottom: 60px solid transparent;
+    border-left: 180px solid orange;
     position: absolute;
-    margin-top: -30px;
-    margin-left: -22px;
+    margin-top: -37px;
+    margin-left: -32px;
     animation: displayRay 10s;
 }
 
@@ -147,15 +147,19 @@ h1 {
         opacity: 1;
     }
 
+    50% {
+        opacity: 0.4;
+    }
+
     100% {
         width: 0;
         height: 0;
-        border-top: 50px solid transparent;
-        border-bottom: 50px solid transparent;
-        border-left: 150px solid orange;
+        border-top: 60px solid transparent;
+        border-bottom: 60px solid transparent;
+        border-left: 200px solid orange;
         position: absolute;
-        margin-top: -30px;
-        margin-left: -22px;
+        margin-top: -37px;
+        margin-left: -32px;
         opacity: 0;
     }
 
