@@ -96,8 +96,6 @@ h1 {
     display: none !important;
 }
 
-
-
 #expanding-ray {
     width: 0;
     height: 0;
@@ -109,9 +107,6 @@ h1 {
     margin-left: -32px;
     animation: displayRay 10s;
 }
-
-
-
 
 #easter-egg p {
     font-size: 15px;
@@ -152,8 +147,6 @@ h1 {
         transform: scale(1);
     }
 }
-
-
 
 @keyframes displayRay {
     0% {
