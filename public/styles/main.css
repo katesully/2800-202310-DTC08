@@ -127,7 +127,7 @@ svg {
 /* Apply the animation to ray1 */
 #ray1b {
     /* transform-origin: bottom; */
-    animation: ray1Animation 2s linear infinite;
+    animation: ray1Animation 2.2s linear infinite;
 }
 
 @keyframes ray1Animation {
@@ -143,8 +143,81 @@ svg {
         transform: scaleY(1);
     }
 }
+#ray2b {
+    transform-origin: bottom;
+    animation: ray2Animation 2s linear infinite;
+}
 
-/*  */
+@keyframes ray2Animation {
+    0% {
+        transform: scaleY(1);
+    }
+
+    50% {
+        transform: scaleY(0.1);
+    }
+
+    100% {
+        transform: scaleY(1);
+    }
+}
+#ray3b {
+    transform-origin: 4.22px 4.22px;
+    animation: ray3Animation 1s linear infinite;
+}
+
+@keyframes ray3Animation {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.5);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+#ray5b {
+    transform-origin: left;
+    animation-delay: 5s;
+    animation: ray5Animation 1.8s linear infinite;
+}
+
+@keyframes ray5Animation {
+    0% {
+        transform: scaleX(1);
+    }
+
+    50% {
+        transform: scaleX(0.1)
+    }
+
+    100% {
+        transform: scaleX(1);
+    }
+}
+#ray6b {
+    transform-origin: right;
+    animation: ray6bAnimation 1.7s linear infinite;
+}
+
+@keyframes ray6bAnimation {
+    0% {
+        transform: scaleX(1);
+    }
+
+    50% {
+        transform: scaleX(0.1)
+    }
+
+    100% {
+        transform: scaleX(1);
+    }
+}
+
+/* ************************************************************************** */
 @keyframes IncreaseSunSize {
   0% {
     transform: scale(1);
