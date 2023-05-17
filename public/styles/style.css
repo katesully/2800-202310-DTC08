@@ -15,7 +15,7 @@ body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    
+
 }
 
 .footer-box {
@@ -35,9 +35,14 @@ body {
 .colour-navbar {
     background-color: #458A92;
     color: white;
+    display: flex;
 }
 
 .material-symbols-outlined {
     font-size: 36px;
     color: rgb(245, 245, 245);
+}
+
+#logoutBtn {
+    font-size: 9px;
 }
