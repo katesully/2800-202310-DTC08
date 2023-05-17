@@ -255,10 +255,12 @@ function createRoadmapObject(message) {
     var messageArray = message.split("\n").filter(line => line.length > 0);
     roadmapObject.title = messageArray[0].split(": ")[1];
     roadmapObject.description = messageArray[1].split(": ")[1];
-
+    
 
     for (var i = 2; i < messageArray.length; i++) {
-        roadmapObject.steps.push(messageArray[i].split(". ")[1]);
+        if (messageArray[i].split(". ")[1] !== undefined) {
+            roadmapObject.steps.push(messageArray[i].split(". ")[1]);
+        }
     }
 
     return roadmapObject;
