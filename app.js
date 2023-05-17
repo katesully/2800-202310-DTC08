@@ -449,4 +449,39 @@ app.get('/logout', function (req, res, next) {
 })
 
 
+// Send email with content
+app.post('/send-email', async (req, res) => {
+    const { recipient, content } = req.body;
+
+    try {
+        // Create a Nodemailer transporter with your email service credentials
+        const transporter = nodemailer.createTransport({
+            service: 'yahoo',
+            auth: {
+                user: 'newjourney2800@yahoo.com',
+                pass: '2800-202310-DTC08',
+            },
+        });
+
+        // Configure the email options
+        const mailOptions = {
+            from: 'your_email',
+            to: recipient,
+            subject: 'Your Subject',
+            text: content,
+        };
+
+        // Send the email
+        await transporter.sendMail(mailOptions);
+        console.log('Email sent successfully');
+        res.send('Email sent successfully');
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error sending email');
+    }
+});
+
+
+
+
 module.exports = app;
