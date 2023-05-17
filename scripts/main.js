@@ -22,34 +22,14 @@ sun.addEventListener("click", function () {
 
     // access element with id expanding-ray
     const expandingRay = document.getElementById("expanding-ray");
-    const expandingImageRay = document.getElementById("imageRay");
 
     // remove hidden class from expanding-ray
     expandingRay.classList.remove("hidden");
-    expandingImageRay.classList.remove("hidden");
-
-    // unhide sunray image
-    sunray.classList.remove('hidden');
 
     // after 5 seconds, add hidden class to expanding-ray and sunray image
     setTimeout(function () {
         expandingRay.classList.add("hidden");
-        expandingImageRay.classList.add("hidden");
-        sunray.classList.add('hidden');
-    }, 5000);
+    }, 10000);
 });
 
 
-
-
-
-
-
-
-
-
-
-const sunray = document.getElementById('sunray');
-sunray.addEventListener('click', function () {
-    this.classList.toggle('clicked');
-});
