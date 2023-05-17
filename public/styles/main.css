@@ -87,9 +87,9 @@ h1 {
     height: 0;
     border-top: 60px solid transparent;
     border-bottom: 60px solid transparent;
-    border-left: 180px solid orange;
+    border-left: 130px solid orange;
     position: absolute;
-    margin-top: -37px;
+    margin-top: -40px;
     margin-left: -32px;
     animation: displayRay 10s;
 }
@@ -142,13 +142,9 @@ h1 {
         border-bottom: 1px solid transparent;
         border-left: 10px solid orange;
         position: absolute;
-        margin-top: 20px;
-        margin-left: 120px;
+        margin-top: 15px;
+        margin-left: 100px;
         opacity: 1;
-    }
-
-    50% {
-        opacity: 0.4;
     }
 
     100% {
@@ -156,9 +152,9 @@ h1 {
         height: 0;
         border-top: 60px solid transparent;
         border-bottom: 60px solid transparent;
-        border-left: 200px solid orange;
+        border-left: 130px solid orange;
         position: absolute;
-        margin-top: -37px;
+        margin-top: -40px;
         margin-left: -32px;
         opacity: 0;
     }
