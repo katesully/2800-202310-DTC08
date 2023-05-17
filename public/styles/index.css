@@ -26,3 +26,10 @@
   display: none;
 }
 
+
+
+.translate-down .goog-te-menu-value {
+  position: fixed !important;
+  bottom: 0 !important;
+  transform: translate(0, 100%) !important;
+}
