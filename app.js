@@ -205,6 +205,36 @@ app.get('/main', (req, res) => {
     }
 });
 
+app.post('/bookmarkRoadmap', async (req, res) => {
+    if (req.session.GLOBAL_AUTHENTICATED) {
+        
+        const user = await usersModel.findOne({ username: req.session.loggedUsername });
+
+        if (!user) {
+            throw new Error("User does not exist");
+        }
+
+        const roadmap = req.body;
+        console.log(roadmap);
+
+        await usersModel.updateOne(
+            { _id: user._id },
+            { $push: { savedRoadmaps: roadmap } }
+        );
+
+        console.log("Roadmap saved to user account");
+        console.log(user);
+        console.log(user.savedRoadmaps);
+    
+        // res.redirect('/savedRoadmaps');
+    }
+    else {
+        // res.redirect('/login');
+    }
+});
+
+
+
 
 
 // Interface with OpenAI API
@@ -255,10 +285,12 @@ function createRoadmapObject(message) {
     var messageArray = message.split("\n").filter(line => line.length > 0);
     roadmapObject.title = messageArray[0].split(": ")[1];
     roadmapObject.description = messageArray[1].split(": ")[1];
-
+    
 
     for (var i = 2; i < messageArray.length; i++) {
-        roadmapObject.steps.push(messageArray[i].split(". ")[1]);
+        if (messageArray[i].split(". ")[1] !== undefined) {
+            roadmapObject.steps.push(messageArray[i].split(". ")[1]);
+        }
     }
 
     return roadmapObject;
@@ -276,7 +308,8 @@ app.post('/sendRequest', async (req, res) => {
         // steps: roadmapObject.steps.slice(0, roadmapObject.steps.length),
         //only display steps that are not undefined
         steps: roadmapObject.steps.filter(step => step !== undefined),
-        displayFlag: true
+        displayFlag: true,
+        roadmap: JSON.stringify(roadmapObject)
     });
 
 });

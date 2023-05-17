@@ -33,6 +33,21 @@ sun.addEventListener("click", function () {
 });
 
 
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+
+
+
+const sunray = document.getElementById('sunray');
+sunray.addEventListener('click', function () {
+    this.classList.toggle('clicked');
+});
 
 
 //save roadmap object to MongoDB under user's account
@@ -65,3 +80,4 @@ async function saveRoadmap(roadmap) {
         console.error('Error making POST request:', error);
     });
 }
+>>>>>>> Charlie_saveMap_on_mainpage
