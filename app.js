@@ -405,10 +405,10 @@ app.post('/confirmNewPassword', async (req, res) => {
 });
 
 
-app.get('/passwordReset', (req, res) => {
+// app.get('/passwordReset', (req, res) => {
 
-    res.render('./savedRoadmaps.ejs', { savedList: roadmapsTemp });
-});
+//     res.render('./savedRoadmaps.ejs', { savedList: roadmapsTemp });
+// });
 
 app.get('/newpassword', (req, res) => {
     res.render('./newpassword.ejs')
