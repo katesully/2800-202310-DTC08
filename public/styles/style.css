@@ -45,3 +45,8 @@ body {
 #logoutBtn {
     font-size: 9px;
 }
+
+#login-button,
+#signup-button {
+    font-size: 12px;
+}
