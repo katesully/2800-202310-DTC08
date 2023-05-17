@@ -93,6 +93,7 @@ h1 {
     display: none !important;
 }
 
+/* for easter egg */
 #expanding-ray {
     width: 0;
     height: 0;
@@ -105,6 +106,7 @@ h1 {
     animation: displayRay 10s;
 }
 
+/* for easter egg */
 #easter-egg p {
     font-size: 15px;
     font-weight: bold;
@@ -115,6 +117,7 @@ h1 {
     margin-top: 5px;
 }
 
+/* for easter egg */
 .IncreaseSunSize {
     /* width: 10%;
     height: 10%; */
@@ -123,6 +126,7 @@ h1 {
     animation: IncreaseSunSize 5s ease-in-out;
 }
 
+/* for easter egg */
 @keyframes IncreaseSunSize {
     0% {
         transform: scale(1);
@@ -145,6 +149,7 @@ h1 {
     }
 }
 
+/* for easter egg */
 @keyframes displayRay {
     0% {
         width: 0;
