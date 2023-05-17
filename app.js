@@ -11,6 +11,8 @@ const Joi = require('joi');
 const ejs = require('ejs');
 const { parse } = require('dotenv');
 
+
+
 var nodemailer = require('nodemailer');
 const tokenModel = require('./models/token.js');
 const crypto = require("crypto");
@@ -482,6 +484,8 @@ app.get('/logout', function (req, res, next) {
 })
 
 
+
+
 // sending an sharing email
 
 const sendShareEmail = async (email, payload) => {
@@ -512,6 +516,21 @@ const sendShareEmail = async (email, payload) => {
         return error;
     }
 }
+
+app.post('/sendShareEmail', async (req, res) => {
+    console.log('Form submission received');
+    // try {
+    //     const recipient = req.body.inputEmailToSend;
+    //     const content = 'Example content'; 
+
+    //     await sendShareEmail(recipient, content);
+
+    //     res.status(200).json({ message: 'Email sent successfully' });
+    // } catch (error) {
+    //     console.log(error);
+    //     res.status(500).json({ error: 'Failed to send email' });
+    // }
+});
 
 
 
