@@ -82,10 +82,69 @@ h1 {
     /* width: 10%;
     height: 10%; */
     border-radius: 50%;
-    background-color: #F0C919;
-    animation: IncreaseSunSize 5s ease-in-out infinite;
+    background-color: #f0c91900;
+    /* animation: IncreaseSunSize 5s linear, rotation 4s infinite linear; */
+    animation: rotation 3s infinite linear;
 }
 
+@keyframes rotation {
+
+    /* from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(359deg);
+    } */
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    20% {
+        transform: rotate(72deg) scale(1.5);
+    }
+
+    50% {
+        transform: rotate(180deg) scale(2);
+    }
+
+    80% {
+        transform: rotate(288deg) scale(1.5);
+    }
+
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+/*  */
+
+svg {
+    overflow: visible;
+}
+
+
+/* Apply the animation to ray1 */
+#ray1b {
+    /* transform-origin: bottom; */
+    animation: ray1Animation 2s linear infinite;
+}
+
+@keyframes ray1Animation {
+    0% {
+        transform: scaleY(1);
+    }
+
+    50% {
+        transform: scaleY(0.1);
+    }
+
+    100% {
+        transform: scaleY(1);
+    }
+}
+
+/*  */
 @keyframes IncreaseSunSize {
   0% {
     transform: scale(1);
