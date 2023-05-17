@@ -52,15 +52,12 @@
     <script src="/scripts/savedRoadmaps.js" type="text/javascript"></script>
 
     <link rel="stylesheet" type="text/css" href="./public/styles/saveRoadmaps.css" />
-
-
-
-</head>
-
-<body>
-
-     <style>
+    <style>
         .VIpgJd-ZVi9od-ORHb {
+            display: none;
+        }
+    
+        #goog-gt-tt {
             display: none;
         }
     
@@ -71,13 +68,21 @@
         }
     </style>
 
+
+
+</head>
+
+<body>
+
+  
+
   
 
     <%- include('components/navbar_header_logout.ejs') %>
     <!-- Share Modal starts here-->
     <%- include('components/deleteModal.ejs') %>
     <!-- Delete Modal starts here-->
-    <%- include('components/shareModal.ejs') %>
+    <%- include('shareModal.ejs') %>
 
 <script type="text/javascript">
     function googleTranslateElementInit() {

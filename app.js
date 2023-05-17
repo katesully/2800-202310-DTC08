@@ -482,4 +482,39 @@ app.get('/logout', function (req, res, next) {
 })
 
 
+// sending an sharing email
+
+const sendShareEmail = async (email, payload) => {
+    try {
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.GMAIL_EMAIL,
+                pass: process.env.GMAIL_KEY
+            }
+        });
+
+        var mailOptions = {
+            from: process.env.GMAIL_EMAIL,
+            to: email,
+            subject: 'Someone sent you a helpful Roadmap!',
+            text: payload
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+    } catch (error) {
+        return error;
+    }
+}
+
+
+
+
+
 module.exports = app;
