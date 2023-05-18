@@ -8,6 +8,14 @@
     .VIpgJd-ZVi9od-l4eHX-hSRGPD {
         display: none;
     }
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
 </style>
 
 <%- include('components/headHTML.ejs') %>
@@ -41,11 +49,15 @@
     <div class="row justify-content-center">
       <div class="col-md-6 col-lg-5">
         <div class="error-template">
-          <img src="404_dog.png" alt="404 Error" class="error-image img-fluid">
-          <h1 class="mb-3">Authentication Error</h1>
-          <h2 class="mb-3">Oops! Seems like you are not logged in</h2>
-          <p class="mb-5">Please click the button to login or sign up </p>
-          <a href="/" class="btn btn-primary">Go Home</a>
+            <div class="text-center">
+                <img src="sadface.png" alt="404 Error" class="error-image img-fluid" height="100px">
+            </div>
+          <h3 class="mb-3" style="text-align: center;">Authentication Error</h1>
+          <h4 class="mb-3" style="text-align: center;">Oops! Seems like you are not logged in</h2>
+          <p class="mb-5" style="text-align: center;">Please click the button to login or sign up </p>
+        <div class="text-center">
+          <a href="/" class="btn btn-warning">Go Home</a>
+        </div>
         </div>
       </div>
     </div>

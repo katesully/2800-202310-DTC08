@@ -10,6 +10,8 @@
     }
 </style>
 
+
+
 <%- include('components/headHTML.ejs') %>
     <%- include('components/navbar_header_logout.ejs') %>
         <link rel="stylesheet" type="text/css" href="./styles/main.css" />
@@ -41,10 +43,12 @@
     <div class="row justify-content-center">
       <div class="col-md-6 col-lg-5">
         <div class="error-template">
-          <img src="404_dog.png" alt="404 Error" class="error-image img-fluid">
-          <h1 class="mb-3">404</h1>
-          <h2 class="mb-3">Page Not Found</h2>
-          <p class="mb-5">Oops! Seems like this page does not exist</p>
+            <div class="text-center">
+          <img src="sadface.png.png" alt="404 Error" class="error-image img-fluid" height="100px">
+        </div>
+          <h3 class="mb-3" style="text-align: center;">404</h1>
+          <h4 class="mb-3" style="text-align: center;">Page Not Found</h2>
+          <p class="mb-5" style="text-align: center;">Oops! Seems like this page does not exist</p>
           <a href="/" class="btn btn-primary">Go Home</a>
         </div>
       </div>
