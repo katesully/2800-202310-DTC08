@@ -9,7 +9,6 @@
     justify-content: center;
     flex-wrap: wrap;
     flex-direction: column;
-
 }
 
 .hidden {
@@ -24,6 +23,7 @@
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
+    backface-visibility: hidden;
 }
 
 #roadmapGoesHere li:hover {
