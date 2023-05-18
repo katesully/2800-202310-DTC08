@@ -202,8 +202,8 @@ h1 {
         opacity: 0;
     }
 
-    50% {
-        transform: translateX(-120px);
+    70% {
+        transform: translateX(-110px);
         opacity: 0.9;
     }
 
