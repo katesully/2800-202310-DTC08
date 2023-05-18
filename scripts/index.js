@@ -1,5 +1,6 @@
 
 
+console.log("index.js loaded");
 
 
 function saveLanguageAndShowSignup() {
@@ -56,5 +57,5 @@ function saveLanguageAndShowSignup() {
 
 //create bootstrap popup that contains Google Translate API
 
-  
+
 

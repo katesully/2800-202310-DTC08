@@ -10,7 +10,12 @@ const usersSchema = new mongoose.Schema({
     },
     "password": String,
     "type": String,
-    "email": String
+    "email": String,
+    "savedRoadmaps": {
+        type: Array,
+        default: []
+      }
+
 });
 
 const usersModel = mongoose.model('user', usersSchema)

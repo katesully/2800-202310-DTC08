@@ -11,6 +11,8 @@ const Joi = require('joi');
 const ejs = require('ejs');
 const { parse } = require('dotenv');
 
+
+
 var nodemailer = require('nodemailer');
 const tokenModel = require('./models/token.js');
 const crypto = require("crypto");
@@ -57,6 +59,9 @@ app.get(['/', '/home'], (req, res) => {
     res.render('./index.ejs');
     // }
 });
+
+
+
 
 
 app.get('/signup', (req, res) => {
@@ -190,7 +195,7 @@ app.get('/settings', (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
         res.render('./settings.ejs', { username: req.session.loggedUsername, email: req.session.loggedEmail });
     } else {
-        res.redirect('/login');
+        res.render('error403');
     }
 });
 
@@ -201,9 +206,42 @@ app.get('/main', (req, res) => {
         });
     }
     else {
-        res.redirect('/login');
+        res.render('error403');
     }
 });
+
+app.post('/bookmarkRoadmap', async (req, res) => {
+    if (req.session.GLOBAL_AUTHENTICATED) {
+        
+        const user = await usersModel.findOne({ username: req.session.loggedUsername });
+
+        if (!user) {
+            throw new Error("User does not exist");
+        }
+
+        const roadmap = req.body;
+        console.log(roadmap);
+        let roadmapId = crypto.randomBytes(32).toString("hex");
+        roadmap._id = roadmapId;
+
+
+        await usersModel.updateOne(
+            { _id: user._id },
+            { $push: { savedRoadmaps: roadmap } }
+        );
+
+        console.log("Roadmap saved to user account");
+        console.log(user);
+        console.log(user.savedRoadmaps);
+    
+        // res.redirect('/savedRoadmaps');
+    }
+    else {
+        // res.redirect('/login');
+    }
+});
+
+
 
 
 
@@ -255,10 +293,12 @@ function createRoadmapObject(message) {
     var messageArray = message.split("\n").filter(line => line.length > 0);
     roadmapObject.title = messageArray[0].split(": ")[1];
     roadmapObject.description = messageArray[1].split(": ")[1];
-
+    
 
     for (var i = 2; i < messageArray.length; i++) {
-        roadmapObject.steps.push(messageArray[i].split(". ")[1]);
+        if (messageArray[i].split(". ")[1] !== undefined) {
+            roadmapObject.steps.push(messageArray[i].split(". ")[1]);
+        }
     }
 
     return roadmapObject;
@@ -273,8 +313,11 @@ app.post('/sendRequest', async (req, res) => {
 
     console.log(roadmapObject)
     res.render('./main.ejs', {
-        steps: roadmapObject.steps.slice(0, roadmapObject.steps.length),
-        displayFlag: true
+        // steps: roadmapObject.steps.slice(0, roadmapObject.steps.length),
+        //only display steps that are not undefined
+        steps: roadmapObject.steps.filter(step => step !== undefined),
+        displayFlag: true,
+        roadmap: JSON.stringify(roadmapObject)
     });
 
 });
@@ -315,7 +358,7 @@ const sendResetEmail = async (email, payload) => {
     }
 }
 
-app.post('/sendResetEmail', async (req, res) =>{
+app.post('/sendResetEmail', async (req, res) => {
     const email = req.body.inputEmail;
     console.log(email);
 
@@ -347,6 +390,7 @@ app.post('/sendResetEmail', async (req, res) =>{
     sendResetEmail(user.email, link);
 
 
+
 })
 
 // Get new password
@@ -358,7 +402,7 @@ app.get('/passwordReset', async (req, res) => {
     res.render('./passwordReset.ejs', { token: token, id: id });
 });
 
-app.post('/confirmNewPassword', async (req, res) =>{
+app.post('/confirmNewPassword', async (req, res) => {
     const token = req.body.token;
     const id = req.body.userID;
     const newPassword = req.body.newPassword;
@@ -367,7 +411,7 @@ app.post('/confirmNewPassword', async (req, res) =>{
     console.log(token);
     console.log(id);
     console.log(newPassword);
-    
+
 
     if (newPassword !== confirmPassword) {
         return res.send("Passwords do not match");
@@ -412,21 +456,48 @@ app.get('/newpassword', (req, res) => {
 })
 
 
-app.get('/savedRoadmaps', (req, res) => {
-    const roadmapsTemp = [
-        { title: "Temp Roadmap 1", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} }, { title: "Temp Roadmap 2", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} }, { title: "Temp Roadmap 3", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} },
-        { title: "Temp Roadmap 4", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} },
-        { title: "Temp Roadmap 5", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} },
-        { title: "Temp Roadmap 6", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} },
-        { title: "Temp Roadmap 7", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} }
-    ];
+app.get('/savedRoadmaps', async(req, res) => {
+    
     if (req.session.GLOBAL_AUTHENTICATED) {
-        res.render('./savedRoadmaps.ejs', { savedList: roadmapsTemp });
+
+        const user = await usersModel.findOne({ username: req.session.loggedUsername });
+
+        if (!user) {
+            throw new Error("User does not exist");
+        }
+
+        const roadmapsList = user.savedRoadmaps;
+
+        console.log(roadmapsList);
+
+        res.render('./savedRoadmaps.ejs', { savedList: roadmapsList });
+
     }
     else {
         res.redirect('/login')
     }
 });
+
+app.post('/deleteBookmark', async (req, res) => {
+    if (req.session.GLOBAL_AUTHENTICATED) {
+        const savedRoadmapId = req.body.mapid;
+        console.log(savedRoadmapId);
+        const user = await usersModel.findOne({ username: req.session.loggedUsername });
+
+        if (!user) {
+            throw new Error("User does not exist");
+        }
+        
+        await usersModel.updateOne(
+            { _id: user._id },
+            { $pull: { savedRoadmaps: { _id: savedRoadmapId } } }
+        );
+
+        console.log("Roadmap deleted from user account");
+        res.status(200).send('Bookmark deleted successfully');
+
+    }
+})
 
 app.get('/logout', function (req, res, next) {
     console.log("Before Logout: Session User:", req.session.loggedUsername, "; ", "Session Password: ", req.session.loggedPassword);
@@ -444,6 +515,62 @@ app.get('/logout', function (req, res, next) {
         res.redirect('/');
     });
 })
+
+
+
+
+// sending an sharing email
+
+const sendShareEmail = async (email, payload) => {
+    try {
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.GMAIL_EMAIL,
+                pass: process.env.GMAIL_KEY
+            }
+        });
+
+        var mailOptions = {
+            from: process.env.GMAIL_EMAIL,
+            to: email,
+            subject: 'Someone sent you a helpful Roadmap!',
+            text: payload
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+    } catch (error) {
+        return error;
+    }
+}
+
+
+
+app.post('/sendShareEmail', async (req, res) => {
+    console.log('Form submission received');
+    try {
+        const recipient = req.body.inputShareEmailToSend;
+        const content = 'Example content'; 
+
+        await sendShareEmail(recipient, content);
+
+        res.status(200).json({ message: 'Email sent successfully' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Failed to send email' });
+    }
+});
+
+
+// app.get("*", (req, res) => {
+//     res.status(404).render('error404.ejs');
+// });
 
 
 module.exports = app;

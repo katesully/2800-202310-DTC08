@@ -8,12 +8,17 @@
     margin-bottom: 25%;
 }
 
-element.style {
-    z-index: 2147383647;
+.VIpgJd-ZVi9od-ORHb-oEVmcd{
+   display: none;
+} 
+
+
+#google_translate_element > :first-child {
+  font-size: 0;
 }
 
-.VIpgJd-ZVi9od-ORHb {
-    display: none;
+.VIpgJd-ZVi9od-l4eHX-hSRGPD{
+  display: none;
 }
 
 .colour-nav {
