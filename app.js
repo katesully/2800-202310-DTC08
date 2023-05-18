@@ -519,17 +519,17 @@ const sendShareEmail = async (email, payload) => {
 
 app.post('/sendShareEmail', async (req, res) => {
     console.log('Form submission received');
-    // try {
-    //     const recipient = req.body.inputEmailToSend;
-    //     const content = 'Example content'; 
+    try {
+        const recipient = req.body.inputShareEmailToSend;
+        const content = 'Example content'; 
 
-    //     await sendShareEmail(recipient, content);
+        await sendShareEmail(recipient, content);
 
-    //     res.status(200).json({ message: 'Email sent successfully' });
-    // } catch (error) {
-    //     console.log(error);
-    //     res.status(500).json({ error: 'Failed to send email' });
-    // }
+        res.status(200).json({ message: 'Email sent successfully' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Failed to send email' });
+    }
 });
 
 
