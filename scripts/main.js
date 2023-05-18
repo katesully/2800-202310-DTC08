@@ -13,6 +13,13 @@ checkboxes.forEach((checkbox) => {
     });
 });
 
+//create array for populating inspirational messages
+const inspirationalMessages = [
+    "Difficult roads often lead to beautiful destinations",
+    "With every challenge, there is an opportunity for growth",
+    "You are stronger than you think. Believe in yourself"
+]
+
 //add event listener to the sun
 const sun = document.getElementById("sun");
 sun.addEventListener("click", function () {
@@ -22,14 +29,19 @@ sun.addEventListener("click", function () {
 
     // access element with id expanding-ray
     const expandingRay = document.getElementById("expanding-ray");
-    //access text element
-    const text = document.getElementById("easter-egg-text")
+
+    //access inspirational message element
+    const inspirationalMessage = document.getElementById("inspirational-message");
+    //access random inspirational message
+    const randomMessage = inspirationalMessages[Math.floor(Math.random() * inspirationalMessages.length)];
+    //set inspirational message to random message
+    inspirationalMessage.innerHTML = randomMessage;
 
 
     // remove hidden class from expanding-ray
     expandingRay.classList.remove("hidden");
     //remove hidden class from text
-    text.classList.remove("hidden");
+    inspirationalMessage.classList.remove("hidden");
 
     // after 10 seconds, add hidden class to expanding-ray and sunray image
     setTimeout(function () {
@@ -38,7 +50,7 @@ sun.addEventListener("click", function () {
 
     //after 7 seconds, add hidden class to text
     setTimeout(function () {
-        text.classList.add("hidden");
+        inspirationalMessage.classList.add("hidden");
     }, 7000);
 });
 
