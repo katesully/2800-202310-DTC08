@@ -1,5 +1,8 @@
 
 
+console.log("index.js loaded");
+
+
 function saveLanguageAndShowSignup() {
   console.log("saveLanguageAndShowSignup called");
   // Show login and signup buttons and info div
@@ -54,5 +57,5 @@ function saveLanguageAndShowSignup() {
 
 //create bootstrap popup that contains Google Translate API
 
-  
+
 

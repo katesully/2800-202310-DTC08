@@ -1,60 +1,34 @@
-
-
 <head>
 
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="./scripts/index.js"></script>
-  <!-- install boostrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <!-- install boostrap js -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
-<!-- JavaScript -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-    <!-- <script src="./scripts/firebase_authentication.js"></script>  -->
-
+  <script src="/scripts/index.js"></script>
 
 </head>
-  <style>
-
-
-/* CSS */
 
 
 
-  </style>
+<%- include('components/headHTML.ejs') %>
 
-  
-</head>
 
- 
-  
-  <%- include('components/headHTML.ejs') %> 
   <body>
     <%- include('components/navbar_header_before_signin.ejs') %>
 
-    <h1 id="title" style="text-align: center;">NewJourney</h1>
+      <h1 id="title" style="text-align: center;">NewJourney</h1>
 
-<!-- translate automatically to users device language  -->
-<link rel="stylesheet" type="text/css" href="./styles/index.css" />
-
-
-<script type="text/javascript">
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-  }
-  </script>
-  
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+      <!-- translate automatically to users device language  -->
+      <link rel="stylesheet" type="text/css" href="./styles/index.css" />
 
 
-    <img src="Welcomes.png" alt="welcomes" style="
+      <script type="text/javascript">
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+        }
+      </script>
+
+      <script type="text/javascript"
+        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+      <img src="Welcomes.png" alt="welcomes" style="
     position: absolute;
     top: 0;
     left: 0;
@@ -66,60 +40,64 @@
     background-position: center center;
     z-index: -1;
   ">
-  <br>
-  
+      <br>
 
 
-<!-- language choice dropdown  -->
-<h5 style="text-align: center;"> Select your language to begin </h5>
 
-    <div class="container">
-      <div class="container-fluid card card-shadow">
-        <div class="container d-flex align-items-center justify-content-between">
-          <div class="container dropdown-container mt-3">
-          </div>
-          <div id="google_translate_element" class="translate-down"></div>>
-          <br>
-          <div class="container main-button mt-3">
-            <button type="button" class="btn btn-light" onclick="saveLanguageAndShowSignup()" style="height: 50px;">
-              <img src="ok-green.png" alt="OK" style="height: 100%;">
-            </button>
+      <!-- language choice dropdown  -->
+      <h5 style="text-align: center;"> Select your language to begin </h5>
 
+      <div class="container">
+        <div class="container-fluid card card-shadow">
+          <div class="container d-flex align-items-center justify-content-between">
+            <div class="container dropdown-container mt-3">
+            </div>
+            <div id="google_translate_element" class="translate-down"></div>
+            <br>
+            <div class="container main-button mt-3">
+              <button type="button" class="btn btn-light" onclick="saveLanguageAndShowSignup()" style="height: 50px;">
+                <img src="ok-green.png" alt="OK" style="height: 100%;">
+              </button>
+
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <br />
+      <br>
 
 
 
-    <div class="d-flex justify-content-center mt-1 mb-1">
-      <button type="button" id="login-button" class="btn btn-secondary mx-2" style="display: none; width: 100px" onclick="window.location.href='/login'">Login</button>
-      <button type="button" id="signup-button" class="btn btn-primary mx-2" style="display: none; width: 100px" onclick="window.location.href='/signup'">Signup</button>
-    </div>
-    <br>
-   
-    
-    <!-- explanation card -->
-
-
-    <div class="card" id="backgroundCard" style="border-radius: 10px; display: none">
-      <img src="background_family_1.png" class="card-img" alt="Background image">
-      <div class="card-img-overlay">
-        <h5 class="card-title text-white">Helping you on your new path</h5>
-        <p class="card-text text-white intro-text">I had a some lorem text in here but I want to check the translations so I am going to 
-          be writing some random english instead and check how it goes with the google api translation and see what happens I hope it goes well
-           repellat minima perferendis cum earum maiores quasi lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur architecto temporibus quos non magni veniam corporis nesciunt a exercitationem est. Possimus quos, exercitationem doloremque officia sapiente cumque repudiandae? Doloribus, nemo.
-           .</p>
+      <div class="d-flex justify-content-center mt-1 mb-1">
+        <button type="button" id="login-button" class="btn btn-secondary mx-2" style="display: none; width: 100px"
+          onclick="window.location.href='/login'">Login</button>
+        <button type="button" id="signup-button" class="btn btn-primary mx-2" style="display: none; width: 100px"
+          onclick="window.location.href='/signup'">Signup</button>
       </div>
-    </div>
-    <br>
-    <br>
+      <br>
 
-    
-    
+
+      <!-- explanation card -->
+
+
+      <div class="card" id="backgroundCard" style="border-radius: 10px; display: none">
+        <img src="background_family_1.png" class="card-img" alt="Background image">
+        <div class="card-img-overlay">
+          <h5 class="card-title text-white">Helping you on your new path</h5>
+          <p class="card-text text-white intro-text">I had a some lorem text in here but I want to check the
+            translations so I am going to
+            be writing some random english instead and check how it goes with the google api translation and see what
+            happens I hope it goes well
+            repellat minima perferendis cum earum maiores quasi lorem Lorem ipsum dolor sit amet consectetur adipisicing
+            elit. Tenetur architecto temporibus quos non magni veniam corporis nesciunt a exercitationem est. Possimus
+            quos, exercitationem doloremque officia sapiente cumque repudiandae? Doloribus, nemo.
+            .</p>
+        </div>
+      </div>
+      <br>
+      <br>
+
+
+
   </body>
-</html>
 
-
-
+  </html>
