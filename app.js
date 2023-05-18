@@ -192,7 +192,7 @@ app.get('/settings', (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
         res.render('./settings.ejs', { username: req.session.loggedUsername, email: req.session.loggedEmail });
     } else {
-        res.redirect('/login');
+        res.render('error403');
     }
 });
 
@@ -203,7 +203,7 @@ app.get('/main', (req, res) => {
         });
     }
     else {
-        res.redirect('/login');
+        res.render('error403');
     }
 });
 

@@ -1,7 +1,5 @@
 
 
-
-
 function saveLanguageAndShowSignup() {
   console.log("saveLanguageAndShowSignup called");
   // Show login and signup buttons and info div
