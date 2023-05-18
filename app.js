@@ -551,7 +551,8 @@ app.post('/sendShareEmail', async (req, res) => {
     console.log('Form submission received');
     try {
         const recipient = req.body.inputShareEmailToSend;
-        const content = 'Example content'; 
+
+        const content = req.body.inputShareEmailContent; 
 
         await sendShareEmail(recipient, content);
 
