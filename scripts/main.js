@@ -17,7 +17,10 @@ checkboxes.forEach((checkbox) => {
 const inspirationalMessages = [
     "Difficult roads often lead to beautiful destinations",
     "With every challenge, there is an opportunity for growth",
-    "You are stronger than you think. Believe in yourself"
+    "You are stronger than you think. Believe in yourself",
+    "Embrace the unfamiliar and discover new possibilities.",
+    "Remember why you started this journey and let that drive you forward",
+    "You have the power to create a new story in this new chapter of your life"
 ]
 
 //add event listener to the sun
