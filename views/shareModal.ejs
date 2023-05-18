@@ -1,77 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"> </script>
-    <script src="../scripts/sharemodal.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"> </script>
+  <script src="../scripts/sharemodal.js"></script>
 </head>
+
 <body>
-
-
-    
-<div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId: 1988587688145968,
+        autoLogAppEvents: true,
+        xfbml: true,
+        version: 'v16.0'
+      });
+    };
+  </script>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v16.0&appId=1988587688145968&autoLogAppEvents=1" nonce="gwYZFUHl"></script>
+  <div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Share your roadmap </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <p> Share on social media </p>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col">
-                                    <img src="facebook_logo.png" style='height:40px'>
-                                </div>
-                                <div class="col">
-                                   
-                                </div>
-                                <div class="col">
-                                    <img src="watsapp_logo.png" style='height:40px'>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <p> Or via e-mail </p>
-                        <img src="mail_image.png" alt='email' style= 'height: 40px' />
-                        <form class="form-floating flex-fill mb-0 container" action="/sendShareEmail" method="post">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="row align-items-center">
-                                        <i class="col-auto fas fa-lock"></i>
-                                        <input type="email" id="inputEmail" class="col form-control" name="inputEmailToSend"
-                                            placeholder="Enter your e-mail" />
-                                    </div>
-                
-                                </div>
-                            </div>
-                            <div class="row d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                <button type="submit" class="btn btn-primary" id="sendButton">Send e-mail</button>
-                            </div>
-                        </form>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                
-            </div>
+      <div class="modal-content">
+        <div class="modal-header pe-3">
+          <h5 class="modal-title" id="exampleModalLabel">Share your roadmap </h5>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;asdas</span>
+          </button> -->
+          <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body pb-6">
+          <form>
+            <div class="form-group">
+              <p> Share on social media </p>
+              <div class="container">
+                <!-- Facebook -->
+                <!-- <div class="fb-share-button" data-href="http://localhost:3000/savedRoadmaps" data-layout="" data-size=""><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A3000%2FsavedRoadmaps&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div> -->
+                <a class="btn px-2" role="button" href="https://www.facebook.com/dialog/share?app_id=145634995501895&display=popup&href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2F&redirect_uri=https%3A%2F%2Fdevelopers.facebook.com%2Ftools%2Fexplorer"><img src="facebook_logo.png" style='height:32px'></a>
+                
+                <!-- Twitter -->
+                <a class="btn px-2" role="button" href="#"><i class="fab fa-twitter fa-2x" style="color: #55acee;"></i></a>
+
+                <!-- Google -->
+                <a class="btn px-2" role="button" href="#"><i class="fab fa-google fa-2x" style="color: #dd4b39;"></i></a>
+
+                <!-- Instagram -->
+                <a class="btn px-2" role="button" href="#"><i class="fab fa-instagram fa-2x" style="color: #ac2bac;"></i></a>
+
+                <!-- Linkedin -->
+                <a class="btn px-2" role="button" href="#"><i class="fab fa-linkedin-in fa-2x" style="color: #0082ca;"></i></a>
+
+                <!-- Pinterest -->
+                <a class="btn px-2" role="button" href="#"><i class="fab fa-pinterest fa-2x" style="color: #c61118;"></i></a>
+
+                <!-- Stack overflow -->
+                <a class="btn px-2" role="button" href="#"><i class="fab fa-stack-overflow fa-2x" style="color: #ffac44;"></i></a>
+
+                <!-- Slack -->
+                <a class="btn px-2" role="button" href="#"><i class="fab fa-slack-hash fa-2x" style="color: #481449;"></i></a>
+
+                <!-- Github -->
+                <a class="btn px-2" role="button" href="#"><i class="fab fa-github fa-2x" style="color: #333333;"></i></a>
+
+                <!-- Reddit -->
+                <a class="btn px-2" role="button" href="#"><i class="fab fa-reddit-alien fa-2x" style="color: #ff4500;"></i></a>
+
+                <!-- Whatsapp -->
+                <a class="btn px-2" role="button" href="https://api.whatsapp.com/send?text=http://localhost:3000/savedRoadmaps" data-action="share/whatsapp/share"><i class="fab fa-whatsapp fa-2x" style="color: #25d366;"></i></a>
+
+                <!-- Email -->
+                <a class="btn px-2" role="button" href="#"><i class="fa-sharp fa-regular fa-envelope fa-2x"></i></a>
+              </div>
+              <!-- <p> Or via e-mail </p> -->
+              <!-- <img src="mail_image.png" alt='email' style='height: 40px' /> -->
+              <!-- <form class="form-floating flex-fill mb-0 container" action="/sendShareEmail" method="post">
+                <div class="row">
+                  <div class="col">
+                    <div class="row align-items-center">
+                      <i class="col-auto fas fa-lock"></i>
+                      <input type="email" id="inputEmail" class="col form-control" name="inputEmailToSend" placeholder="Enter your e-mail" />
+                    </div>
+
+                  </div>
+                </div>
+                <div class="row d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                  <button type="submit" class="btn btn-primary" id="sendButton">Send e-mail</button>
+                </div>
+              </form> -->
+            </div>
+          </form>
+          <hr>
+          <div class="d-flex my-4">
+            <input id="savedID" class="form-control" type="text" value="{Saved roadmap ID goes here}" aria-label="readonly input example" readonly>
+            <button type="button" class="btn btn-primary ms-2" id="copyButton">Copy</button>
+          </div>
+        </div> <!-- end of modal body -->
+        <!-- <div class="modal-footer"> -->
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+      </div>
     </div>
-</div>
+  </div>
 
 </body>
 
 </html>
-
