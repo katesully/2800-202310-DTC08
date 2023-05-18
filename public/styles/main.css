@@ -194,6 +194,10 @@ h1 {
 
 #inspirational-message {
     animation: displayText 7s;
+    max-width: 150px;
+    margin-left: 20px;
+    /* margin-top: -50px !important; */
+    font-size: 10px !important;
 }
 
 @keyframes displayText {
@@ -203,12 +207,12 @@ h1 {
     }
 
     70% {
-        transform: translateX(-110px);
+        transform: translateX(-30px);
         opacity: 0.9;
     }
 
     100% {
-        transform: translateX(-120px);
+        transform: translateX(-30px);
         opacity: 0;
     }
 }
