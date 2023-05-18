@@ -24,15 +24,20 @@
         }
     </style>
 
+
     <body>
         <%- include('components/navbar_header.ejs') %>
 
             <%- include('components/roadmap.ejs') %>
-                <button class="btn btn-primary col-6 col-md-12 py-md-3" onclick="saveProgress(this)">Save
+
+                <button class="btn btn-primary col-6 col-md-12 py-md-3" onclick=saveProgress(mapID)>Save
                     Progress</button>
                 <%- include('components/footer.ejs') %>
     </body>
 
     <script src="../scripts/trackProgress.js"></script>
+    <script>
+        let mapID = "<%= mapID %>";
+    </script>
 
     </html>
