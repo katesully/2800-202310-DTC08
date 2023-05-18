@@ -532,7 +532,9 @@ app.post('/sendShareEmail', async (req, res) => {
     }
 });
 
-
+app.get('/shareModal', (req, res) => {
+    res.render('shareModal.ejs')
+});
 
 
 

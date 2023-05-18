@@ -21,6 +21,7 @@
     "express-session": "^1.17.3",
     "joi": "^17.9.2",
     "mime": "^3.0.0",
+    "mongodb": "^5.5.0",
     "mongoose": "^7.0.5",
     "nodemailer": "^6.9.2",
     "nodemon": "^2.0.22",
