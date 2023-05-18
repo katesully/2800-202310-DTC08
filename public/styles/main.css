@@ -190,8 +190,13 @@ h1 {
         opacity: 0;
     }
 
+    50% {
+        transform: translateX(-120px);
+        opacity: 0.9;
+    }
+
     100% {
         transform: translateX(-120px);
-        opacity: 1;
+        opacity: 0;
     }
 }
