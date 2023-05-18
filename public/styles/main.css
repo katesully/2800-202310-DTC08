@@ -122,12 +122,9 @@ h1 {
 
 /* for easter egg */
 .IncreaseSunSize {
-    height: 10%; */
+    height: 10%;
     border-radius: 50%;
     animation: IncreaseSunSize 5s ease-in-out;
-
-
-    /* for easter egg */
     background-color: #f0c91900;
     animation: rotation 3s infinite linear;
 }
