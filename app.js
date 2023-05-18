@@ -209,7 +209,7 @@ app.get('/main', (req, res) => {
 
 app.post('/bookmarkRoadmap', async (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
-        
+
         const user = await usersModel.findOne({ username: req.session.loggedUsername });
 
         if (!user) {
@@ -230,7 +230,7 @@ app.post('/bookmarkRoadmap', async (req, res) => {
         console.log("Roadmap saved to user account");
         console.log(user);
         console.log(user.savedRoadmaps);
-    
+
         // res.redirect('/savedRoadmaps');
     }
     else {
@@ -290,7 +290,7 @@ function createRoadmapObject(message) {
     var messageArray = message.split("\n").filter(line => line.length > 0);
     roadmapObject.title = messageArray[0].split(": ")[1];
     roadmapObject.description = messageArray[1].split(": ")[1];
-    
+
 
     for (var i = 2; i < messageArray.length; i++) {
         if (messageArray[i].split(". ")[1] !== undefined) {
@@ -453,8 +453,8 @@ app.get('/newpassword', (req, res) => {
 })
 
 
-app.get('/savedRoadmaps', async(req, res) => {
-    
+app.get('/savedRoadmaps', async (req, res) => {
+
     if (req.session.GLOBAL_AUTHENTICATED) {
 
         const user = await usersModel.findOne({ username: req.session.loggedUsername });
@@ -475,6 +475,10 @@ app.get('/savedRoadmaps', async(req, res) => {
     }
 });
 
+app.get('/trackProgress', (req, res) => {
+    res.render('components/track_progress.ejs')
+});
+
 app.post('/deleteBookmark', async (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
         const savedRoadmapId = req.body.mapid;
@@ -484,7 +488,7 @@ app.post('/deleteBookmark', async (req, res) => {
         if (!user) {
             throw new Error("User does not exist");
         }
-        
+
         await usersModel.updateOne(
             { _id: user._id },
             { $pull: { savedRoadmaps: { _id: savedRoadmapId } } }
@@ -551,7 +555,7 @@ app.post('/sendShareEmail', async (req, res) => {
     console.log('Form submission received');
     try {
         const recipient = req.body.inputShareEmailToSend;
-        const content = 'Example content'; 
+        const content = 'Example content';
 
         await sendShareEmail(recipient, content);
 
