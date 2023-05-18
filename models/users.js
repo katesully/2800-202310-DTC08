@@ -11,10 +11,11 @@ const usersSchema = new mongoose.Schema({
     "password": String,
     "type": String,
     "email": String,
+    "city": String,
     "savedRoadmaps": {
         type: Array,
         default: []
-      }
+    }
 
 });
 

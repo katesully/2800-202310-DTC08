@@ -124,13 +124,15 @@ app.post('/signup', async (req, res) => {
             username: req.body.username,
             password: hashedPassword,
             type: "non-administrator",
-            email: req.body.Email
+            email: req.body.Email,
+            city: req.body.City
         })
         req.session.GLOBAL_AUTHENTICATED = true;
         req.session.loggedUsername = req.body.username;
         req.session.loggedPassword = hashedPassword;
         req.session.loggedType = "non-administrator";
         req.session.loggedEmail = req.body.Email;
+        req.session.loggedCity = req.body.City;
         await newUser.save();
         console.log(`New user created: ${newUser}`);
         res.redirect('/main');
@@ -175,6 +177,7 @@ app.post('/login', async (req, res) => {
         req.session.loggedPassword = userresult.password;
         req.session.loggedType = userresult?.type;
         req.session.loggedEmail = userresult.email;
+        req.session.loggedCity = userresult.city;
         console.log("app.post(\'\/login\'): Current session cookie:", req.cookies)
         res.redirect('/main');
     } else {
@@ -193,7 +196,7 @@ app.post('/login', async (req, res) => {
 
 app.get('/settings', (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
-        res.render('./settings.ejs', { username: req.session.loggedUsername, email: req.session.loggedEmail });
+        res.render('./settings.ejs', { username: req.session.loggedUsername, email: req.session.loggedEmail, city: req.session.loggedCity });
     } else {
         res.render('error403');
     }
@@ -246,8 +249,9 @@ app.post('/bookmarkRoadmap', async (req, res) => {
 
 
 // Interface with OpenAI API
-async function getMessage(message) {
+async function getMessage(message, userCity) {
     console.log('clicked');
+    let city = userCity;
     const options = {
         method: 'POST',
         headers: {
@@ -258,7 +262,7 @@ async function getMessage(message) {
             model: "gpt-3.5-turbo",
             messages: [{
                 role: "user",
-                content: `Give me a step by step guide on ${message} the form of (with no preambles or postambles):
+                content: `Please give me a step by step guide on ${message} in ${city}, BC Canada in the form of (with no preambles or postambles):
                 Title: How to ...
                 Description: A step by step guide on how to ...
                 1. ...
@@ -308,7 +312,7 @@ function createRoadmapObject(message) {
 app.post('/sendRequest', async (req, res) => {
     var userInput = req.body.hiddenField || req.body.textInput;
 
-    let returnMessage = await getMessage(userInput);
+    let returnMessage = await getMessage(userInput, req.session.loggedCity);
     let roadmapObject = createRoadmapObject(returnMessage.choices[0].message.content);
 
     console.log(roadmapObject)
