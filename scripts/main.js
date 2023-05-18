@@ -63,31 +63,35 @@ sun.addEventListener("click", function () {
         element.style.display = "block";
     });
 
-    var sunCloneContainer = document.createElement("div");
-    sunCloneContainer.classList.add("sun-clone-container");
+    
+    for (var i = 0; i < 20; i++) {
+        setTimeout(function () {
+        var sunCloneContainer = document.createElement("div");
+        sunCloneContainer.classList.add("sun-clone-container");
+        var sunClone = sun.cloneNode(true);
+        sunClone.classList.add("sun-animation");
 
-    var sunClone = sun.cloneNode(true);
-    sunClone.classList.add("sun-animation");
+        sunCloneContainer.appendChild(sunClone);
 
-    sunCloneContainer.appendChild(sunClone);
+        var sunContainer = document.getElementById("sunContainer");
+        sunContainer.appendChild(sunCloneContainer);
 
-    var sunContainer = document.getElementById("sunContainer");
-    sunContainer.appendChild(sunCloneContainer);
+        var randomAngle = Math.random() * 360; // Generate a random angle in degrees
+        var distance = 200; // Adjust the distance as desired
+        var radians = randomAngle * (Math.PI / 180); // Convert the angle to radians
 
-    var randomAngle = Math.random() * 360; // Generate a random angle in degrees
-    var distance = 200; // Adjust the distance as desired
-    var radians = randomAngle * (Math.PI / 180); // Convert the angle to radians
+        var translateX = distance * Math.cos(radians);
+        var translateY = distance * Math.sin(radians);
 
-    var translateX = distance * Math.cos(radians);
-    var translateY = distance * Math.sin(radians);
+        sunCloneContainer.style.position = "absolute";
+        sunCloneContainer.style.zIndex = "9999";
+        sunCloneContainer.style.transform = `translate(${translateX}px, ${translateY}px)`;
 
-    sunCloneContainer.style.position = "absolute";
-    sunCloneContainer.style.zIndex = "9999";
-    sunCloneContainer.style.transform = `translate(${translateX}px, ${translateY}px)`;
-
-    setTimeout(function () {
-        sunCloneContainer.remove();
-    }, 2000);
+        setTimeout(function () {
+            sunCloneContainer.remove();
+        }, 1000);
+    }, i * 500);
+    }
 });
 
 
