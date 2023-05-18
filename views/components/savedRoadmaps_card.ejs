@@ -1,4 +1,4 @@
-<div class="card container mt-3 mb-3">
+<div class="card container mt-3 mb-3" value="<%= _id %>">
     <div class="col">
         <div class="row row-cols-1 row-cols-md-2">
             <div class="col col-md-10">
@@ -18,8 +18,8 @@
             <div class="col col-md-2 container">
                 <!-- Share Button starts here-->
                 <div class="row">
-                    <button class="btn btn-primary col-6 col-md-12 py-md-3" onclick="shareRoadmap()"><img src="share_button.png" style="height: 30px" alt="Delete" /> share </span></button>
-                    <button class="btn btn-secondary col-6 col-md-12 py-md-3" onclick="deleteRoadmap()"><img src="delete_button.png" style="height: 30px" alt="Delete" /> delete </span></button>
+                    <button class="btn btn-primary col-6 col-md-12 py-md-3" onclick="shareRoadmap(this)"><img src="share_button.png" style="height: 30px" alt="Delete" /> share </span></button>
+                    <button class="btn btn-secondary col-6 col-md-12 py-md-3" onclick="deleteRoadmap(this)"><img src="delete_button.png" style="height: 30px" alt="Delete" /> delete </span></button>
                 </div>
             </div>
         </div>

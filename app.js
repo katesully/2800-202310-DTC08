@@ -218,6 +218,9 @@ app.post('/bookmarkRoadmap', async (req, res) => {
 
         const roadmap = req.body;
         console.log(roadmap);
+        let roadmapId = crypto.randomBytes(32).toString("hex");
+        roadmap._id = roadmapId;
+
 
         await usersModel.updateOne(
             { _id: user._id },
@@ -450,21 +453,48 @@ app.get('/newpassword', (req, res) => {
 })
 
 
-app.get('/savedRoadmaps', (req, res) => {
-    const roadmapsTemp = [
-        { title: "Temp Roadmap 1", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} }, { title: "Temp Roadmap 2", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} }, { title: "Temp Roadmap 3", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} },
-        { title: "Temp Roadmap 4", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} },
-        { title: "Temp Roadmap 5", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} },
-        { title: "Temp Roadmap 6", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} },
-        { title: "Temp Roadmap 7", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum velit vero vel officia totam aperiam debitis asperiores accusantium suscipit ab? Quasi laborum eius culpa a perferendis, deserunt nostrum eveniet nulla!", body: {} }
-    ];
+app.get('/savedRoadmaps', async(req, res) => {
+    
     if (req.session.GLOBAL_AUTHENTICATED) {
-        res.render('./savedRoadmaps.ejs', { savedList: roadmapsTemp });
+
+        const user = await usersModel.findOne({ username: req.session.loggedUsername });
+
+        if (!user) {
+            throw new Error("User does not exist");
+        }
+
+        const roadmapsList = user.savedRoadmaps;
+
+        console.log(roadmapsList);
+
+        res.render('./savedRoadmaps.ejs', { savedList: roadmapsList });
+
     }
     else {
         res.redirect('/login')
     }
 });
+
+app.post('/deleteBookmark', async (req, res) => {
+    if (req.session.GLOBAL_AUTHENTICATED) {
+        const savedRoadmapId = req.body.mapid;
+        console.log(savedRoadmapId);
+        const user = await usersModel.findOne({ username: req.session.loggedUsername });
+
+        if (!user) {
+            throw new Error("User does not exist");
+        }
+        
+        await usersModel.updateOne(
+            { _id: user._id },
+            { $pull: { savedRoadmaps: { _id: savedRoadmapId } } }
+        );
+
+        console.log("Roadmap deleted from user account");
+        res.status(200).send('Bookmark deleted successfully');
+
+    }
+})
 
 app.get('/logout', function (req, res, next) {
     console.log("Before Logout: Session User:", req.session.loggedUsername, "; ", "Session Password: ", req.session.loggedPassword);
