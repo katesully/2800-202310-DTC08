@@ -181,15 +181,17 @@ h1 {
 }
 
 #easter-egg-text {
-    animation: displayText 10s;
+    animation: displayText 7s;
 }
 
 @keyframes displayText {
     0% {
-        transform: translateX(100px)
+        transform: translateX(100px);
+        opacity: 0;
     }
 
     100% {
-        transform: translateX(-120px)
+        transform: translateX(-120px);
+        opacity: 1;
     }
 }
