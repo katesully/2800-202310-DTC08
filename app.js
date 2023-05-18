@@ -478,8 +478,49 @@ app.get('/savedRoadmaps', async (req, res) => {
     }
 });
 
-app.get('/trackProgress', (req, res) => {
-    res.render('./trackProgress.ejs', { mapid: req.query.id });
+app.get('/trackProgress', async (req, res) => {
+    try {
+        const users = await usersModel.find({}).exec(); // Fetch users from the database
+        // console.log(users)
+
+        //user savedRoadmaps is an array of objects
+        //each object has a roadmap id
+        //find the user with the roadmap id
+        //then find the roadmap with the roadmap id
+        //then get the steps from the roadmap
+
+
+        const allSavedRoadMaps = [];
+
+        users.forEach(user => {
+            user.savedRoadmaps.forEach(roadmap => {
+                allSavedRoadMaps.push(roadmap);
+            })
+        });
+
+        // console.log(allSavedRoadMaps);
+
+        const mapid = req.query.id;
+
+        const map = allSavedRoadMaps.find(roadmap => roadmap._id === mapid);
+
+        if (!map) {
+            return res.status(404).send('Map ID not found');
+        }
+
+        const steps = [];
+
+        map.steps.forEach(step => {
+            steps.push(step.step);
+        });
+
+        console.log(steps);
+
+        res.render('./trackProgress.ejs', { mapid: req.query.id, steps: steps });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Internal Server Error');
+    }
 });
 
 app.post('/deleteBookmark', async (req, res) => {
