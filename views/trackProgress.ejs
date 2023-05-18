@@ -13,12 +13,23 @@
             backface-visibility: hidden;
             padding: 5px;
         }
+
+        ul li:hover {
+            background-color: #e6e6ff;
+        }
+
+        button {
+            text-align: center;
+            margin: auto;
+        }
     </style>
 
     <body>
         <%- include('components/navbar_header.ejs') %>
 
             <%- include('components/roadmap.ejs') %>
+                <button class="btn btn-primary col-6 col-md-12 py-md-3" onclick="saveProgress(this)">Save
+                    Progress</button>
                 <%- include('components/footer.ejs') %>
     </body>
 
