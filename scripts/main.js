@@ -22,14 +22,24 @@ sun.addEventListener("click", function () {
 
     // access element with id expanding-ray
     const expandingRay = document.getElementById("expanding-ray");
+    //access text element
+    const text = document.getElementById("easter-egg-text")
+
 
     // remove hidden class from expanding-ray
     expandingRay.classList.remove("hidden");
+    //remove hidden class from text
+    text.classList.remove("hidden");
 
-    // after 5 seconds, add hidden class to expanding-ray and sunray image
+    // after 10 seconds, add hidden class to expanding-ray and sunray image
     setTimeout(function () {
         expandingRay.classList.add("hidden");
     }, 10000);
+
+    //after 7 seconds, add hidden class to text
+    setTimeout(function () {
+        text.classList.add("hidden");
+    }, 7000);
 });
 
 
@@ -42,26 +52,26 @@ async function saveRoadmap(roadmap) {
     console.log(roadmap.title);
     //make checkbox array for state of each checkbox
     var checkboxeStates = [];
-    
+
     //loop through each checkbox and add to array
     checkboxes.forEach((checkbox) => {
         checkboxeStates.push(checkbox.checked);
     });
 
     //make array of step objects including step message and checked state
-    roadmap.steps = roadmap.steps.map(function(message, i) {
-        return {step: message, checked: checkboxeStates[i]};
-      });
-
-    
-    fetch("/bookmarkRoadmap" , {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(roadmap)
-    })
-    .catch(error => {
-        console.error('Error making POST request:', error);
+    roadmap.steps = roadmap.steps.map(function (message, i) {
+        return { step: message, checked: checkboxeStates[i] };
     });
+
+
+    fetch("/bookmarkRoadmap", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(roadmap)
+    })
+        .catch(error => {
+            console.error('Error making POST request:', error);
+        });
 }
