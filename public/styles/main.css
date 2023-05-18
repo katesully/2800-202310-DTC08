@@ -122,28 +122,18 @@ h1 {
 
 /* for easter egg */
 .IncreaseSunSize {
-    /* width: 10%;
     height: 10%; */
     border-radius: 50%;
-    /* background-color: #F0C919; */
     animation: IncreaseSunSize 5s ease-in-out;
 
 
     /* for easter egg */
     background-color: #f0c91900;
-    /* animation: IncreaseSunSize 5s linear, rotation 4s infinite linear; */
     animation: rotation 3s infinite linear;
 }
 
 @keyframes rotation {
 
-    /* from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(359deg);
-    } */
     0% {
         transform: rotate(0deg) scale(1);
     }
