@@ -129,7 +129,7 @@ h1 {
     animation: IncreaseSunSize 5s ease-in-out;
 
 
-/* for easter egg */
+    /* for easter egg */
     background-color: #f0c91900;
     /* animation: IncreaseSunSize 5s linear, rotation 4s infinite linear; */
     animation: rotation 3s infinite linear;
@@ -164,6 +164,7 @@ h1 {
         transform: rotate(360deg) scale(1);
     }
 }
+
 @keyframes rotation2 {
 
     /* from {
@@ -176,19 +177,19 @@ h1 {
     0% {
         transform: rotate(360deg) scale(1);
     }
-    
+
     20% {
         transform: rotate(288deg) scale(1.5);
     }
-    
+
     50% {
         transform: rotate(180deg) scale(2);
     }
-    
+
     80% {
         transform: rotate(72deg) scale(1.5);
     }
-    
+
     100% {
         transform: rotate(0deg) scale(1);
     }
@@ -222,6 +223,7 @@ svg {
         transform: scaleY(1);
     }
 }
+
 #ray2b {
     transform-origin: bottom;
     animation: ray2Animation 2s linear infinite;
@@ -242,6 +244,7 @@ svg {
         transform: scaleY(1);
     }
 }
+
 #ray3b {
     transform-origin: 4.22px 4.22px;
     animation: ray3Animation 1s linear infinite;
@@ -262,6 +265,7 @@ svg {
         transform: scale(1);
     }
 }
+
 #ray4b {
     transform-origin: 15.36px 15.36px;
     animation: ray4Animation 1.4s linear infinite;
@@ -282,6 +286,7 @@ svg {
         transform: scale(1);
     }
 }
+
 #ray5b {
     transform-origin: left;
     animation-delay: 5s;
@@ -303,6 +308,7 @@ svg {
         transform: scaleX(1);
     }
 }
+
 #ray6b {
     transform-origin: right;
     animation: ray6bAnimation 1.7s linear infinite;
@@ -323,6 +329,7 @@ svg {
         transform: scaleX(1);
     }
 }
+
 #ray7b {
     transform-origin: 4.22px 19.78px;
     animation: ray7bAnimation 1.37s linear infinite;
@@ -343,6 +350,7 @@ svg {
         transform: scale(1);
     }
 }
+
 #ray8b {
     transform-origin: 18.36px 5.64px;
     animation: ray8bAnimation 1.5s linear infinite;
@@ -367,58 +375,23 @@ svg {
 /* for easter egg */
 /* ************************************************************************** */
 @keyframes IncreaseSunSize {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.5);
-  }
-  100% {
-    transform: scale(2);
-  }
-}
-#sunContainer {
-    position: relative;
-  }
-.sun-animation {
-    position: absolute;
-    top: 25%;
-    left: 26%;
-    transform: translate(-50%, -50%);
-    /* transform: translateX(-50%); */
-    /* animation-name: sunAnimation;
-    animation-duration: 2s;
-    animation-timing-function: linear;
-    animation-fill-mode: forwards; */
-    animation: sunAnimation 2s cubic-bezier(.43, 2, 1, 1.43) forwards;
-    animation: sunAnimation 2s cubic-bezier(0.42, 0, 0.58, 1) forwards;
-    /* cubic-bezier(.13,2,1,1.43) */
-  }
-  
-  @keyframes sunAnimation {
     0% {
-      transform: translateY(0) scale(1);
-      opacity: 1;
-    }
-    50% {
-      transform: translateY(-100px) scale(0.5);
-      opacity: 0.5;
-    }
-    100% {
-      transform: translateY(-200px) scale(0);
-      opacity: 0;
-    }
-  }
-
-
-
-    100% {
         transform: scale(1);
     }
+
+    50% {
+        transform: scale(1.5);
+    }
+
+    100% {
+        transform: scale(2);
+    }
 }
+
 #sunContainer {
     position: relative;
-  }
+}
+
 .sun-animation {
     position: absolute;
     top: 25%;
@@ -432,22 +405,30 @@ svg {
     animation: sunAnimation 2s cubic-bezier(.43, 2, 1, 1.43) forwards;
     animation: sunAnimation 2s cubic-bezier(0.42, 0, 0.58, 1) forwards;
     /* cubic-bezier(.13,2,1,1.43) */
-  }
-  
-  @keyframes sunAnimation {
+}
+
+@keyframes sunAnimation {
     0% {
-      transform: translateY(0) scale(1);
-      opacity: 1;
+        transform: translateY(0) scale(1);
+        opacity: 1;
     }
+
     50% {
-      transform: translateY(-100px) scale(0.5);
-      opacity: 0.5;
+        transform: translateY(-100px) scale(0.5);
+        opacity: 0.5;
     }
+
     100% {
-      transform: translateY(-200px) scale(0);
-      opacity: 0;
+        transform: translateY(-200px) scale(0);
+        opacity: 0;
     }
-  }
+}
+
+/* 100% {
+        transform: scale(1);
+    } */
+/* } */
+
 
 @keyframes displayText {
     0% {
@@ -459,6 +440,7 @@ svg {
         transform: translateX(-30px);
         opacity: 0.9;
     }
+}
 
 /* for easter egg */
 @keyframes displayRay {
