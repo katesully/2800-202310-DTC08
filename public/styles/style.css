@@ -23,6 +23,13 @@ a {
     text-decoration: none;
 }
 
+a[href="https://translate.google.com"] {
+    display: none;
+}
+
+iframe[id=":1.container"] {
+    display: none;
+}
 
 .footer-box {
     display: flex;
