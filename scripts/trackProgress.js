@@ -25,3 +25,10 @@ async function saveProgress(mapID) {
     location.reload();
 
 }
+
+function saveCopy() {
+    console.log('Saving a copy...');
+
+    //get the array of steps
+    var steps = document.querySelectorAll('.step');
+}
