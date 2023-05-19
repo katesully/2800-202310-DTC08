@@ -7,13 +7,27 @@
                 <% } else { %>
             <li class="rotate-in odd">
                 <% } %>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="step<%-index%>">
-                        <label class="form-check-label" for="step<%-index%>">Step <%= index + 1 %></label>
-                        <p>
-                            <%= step %>
-                        </p>
-                    </div>
+                    <% if (checkboxStates[index]==true) { %>
+                        <div class="form-check true">
+                            <% } else { %>
+                                <div class="form-check false">
+                                    <% } %>
+                                        <% if (checkboxStates[index]==false) { %>
+                                            <input class="form-check-input" type="checkbox" value=""
+                                                id="step<%-index%>">
+                                            <label class="form-check-label" for="step<%-index%>">Step <%= index + 1 %>
+                                            </label>
+                                            <% } else { %>
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="step<%-index%>" checked>
+                                                <label class="form-check-label" for="step<%-index%>">Step <%= index + 1
+                                                        %>
+                                                </label>
+                                                <% } %>
+                                                    <p>
+                                                        <%= step %>
+                                                    </p>
+                                </div>
             </li>
             <% }); %>
 </ul>

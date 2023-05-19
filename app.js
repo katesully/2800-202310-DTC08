@@ -215,7 +215,7 @@ app.get('/main', (req, res) => {
 
 app.post('/bookmarkRoadmap', async (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
-        
+
         const user = await usersModel.findOne({ username: req.session.loggedUsername });
 
         if (!user) {
@@ -236,7 +236,7 @@ app.post('/bookmarkRoadmap', async (req, res) => {
         console.log("Roadmap saved to user account");
         console.log(user);
         console.log(user.savedRoadmaps);
-    
+
         // res.redirect('/savedRoadmaps');
     }
     else {
@@ -297,7 +297,7 @@ function createRoadmapObject(message) {
     var messageArray = message.split("\n").filter(line => line.length > 0);
     roadmapObject.title = messageArray[0].split(": ")[1];
     roadmapObject.description = messageArray[1].split(": ")[1];
-    
+
 
     for (var i = 2; i < messageArray.length; i++) {
         if (messageArray[i].split(". ")[1] !== undefined) {
@@ -317,10 +317,13 @@ app.post('/sendRequest', async (req, res) => {
 
     console.log(roadmapObject)
     res.render('./main.ejs', {
-        // steps: roadmapObject.steps.slice(0, roadmapObject.steps.length),
+        //create an array the size of the number of steps in the roadmap
+        //fill the array with true values
+        //this is used to set the checkboxes to true by default
+
         //only display steps that are not undefined
         steps: roadmapObject.steps.filter(step => step !== undefined),
-        displayFlag: true,
+        checkboxStates: Array(roadmapObject.steps.length).fill(false),
         roadmap: JSON.stringify(roadmapObject)
     });
 
@@ -460,8 +463,8 @@ app.get('/newpassword', (req, res) => {
 })
 
 
-app.get('/savedRoadmaps', async(req, res) => {
-    
+app.get('/savedRoadmaps', async (req, res) => {
+
     if (req.session.GLOBAL_AUTHENTICATED) {
 
         const user = await usersModel.findOne({ username: req.session.loggedUsername });
@@ -482,6 +485,105 @@ app.get('/savedRoadmaps', async(req, res) => {
     }
 });
 
+app.get('/trackProgress', async (req, res) => {
+    try {
+        const users = await usersModel.find({}).exec(); // Fetch users from the database
+        // console.log(users)
+
+        const allSavedRoadMaps = [];
+
+        users.forEach(user => {
+            user.savedRoadmaps.forEach(roadmap => {
+                allSavedRoadMaps.push(roadmap);
+            })
+        });
+
+        // console.log(allSavedRoadMaps);
+
+        const mapid = req.query.id;
+
+        const map = allSavedRoadMaps.find(roadmap => roadmap._id === mapid);
+
+        if (!map) {
+            return res.status(404).send('Map ID not found');
+        }
+
+        const steps = [];
+
+        map.steps.forEach(step => {
+            steps.push(step.step);
+        });
+
+        const checkboxStates = [];
+
+        map.steps.forEach(step => {
+            checkboxStates.push(step.checked);
+        });
+
+        console.log(steps);
+
+        res.render('./trackProgress.ejs', { mapid: req.query.id, steps: steps, checkboxStates: checkboxStates });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Internal Server Error');
+    }
+});
+
+app.post('/saveProgress', async (req, res) => {
+    console.log(req.body);
+    //grab the map id from the request body
+    const mapid = req.body.mapID;
+    //grab the checkbox states from the request body
+    const checkboxStates = req.body.checkboxStates;
+
+    //get all users from the database
+    try {
+        const users = await usersModel.find({}).exec(); // Fetch users from the database
+        // console.log(users)
+
+        const allSavedRoadMaps = [];
+
+        users.forEach(user => {
+            user.savedRoadmaps.forEach(roadmap => {
+                allSavedRoadMaps.push(roadmap);
+            })
+        }
+        );
+
+        // find the roadmap with the matching id
+        const map = allSavedRoadMaps.find(roadmap => roadmap._id === mapid);
+
+        //find the user who owns the roadmap
+        const user = users.find(user => user.savedRoadmaps.includes(map));
+
+        if (!map) {
+            return res.status(404).send('Map ID not found');
+        }
+
+        //check if user is logged in
+        if (!req.session.GLOBAL_AUTHENTICATED) {
+            return res.status(401).send('Unauthorized');
+        }
+
+        //check if user owns the roadmap
+        if (user.username !== req.session.loggedUsername) {
+            return res.status(401).send('Unauthorized');
+        }
+
+        //update the roadmap with the new checkbox states
+        await usersModel.updateOne(
+            { _id: user._id, "savedRoadmaps._id": mapid },
+            { $set: { "savedRoadmaps.$.steps": map.steps.map((step, i) => ({ step: step.step, checked: checkboxStates[i] })) } }
+        );
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Internal Server Error');
+    }
+
+    res.status(200).send('Progress saved successfully');
+});
+
 app.post('/deleteBookmark', async (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
         const savedRoadmapId = req.body.mapid;
@@ -491,7 +593,7 @@ app.post('/deleteBookmark', async (req, res) => {
         if (!user) {
             throw new Error("User does not exist");
         }
-        
+
         await usersModel.updateOne(
             { _id: user._id },
             { $pull: { savedRoadmaps: { _id: savedRoadmapId } } }
@@ -561,7 +663,7 @@ app.post('/sendShareEmail', async (req, res) => {
     try {
         const recipient = req.body.inputShareEmailToSend;
 
-        const content = req.body.inputShareEmailContent; 
+        const content = req.body.inputShareEmailContent;
 
         await sendShareEmail(recipient, content);
 
