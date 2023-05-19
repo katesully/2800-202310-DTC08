@@ -16,6 +16,7 @@ async function main() {
     // Check if the connection is successful by checking the value of mongoose.connection.readyState
     console.log("server.js: mongoose.connection.readyState (0 = disconnected; 1 = connected):", mongoose.connection.readyState);
     
+
     //this was written by Oceaan with help from chatGPT to resolve the issue of the signup.js file not being found
     app.use('/scripts', express.static(__dirname + '/scripts', {
         setHeaders: function (res, path) {
@@ -24,6 +25,12 @@ async function main() {
             }
         }
     }));
+
+
+    app.get("*", (req, res) => {
+        res.status(404).render('error404.ejs');
+    });
+  
   }
   
   

@@ -63,7 +63,6 @@ app.get(['/', '/home'], (req, res) => {
 
 
 
-
 app.get('/signup', (req, res) => {
     console.log("app.get(\'\/createUser\'): Current session cookie-id:", req.cookies)
     if (req.session.GLOBAL_AUTHENTICATED) {
@@ -733,9 +732,6 @@ app.post('/sendShareEmail', async (req, res) => {
 });
 
 
-// app.get("*", (req, res) => {
-//     res.status(404).render('error404.ejs');
-// });
 
 
 module.exports = app;
