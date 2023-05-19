@@ -20,7 +20,7 @@ function shareRoadmap(shareButton) {
     let maptoshare = shareButton.closest('.card');
     console.log(maptoshare.getAttribute("value"));
     let mapid = maptoshare.getAttribute("value");
-    let shareURL = "https://outrageous-gold-pullover.cyclic.app/trackprogress?id=" + mapid;
+    let shareURL = "https://outrageous-gold-pullover.cyclic.app/trackProgress?id=" + mapid;
     console.log(shareURL);
     let inputIdField = document.getElementById("savedID")
     // set value attribute to shareURL
