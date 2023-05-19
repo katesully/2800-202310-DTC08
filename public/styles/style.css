@@ -32,6 +32,11 @@ iframe[id=":1.container"] {
     display: none;
 }
 
+#goog-gt-tt {
+    display: none !important;
+    
+}
+
 .footer-box {
     display: flex;
     flex-grow: 1;
