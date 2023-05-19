@@ -319,7 +319,7 @@ app.post('/sendRequest', async (req, res) => {
 
         //only display steps that are not undefined
         steps: roadmapObject.steps.filter(step => step !== undefined),
-        checkboxStates: Array(roadmapObject.steps.length).fill(true),
+        checkboxStates: Array(roadmapObject.steps.length).fill(false),
         roadmap: JSON.stringify(roadmapObject)
     });
 
