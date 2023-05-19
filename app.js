@@ -483,13 +483,6 @@ app.get('/trackProgress', async (req, res) => {
         const users = await usersModel.find({}).exec(); // Fetch users from the database
         // console.log(users)
 
-        //user savedRoadmaps is an array of objects
-        //each object has a roadmap id
-        //find the user with the roadmap id
-        //then find the roadmap with the roadmap id
-        //then get the steps from the roadmap
-
-
         const allSavedRoadMaps = [];
 
         users.forEach(user => {
@@ -521,6 +514,61 @@ app.get('/trackProgress', async (req, res) => {
         console.error(err);
         return res.status(500).send('Internal Server Error');
     }
+});
+
+app.post('/saveProgress', async (req, res) => {
+    console.log(req.body);
+    //grab the map id from the request body
+    const mapid = req.body.mapID;
+    //grab the checkbox states from the request body
+    const checkboxStates = req.body.checkboxStates;
+
+    //get all users from the database
+    try {
+        const users = await usersModel.find({}).exec(); // Fetch users from the database
+        // console.log(users)
+
+        const allSavedRoadMaps = [];
+
+        users.forEach(user => {
+            user.savedRoadmaps.forEach(roadmap => {
+                allSavedRoadMaps.push(roadmap);
+            })
+        }
+        );
+
+        // find the roadmap with the matching id
+        const map = allSavedRoadMaps.find(roadmap => roadmap._id === mapid);
+
+        //find the user who owns the roadmap
+        const user = users.find(user => user.savedRoadmaps.includes(map));
+
+        if (!map) {
+            return res.status(404).send('Map ID not found');
+        }
+
+        //check if user is logged in
+        if (!req.session.GLOBAL_AUTHENTICATED) {
+            return res.status(401).send('Unauthorized');
+        }
+
+        //check if user owns the roadmap
+        if (user.username !== req.session.loggedUsername) {
+            return res.status(401).send('Unauthorized');
+        }
+
+        //update the roadmap with the new checkbox states
+        await usersModel.updateOne(
+            { _id: user._id, "savedRoadmaps._id": mapid },
+            { $set: { "savedRoadmaps.$.steps": map.steps.map((step, i) => ({ step: step.step, checked: checkboxStates[i] })) } }
+        );
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Internal Server Error');
+    }
+
+    res.status(200).send('Progress saved successfully');
 });
 
 app.post('/deleteBookmark', async (req, res) => {

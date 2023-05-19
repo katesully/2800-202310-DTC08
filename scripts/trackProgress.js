@@ -5,7 +5,7 @@ async function saveProgress(mapID) {
     var checkboxes = document.querySelectorAll('input[type=checkbox]');
     var checkboxStates = [];
     checkboxes.forEach((checkbox) => {
-        checkboxeStates.push(checkbox.checked);
+        checkboxStates.push(checkbox.checked);
     }
     );
 
