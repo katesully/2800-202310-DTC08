@@ -32,10 +32,6 @@ function saveCopy() {
     //get the array of steps
     var steps = document.querySelectorAll('.step');
 
-    steps.forEach((step) => {
-        console.log(step);
-    });
-
     //create a new array to store the steps
     var stepObjects = [];
 
@@ -51,17 +47,17 @@ function saveCopy() {
         steps: stepObjects
     };
 
-    //pass the roadmap object to the backend
-    // axios.post("/saveCopy", { roadmap: roadmap }, {
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     }
-    // }).then(response => {
-    //     console.log(response);
-    // }
-    // ).catch(error => {
-    //     console.log(error);
-    // }
-    // );
+    // pass the roadmap object to the backend
+    axios.post("/saveCopy", { roadmap: roadmap }, {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then(response => {
+        console.log(response);
+    }
+    ).catch(error => {
+        console.log(error);
+    }
+    );
 
 }
