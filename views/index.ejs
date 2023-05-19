@@ -1,17 +1,21 @@
 <%- include('components/headHTML.ejs') %>
 
-<body>
-  <script src="/scripts/index.js"></script>
-  <!-- translate automatically to users device language  -->
-  <link rel="stylesheet" type="text/css" href="./styles/index.css" />
-  <script type="text/javascript">
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({
-        pageLanguage: 'en'
-      }, 'google_translate_element');
-    }
-  </script>
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+  <body>
+    <%- include('components/navbar_header_before_signin.ejs') %>
+
+      <h1 class="notranslate" id="title" style="text-align: center;">NewJourney</h1>
+
+      <!-- translate automatically to users device language  -->
+      <link rel="stylesheet" type="text/css" href="./styles/index.css" />
+
+
+      <script type="text/javascript">
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+        }
+      </script>
 
   <%- include('components/navbar_header_before_signin.ejs') %>
   <h1 id="title" class="mt-5" style="text-align: center;">NewJourney</h1>
@@ -66,15 +70,15 @@
   <div class="card" id="backgroundCard" style="border-radius: 10px; display: none">
     <img src="background_family_1.png" class="card-img" alt="Background image">
 
-    <div class="card-img-overlay">
-      <h5 class="card-title text-white">Helping you on your new path</h5>
-      <p class="card-text text-white intro-text"> NewJourney is your helping hand to navigating life in your new home town
-        Whether you need help with finding a house, navigating transit or figuring out the healthcare system,
-        NewJourney is here to help you. </p>
-    </div>
-  </div>
-  <br>
-  <br>
+        <div class="card-img-overlay">
+          <h5 class="card-title text-white">Helping you on your new path</h5>
+          <p class="card-text text-white intro-text"> <span class="notranslate">NewJourney </span> is your helping hand to navigating life in your new home town
+         Whether you need help with finding a house, navigating transit or figuring out the healthcare system, 
+        <span class="notranslate">NewJourney </span> is here to help you.  </p>
+        </div>
+      </div>
+      <br>
+      <br>
 
 
 
