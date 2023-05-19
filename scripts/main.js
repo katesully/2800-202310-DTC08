@@ -138,3 +138,13 @@ async function saveRoadmap(roadmap) {
         });
 
 }
+
+function toggleLoader() {
+    var loader = document.getElementById('containerLoader');
+    var content = document.getElementById('hideWhenLoading');
+    
+    if (loader.style.display === 'none') {
+        loader.style.display = 'block';
+        content.style.display = 'none';
+    }
+}
