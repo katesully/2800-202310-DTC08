@@ -326,7 +326,8 @@ app.post('/sendRequest', async (req, res) => {
         steps: roadmapObject.steps.filter(step => step !== undefined),
         checkboxStates: Array(roadmapObject.steps.length).fill(false),
         roadmap: JSON.stringify(roadmapObject),
-        title: roadmapObject.title
+        title: roadmapObject.title,
+        description: roadmapObject.description
     });
 
 });

@@ -43,7 +43,7 @@
                     <div id="roadmapGoesHere">
                         <% if (typeof steps !=='undefined' ) { %>
                             <%- include('components/roadmap.ejs', {steps: steps, checkboxStates: checkboxStates, title:
-                                title}) %>
+                                title, description: description}) %>
                                 <% } %>
                     </div>
                     <!-- div for bookmark/save map -->
