@@ -315,6 +315,7 @@ app.post('/sendRequest', async (req, res) => {
     let returnMessage = await getMessage(userInput, req.session.loggedCity);
     let roadmapObject = createRoadmapObject(returnMessage.choices[0].message.content);
 
+
     console.log(roadmapObject)
     res.render('./main.ejs', {
         //create an array the size of the number of steps in the roadmap
@@ -324,7 +325,8 @@ app.post('/sendRequest', async (req, res) => {
         //only display steps that are not undefined
         steps: roadmapObject.steps.filter(step => step !== undefined),
         checkboxStates: Array(roadmapObject.steps.length).fill(false),
-        roadmap: JSON.stringify(roadmapObject)
+        roadmap: JSON.stringify(roadmapObject),
+        title: roadmapObject.title
     });
 
 });
@@ -522,7 +524,7 @@ app.get('/trackProgress', async (req, res) => {
 
         console.log(steps);
 
-        res.render('./trackProgress.ejs', { mapid: req.query.id, steps: steps, checkboxStates: checkboxStates });
+        res.render('./trackProgress.ejs', { mapid: req.query.id, steps: steps, checkboxStates: checkboxStates, title: map.title, description: map.description });
     } catch (err) {
         console.error(err);
         return res.status(500).send('Internal Server Error');

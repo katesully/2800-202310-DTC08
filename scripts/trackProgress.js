@@ -40,8 +40,6 @@ function saveCopy() {
         stepObjects.push({ step: step.innerHTML, checked: false });
     });
 
-
-
     //create new roadmap object to store the steps
     var roadmap = {
         title: 'Copy of ' + document.getElementById('roadmapTitle').innerHTML,
