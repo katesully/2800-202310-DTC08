@@ -48,6 +48,15 @@
         .VIpgJd-ZVi9od-ORHb {
             display: none;
         }
+
+        .VIpgJd-ZVi9od-ORHb-OEVmcd {
+            display: none;
+        }
+    
+
+          .VIpgJd-VIpgJd-suEOdc {
+            display: none;
+        }
     
         #goog-gt-tt {
             display: none;
@@ -59,6 +68,8 @@
             display: none;
         }
     </style>
+
+<%- include('components/headHTML.ejs') %>
 
 
 
@@ -88,13 +99,13 @@
     src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 
-    <div class="container col">
-        <h1 class="text-center">Saved Roadmaps</h1>
-        <% let i=0; %>
-            <% for(i=0; i < savedList.length; i++) { %>
-                <%- include("components/savedRoadmaps_card.ejs", savedList[i]) %>
-            <% } %>
-    </div>
+                        <div class="container col mt-3">
+                            <h1 class="text-center">Saved Roadmaps</h1>
+                            <% let i=0; %>
+                                <% for(i=0; i < savedList.length; i++) { %>
+                                    <%- include("components/savedRoadmaps_card.ejs", savedList[i]) %>
+                                        <% } %>
+                        </div>
 
     
 <script src="../scripts/shareModal.js"></script>
