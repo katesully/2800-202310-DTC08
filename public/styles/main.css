@@ -498,3 +498,8 @@ svg {
         opacity: 0;
     }
 }
+
+.chat-bubble-input {
+    border: 1px solid rgb(190, 190, 190);
+    border-radius: 25px;
+}

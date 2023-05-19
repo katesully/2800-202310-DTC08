@@ -34,7 +34,7 @@
         </script>
 
         <%if(typeof username !=='undefined' ) { %>
-            <h1> Hello, &nbsp;<span class="notranslate" id="namePlaceholder"><%- username %></span>!</h1>
+            <h1> Hello, <span class="notranslate" id="namePlaceholder"><%- username %></span>!</h1>
             <% } %>
 
                 <!-- the code below was copied from the chatGPT website and subsequently edited by Oceaan -->
@@ -54,7 +54,7 @@
                     </div>
                     <!-- div for chatbot -->
                     <div class="flex flex-col mb-8 md:mb-auto gap-3.5 flex-1">
-                        <div class="box colour-yellow">
+                        <div class="box colour-yellow mb-5">
                             <div id="easter-egg">
                                 <div id="expanding-ray" class="hidden">
                                 </div>
@@ -91,7 +91,8 @@
                                             <line x1="4.22" y1="19.78" x2="-4.22" y2="29.78" id="ray7b"></line>
                                             <!--7:30-->
                                             <line x1="18.36" y1="5.64" x2="28.36" y2="-5.64" id="ray8b"></line>
-                                        </svg>Examples
+                                        </svg>
+                                        <span>Examples</span>
                                     </div>
                                 </h2>
                             </div>
@@ -109,17 +110,17 @@
                                         value="How do I get a credit card in Vancouver BC?">
                                 </form>
                                 <button type="submit" form="exampleForm1" id="textInput" name="textInput"
-                                    class="w-full bg-gray-50 dark:bg-white/5 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-900">"How
+                                    class="rounded shadow-sm w-full bg-gray-50 dark:bg-white/5 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-900 remove-border">"How
                                     can I understand my tenancy agreement?"</button>
                                 <button type="submit" form="exampleForm2"
-                                    class="w-full bg-gray-50 dark:bg-white/5 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-900"
+                                    class="rounded shadow-sm w-full bg-gray-50 dark:bg-white/5 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-900 remove-border"
                                     id="textInput" name="textInput">"How do I navigate the city using transit?"</button>
                                 <button type="submit" form="exampleForm3"
-                                    class="w-full bg-gray-50 dark:bg-white/5 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-900"
+                                    class="rounded shadow-sm w-full bg-gray-50 dark:bg-white/5 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-900 remove-border"
                                     id="textInput" name="textInput">"How do I get a credit card?"</button>
                             </ul>
                         </div>
-                        <form class="input-field py-3" action="/sendRequest" method="post">
+                        <form class="chat-bubble-input input-field mt-6 py-0 px-3" action="/sendRequest" method="post">
                             <input type="text" class="form-control" placeholder="What do you need help with?"
                                 id="textInput" name="textInput">
                             <button type="submit" value="Submit" class="btn m-auto"><i
