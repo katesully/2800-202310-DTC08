@@ -60,4 +60,6 @@ function saveCopy() {
     }
     );
 
+    alert("Your roadmap has been saved to your account.");
+
 }
