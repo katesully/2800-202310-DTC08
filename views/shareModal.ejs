@@ -99,22 +99,21 @@
 
             </div>
           </form>
-          <form class="form-floating flex-fill mb-0 container" action="/sendShareEmail" method="post">
+          <form class="form-floating flex-fill mb-0 container px-0" action="/sendShareEmail" method="post">
 
-            <div id="emailDiv" class="my-3" hidden>
+            <div id="emailDiv" class="mt-3 mb-4" hidden>
               <div class="d-flex">
                 <input type="email" id="inputEmail" class="col form-control" name="inputShareEmailToSend"
                   placeholder="Enter your e-mail" />
               
                 <input type="text" id="emailContent" class="col form-control" name="inputShareEmailContent"
                   value="" hidden />
-              </div>
-              <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary" id="sendButton">Send e-mail</button>
+                  <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary ms-2" id="sendButton">Send</button>
+                  </div>
               </div>
               <div id="sentText"></div>
               </div>
-            </div>
           </form>
 
           <hr>
