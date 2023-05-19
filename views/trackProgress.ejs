@@ -9,7 +9,7 @@
 
         ul li {
             margin-left: 10px;
-            border: 2px purple solid;
+            border: 2px #7951A0 solid;
             backface-visibility: hidden;
             padding: 5px;
         }
@@ -30,6 +30,17 @@
         .VIpgJd-ZVi9od-l4eHX-hSRGPD {
             display: none;
         }
+
+        #saveButtons {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            display: flex;
+        }
+
+        #saveButtons button {
+            margin: 2px;
+            background-color: #7951A0;
+        }
     </style>
     <script type="text/javascript">
         function googleTranslateElementInit() {
@@ -47,9 +58,12 @@
         <%- include('components/navbar_header.ejs') %>
 
             <%- include('components/roadmap.ejs') %>
-
-                <button class="btn btn-primary col-6 col-md-12 py-md-3" onclick=saveProgress(mapID)>Save
-                    Progress</button>
+                <div class="container" id="saveButtons">
+                    <button class="btn btn-primary col-6 col-md-12 py-md-3" onclick=saveProgress(mapID)>Save
+                        Progress</button>
+                    <button class="btn btn-primary col-6 col-md-12 py-md-3" onclick=saveCopy(mapID)>Save
+                        A Copy</button>
+                </div>
                 <%- include('components/footer.ejs') %>
     </body>
 
