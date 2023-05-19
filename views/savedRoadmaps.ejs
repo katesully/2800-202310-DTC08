@@ -32,43 +32,46 @@
             console.log('Detected language:', language);
         </script>
 
-<body>
-
-  
-
-  
-
-    <%- include('components/navbar_header_logout.ejs') %>
-    <!-- Share Modal starts here-->
-    <%- include('components/deleteModal.ejs') %>
-    <!-- Delete Modal starts here-->
-    <%- include('shareModal.ejs') %>
-
-<script type="text/javascript">
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-            pageLanguage: 'en'
-        }, 'google_translate_element');
-    }
-</script>
-
-<script type="text/javascript"
-    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        <body>
 
 
-    <div class="container col">
-        <h1 class="text-center">Saved Roadmaps</h1>
-        <% let i=0; %>
-            <% for(i=0; i < savedList.length; i++) { %>
-                <%- include("components/savedRoadmaps_card.ejs", savedList[i]) %>
-            <% } %>
-    </div>
 
-    
-<script src="../scripts/shareModal.js"></script>
 
-    <%- include('components/footer.ejs') %>
 
-</body>
+            <%- include('components/navbar_header_logout.ejs') %>
+                <!-- Share Modal starts here-->
+                <%- include('components/deleteModal.ejs') %>
+                    <!-- Delete Modal starts here-->
+                    <%- include('shareModal.ejs') %>
 
-</html>
+                        <script type="text/javascript">
+                            function googleTranslateElementInit() {
+                                new google.translate.TranslateElement({
+                                    pageLanguage: 'en'
+                                }, 'google_translate_element');
+                            }
+                        </script>
+
+                        <script type="text/javascript"
+                            src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+                        <div class="container col">
+                            <h1 class="text-center">Saved Roadmaps</h1>
+                            <% let i=0; %>
+                                <% for(i=0; i < savedList.length; i++) { %>
+                                    <%- include("components/savedRoadmaps_card.ejs", savedList[i]) %>
+                                        <% } %>
+                        </div>
+
+
+                        <script src="../scripts/shareModal.js"></script>
+                        <script src="../scripts/savedRoadmaps.js"></script>
+                        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+                        <%- include('components/footer.ejs') %>
+
+        </body>
+
+        </html>
