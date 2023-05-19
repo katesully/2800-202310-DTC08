@@ -21,4 +21,7 @@ async function saveProgress(mapID) {
         console.log(error);
     });
 
+    //reload page
+    location.reload();
+
 }
