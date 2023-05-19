@@ -534,7 +534,10 @@ app.get('/trackProgress', async (req, res) => {
 
         let userOwnsMap;
         //check if user owns the roadmap
-        if (req.session.loggedUsername !== mapOwner.username) {
+        if (req.session.loggedUsername == mapOwner.username) {
+            userOwnsMap = true;
+        }
+        else {
             userOwnsMap = false;
         }
 
