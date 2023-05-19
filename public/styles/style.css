@@ -27,6 +27,7 @@ a[href="https://translate.google.com"] {
     display: none;
 }
 
+iframe[id=":0.container"], 
 iframe[id=":1.container"] {
     display: none;
 }
