@@ -506,6 +506,9 @@ app.get('/trackProgress', async (req, res) => {
 
         const map = allSavedRoadMaps.find(roadmap => roadmap._id === mapid);
 
+        //find the user who owns the roadmap
+        const mapOwner = users.find(user => user.savedRoadmaps.includes(map));
+
         if (!map) {
             return res.status(404).send('Map ID not found');
         }
@@ -522,9 +525,21 @@ app.get('/trackProgress', async (req, res) => {
             checkboxStates.push(step.checked);
         });
 
-        console.log(steps);
+        // console.log(steps);
 
-        res.render('./trackProgress.ejs', { mapid: req.query.id, steps: steps, checkboxStates: checkboxStates, title: map.title, description: map.description });
+        //check which user is logged in
+        if (!req.session.GLOBAL_AUTHENTICATED) {
+            return res.status(401).send('Unauthorized');
+        }
+
+        let userOwnsMap;
+        //check if user owns the roadmap
+        if (req.session.loggedUsername !== mapOwner.username) {
+            userOwnsMap = false;
+        }
+
+
+        res.render('./trackProgress.ejs', { mapid: req.query.id, steps: steps, checkboxStates: checkboxStates, title: map.title, description: map.description, userOwnsMap: userOwnsMap });
     } catch (err) {
         console.error(err);
         return res.status(500).send('Internal Server Error');

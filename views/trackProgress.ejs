@@ -59,10 +59,15 @@
 
             <%- include('components/roadmap.ejs') %>
                 <div class="container" id="saveButtons">
-                    <button class="btn btn-primary col-6 col-md-12 py-md-3" onclick=saveProgress(mapID)>Save
-                        Progress</button>
-                    <button class="btn btn-primary col-6 col-md-12 py-md-3" onclick=saveCopy(mapID)>Save
-                        A Copy</button>
+                    <% if (userOwnsMap) { %>
+                        <button class="btn btn-primary col-6 col-md-12 py-md-3" id="save-progress-button"
+                            onclick=saveProgress(mapID)>Save
+                            Progress</button>
+                        <% } else { %>
+                            <button class="btn btn-primary col-6 col-md-12 py-md-3" id="save-copy-button"
+                                onclick=saveCopy(mapID)>Save
+                                A Copy</button>
+                            <% } %>
                 </div>
                 <%- include('components/footer.ejs') %>
     </body>
