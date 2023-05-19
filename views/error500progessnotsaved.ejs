@@ -8,15 +8,9 @@
     .VIpgJd-ZVi9od-l4eHX-hSRGPD {
         display: none;
     }
-
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-}
-
 </style>
+
+
 
 <%- include('components/headHTML.ejs') %>
     <%- include('components/navbar_header_logout.ejs') %>
@@ -40,7 +34,7 @@
         </script>
 
       
-              
+              <title>Error! </title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
  
@@ -50,13 +44,12 @@
       <div class="col-md-6 col-lg-5">
         <div class="error-template">
             <div class="text-center">
-                <img src="happyface.png" alt="200 Success" class="success-image img-fluid" height="100px">
-            </div>
-          <h3 class="mb-3" style="text-align: center;">Email sent successfully!</h1>
-          <h4 class="mb-3" style="text-align: center;">Thanks for sharing your journey </h2>
-        <div class="text-center">
-          <a href="/savedRoadmaps" class="btn btn-warning">Return to Maps</a>
+          <img src="sadface.png" alt="500 Error" class="error-image img-fluid" height="100px">
         </div>
+          <h3 class="mb-3" style="text-align: center;">Sorry</h1>
+          <h4 class="mb-3" style="text-align: center;">There seems to be a problem saving</h2>
+          <p class="mb-5" style="text-align: center;">Dorry about that, please go back and try again</p>
+          <a href="/savedRoadmaps" class="btn btn-primary">Back to saved maps</a>
         </div>
       </div>
     </div>
