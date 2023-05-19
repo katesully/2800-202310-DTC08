@@ -1,35 +1,21 @@
-<head>
-
-  <script src="/scripts/index.js"></script>
-
-</head>
-
-
-
 <%- include('components/headHTML.ejs') %>
 
+<body>
+  <script src="/scripts/index.js"></script>
+  <!-- translate automatically to users device language  -->
+  <link rel="stylesheet" type="text/css" href="./styles/index.css" />
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en'
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-
-  <body>
-    <%- include('components/navbar_header_before_signin.ejs') %>
-
-      <h1 id="title" style="text-align: center;">NewJourney</h1>
-
-      <!-- translate automatically to users device language  -->
-      <link rel="stylesheet" type="text/css" href="./styles/index.css" />
-
-
-      <script type="text/javascript">
-        function googleTranslateElementInit() {
-          new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
-        }
-      </script>
-
-      <script type="text/javascript"
-        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-
-      <img src="Welcomes.png" alt="welcomes" style="
+  <%- include('components/navbar_header_before_signin.ejs') %>
+  <h1 id="title" class="mt-5" style="text-align: center;">NewJourney</h1>
+  <img src="Welcomes.png" alt="welcomes" style="
     position: absolute;
     top: 0;
     left: 0;
@@ -41,59 +27,57 @@
     background-position: center center;
     z-index: -1;
   ">
-      <br>
+  <br>
 
 
 
-      <!-- language choice dropdown  -->
-      <h5 style="text-align: center;"> Select your language to begin </h5>
+  <!-- language choice dropdown  -->
+  <h5 style="text-align: center;"> Select your language to begin </h5>
 
-      <div class="container">
-        <div class="container-fluid card card-shadow">
-          <div class="container d-flex align-items-center justify-content-between">
-            <div class="container dropdown-container mt-3">
-            </div>
-            <div id="google_translate_element" class="translate-down"></div>
-          
-            <div class="container main-button mt-3">
-              <button type="button" class="btn btn-light" onclick="saveLanguageAndShowSignup()" style="height: 50px;">
-                <img src="ok-green.png" alt="OK" style="height: 100%;">
-              </button>
-            </div>
-          </div>
+  <div class="container">
+    <div class="container-fluid card card-shadow">
+      <div class="container d-flex align-items-center justify-content-between">
+        <div class="container dropdown-container mt-3">
+        </div>
+        <div id="google_translate_element" class="translate-down"></div>
+
+        <div class="container main-button mt-3">
+          <button type="button" class="btn btn-light" onclick="saveLanguageAndShowSignup()" style="height: 50px;">
+            <img src="ok-green.png" alt="OK" style="height: 100%;">
+          </button>
         </div>
       </div>
- 
+    </div>
+  </div>
 
 
 
-      <div class="d-flex justify-content-center mt-1">
-        <button type="button" id="login-button" class="btn btn-secondary mx-2" style="display: none; width: 100px"
-          onclick="window.location.href='/login'">Login</button>
-        <button type="button" id="signup-button" class="btn btn-warning mx-2" style="display: none; width: 100px"
-          onclick="window.location.href='/signup'">Signup</button>
-      </div>
-   
 
-
-      <!-- explanation card -->
-
-
-      <div class="card" id="backgroundCard" style="border-radius: 10px; display: none">
-        <img src="background_family_1.png" class="card-img" alt="Background image">
-
-        <div class="card-img-overlay">
-          <h5 class="card-title text-white">Helping you on your new path</h5>
-          <p class="card-text text-white intro-text"> NewJourney is your helping hand to navigating life in your new home town
-         Whether you need help with finding a house, navigating transit or figuring out the healthcare system, 
-         NewJourney is here to help you.  </p>
-        </div>
-      </div>
-      <br>
-      <br>
+  <div class="d-flex justify-content-center mt-1">
+    <button type="button" id="login-button" class="btn btn-secondary mx-2" style="display: none; width: 100px" onclick="window.location.href='/login'">Login</button>
+    <button type="button" id="signup-button" class="btn btn-warning mx-2" style="display: none; width: 100px" onclick="window.location.href='/signup'">Signup</button>
+  </div>
 
 
 
-  </body>
+  <!-- explanation card -->
 
-  </html>
+
+  <div class="card" id="backgroundCard" style="border-radius: 10px; display: none">
+    <img src="background_family_1.png" class="card-img" alt="Background image">
+
+    <div class="card-img-overlay">
+      <h5 class="card-title text-white">Helping you on your new path</h5>
+      <p class="card-text text-white intro-text"> NewJourney is your helping hand to navigating life in your new home town
+        Whether you need help with finding a house, navigating transit or figuring out the healthcare system,
+        NewJourney is here to help you. </p>
+    </div>
+  </div>
+  <br>
+  <br>
+
+
+
+</body>
+
+</html>
