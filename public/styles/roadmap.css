@@ -76,3 +76,11 @@
         transform: rotateX(0deg) skewX(-15deg);
     }
 }
+
+.true {
+    text-decoration: line-through;
+}
+
+.false {
+    text-decoration: none;
+}

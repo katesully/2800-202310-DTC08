@@ -42,7 +42,7 @@
                     <!-- div for GPT's answer -->
                     <div id="roadmapGoesHere">
                         <% if (typeof steps !=='undefined' ) { %>
-                            <%- include('components/roadmap.ejs', {steps: steps}) %>
+                            <%- include('components/roadmap.ejs', {steps: steps, checkboxStates: checkboxStates}) %>
                                 <% } %>
                     </div>
                     <!-- div for bookmark/save map -->

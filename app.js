@@ -313,10 +313,13 @@ app.post('/sendRequest', async (req, res) => {
 
     console.log(roadmapObject)
     res.render('./main.ejs', {
-        // steps: roadmapObject.steps.slice(0, roadmapObject.steps.length),
+        //create an array the size of the number of steps in the roadmap
+        //fill the array with true values
+        //this is used to set the checkboxes to true by default
+
         //only display steps that are not undefined
         steps: roadmapObject.steps.filter(step => step !== undefined),
-        displayFlag: true,
+        checkboxStates: Array(roadmapObject.steps.length).fill(true),
         roadmap: JSON.stringify(roadmapObject)
     });
 
@@ -507,9 +510,15 @@ app.get('/trackProgress', async (req, res) => {
             steps.push(step.step);
         });
 
+        const checkboxStates = [];
+
+        map.steps.forEach(step => {
+            checkboxStates.push(step.checked);
+        });
+
         console.log(steps);
 
-        res.render('./trackProgress.ejs', { mapid: req.query.id, steps: steps });
+        res.render('./trackProgress.ejs', { mapid: req.query.id, steps: steps, checkboxStates: checkboxStates });
     } catch (err) {
         console.error(err);
         return res.status(500).send('Internal Server Error');
