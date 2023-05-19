@@ -63,7 +63,6 @@ app.get(['/', '/home'], (req, res) => {
 
 
 
-
 app.get('/signup', (req, res) => {
     console.log("app.get(\'\/createUser\'): Current session cookie-id:", req.cookies)
     if (req.session.GLOBAL_AUTHENTICATED) {
@@ -124,13 +123,15 @@ app.post('/signup', async (req, res) => {
             username: req.body.username,
             password: hashedPassword,
             type: "non-administrator",
-            email: req.body.Email
+            email: req.body.Email,
+            city: req.body.City
         })
         req.session.GLOBAL_AUTHENTICATED = true;
         req.session.loggedUsername = req.body.username;
         req.session.loggedPassword = hashedPassword;
         req.session.loggedType = "non-administrator";
         req.session.loggedEmail = req.body.Email;
+        req.session.loggedCity = req.body.City;
         await newUser.save();
         console.log(`New user created: ${newUser}`);
         res.redirect('/main');
@@ -175,6 +176,7 @@ app.post('/login', async (req, res) => {
         req.session.loggedPassword = userresult.password;
         req.session.loggedType = userresult?.type;
         req.session.loggedEmail = userresult.email;
+        req.session.loggedCity = userresult.city;
         console.log("app.post(\'\/login\'): Current session cookie:", req.cookies)
         res.redirect('/main');
     } else {
@@ -193,7 +195,7 @@ app.post('/login', async (req, res) => {
 
 app.get('/settings', (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
-        res.render('./settings.ejs', { username: req.session.loggedUsername, email: req.session.loggedEmail });
+        res.render('./settings.ejs', { username: req.session.loggedUsername, email: req.session.loggedEmail, city: req.session.loggedCity });
     } else {
         res.render('error403');
     }
@@ -212,7 +214,7 @@ app.get('/main', (req, res) => {
 
 app.post('/bookmarkRoadmap', async (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
-        
+
         const user = await usersModel.findOne({ username: req.session.loggedUsername });
 
         if (!user) {
@@ -233,7 +235,7 @@ app.post('/bookmarkRoadmap', async (req, res) => {
         console.log("Roadmap saved to user account");
         console.log(user);
         console.log(user.savedRoadmaps);
-    
+
         // res.redirect('/savedRoadmaps');
     }
     else {
@@ -246,8 +248,9 @@ app.post('/bookmarkRoadmap', async (req, res) => {
 
 
 // Interface with OpenAI API
-async function getMessage(message) {
+async function getMessage(message, userCity) {
     console.log('clicked');
+    let city = userCity;
     const options = {
         method: 'POST',
         headers: {
@@ -258,7 +261,7 @@ async function getMessage(message) {
             model: "gpt-3.5-turbo",
             messages: [{
                 role: "user",
-                content: `Give me a step by step guide on ${message} the form of (with no preambles or postambles):
+                content: `Please give me a step by step guide on ${message} in ${city}, BC Canada in the form of (with no preambles or postambles):
                 Title: How to ...
                 Description: A step by step guide on how to ...
                 1. ...
@@ -293,7 +296,7 @@ function createRoadmapObject(message) {
     var messageArray = message.split("\n").filter(line => line.length > 0);
     roadmapObject.title = messageArray[0].split(": ")[1];
     roadmapObject.description = messageArray[1].split(": ")[1];
-    
+
 
     for (var i = 2; i < messageArray.length; i++) {
         if (messageArray[i].split(". ")[1] !== undefined) {
@@ -308,16 +311,22 @@ function createRoadmapObject(message) {
 app.post('/sendRequest', async (req, res) => {
     var userInput = req.body.hiddenField || req.body.textInput;
 
-    let returnMessage = await getMessage(userInput);
+    let returnMessage = await getMessage(userInput, req.session.loggedCity);
     let roadmapObject = createRoadmapObject(returnMessage.choices[0].message.content);
+
 
     console.log(roadmapObject)
     res.render('./main.ejs', {
-        // steps: roadmapObject.steps.slice(0, roadmapObject.steps.length),
+        //create an array the size of the number of steps in the roadmap
+        //fill the array with true values
+        //this is used to set the checkboxes to true by default
+
         //only display steps that are not undefined
         steps: roadmapObject.steps.filter(step => step !== undefined),
-        displayFlag: true,
-        roadmap: JSON.stringify(roadmapObject)
+        checkboxStates: Array(roadmapObject.steps.length).fill(false),
+        roadmap: JSON.stringify(roadmapObject),
+        title: roadmapObject.title,
+        description: roadmapObject.description
     });
 
 });
@@ -446,18 +455,18 @@ app.post('/confirmNewPassword', async (req, res) => {
 });
 
 
-app.get('/passwordReset', (req, res) => {
+// app.get('/passwordReset', (req, res) => {
 
-    res.render('./savedRoadmaps.ejs', { savedList: roadmapsTemp });
-});
+//     res.render('./savedRoadmaps.ejs', { savedList: roadmapsTemp });
+// });
 
 app.get('/newpassword', (req, res) => {
     res.render('./newpassword.ejs')
 })
 
 
-app.get('/savedRoadmaps', async(req, res) => {
-    
+app.get('/savedRoadmaps', async (req, res) => {
+
     if (req.session.GLOBAL_AUTHENTICATED) {
 
         const user = await usersModel.findOne({ username: req.session.loggedUsername });
@@ -478,6 +487,155 @@ app.get('/savedRoadmaps', async(req, res) => {
     }
 });
 
+app.get('/trackProgress', async (req, res) => {
+    try {
+        const users = await usersModel.find({}).exec(); // Fetch users from the database
+        // console.log(users)
+
+        const allSavedRoadMaps = [];
+
+        users.forEach(user => {
+            user.savedRoadmaps.forEach(roadmap => {
+                allSavedRoadMaps.push(roadmap);
+            })
+        });
+
+        // console.log(allSavedRoadMaps);
+
+        const mapid = req.query.id;
+
+        const map = allSavedRoadMaps.find(roadmap => roadmap._id === mapid);
+
+        //find the user who owns the roadmap
+        const mapOwner = users.find(user => user.savedRoadmaps.includes(map));
+
+        if (!map) {
+            return res.status(404).send('Map ID not found');
+        }
+
+        const steps = [];
+
+        map.steps.forEach(step => {
+            steps.push(step.step);
+        });
+
+        const checkboxStates = [];
+
+        map.steps.forEach(step => {
+            checkboxStates.push(step.checked);
+        });
+
+        // console.log(steps);
+
+        //check which user is logged in
+        if (!req.session.GLOBAL_AUTHENTICATED) {
+            res.render('error403');
+        }
+
+        let userOwnsMap;
+        //check if user owns the roadmap
+        if (req.session.loggedUsername == mapOwner.username) {
+            userOwnsMap = true;
+        }
+        else {
+            userOwnsMap = false;
+        }
+
+
+        res.render('./trackProgress.ejs', { mapid: req.query.id, steps: steps, checkboxStates: checkboxStates, title: map.title, description: map.description, userOwnsMap: userOwnsMap });
+    } catch (err) {
+        console.error(err);
+        res.render('error500progressnotsaved');
+    }
+});
+
+app.post('/saveProgress', async (req, res) => {
+    console.log(req.body);
+    //grab the map id from the request body
+    const mapid = req.body.mapID;
+    //grab the checkbox states from the request body
+    const checkboxStates = req.body.checkboxStates;
+
+    //get all users from the database
+    try {
+        const users = await usersModel.find({}).exec(); // Fetch users from the database
+        // console.log(users)
+
+        const allSavedRoadMaps = [];
+
+        users.forEach(user => {
+            user.savedRoadmaps.forEach(roadmap => {
+                allSavedRoadMaps.push(roadmap);
+            })
+        }
+        );
+
+        // find the roadmap with the matching id
+        const map = allSavedRoadMaps.find(roadmap => roadmap._id === mapid);
+
+        //find the user who owns the roadmap
+        const user = users.find(user => user.savedRoadmaps.includes(map));
+
+        if (!map) {
+            return res.status(404).send('Map ID not found');
+        }
+
+        //check if user is logged in
+        if (!req.session.GLOBAL_AUTHENTICATED) {
+            res.render('error403');
+        }
+
+        //check if user owns the roadmap
+        if (user.username !== req.session.loggedUsername) {
+            res.render('error403');
+        }
+
+        //update the roadmap with the new checkbox states
+        await usersModel.updateOne(
+            { _id: user._id, "savedRoadmaps._id": mapid },
+            { $set: { "savedRoadmaps.$.steps": map.steps.map((step, i) => ({ step: step.step, checked: checkboxStates[i] })) } }
+        );
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Internal Server Error, Please try again later');
+    }
+
+    res.status(200).send('Progress saved successfully');
+});
+
+app.post('/saveCopy', async (req, res) => {
+    console.log(req.body);
+    // check that the user is logged in
+    if (!req.session.GLOBAL_AUTHENTICATED) {
+        res.render('error403');
+    }
+
+    //grab the roadmap from the request body
+    const roadmap = req.body.roadmap;
+
+    //generate a random id for the roadmap
+    let roadmapId = crypto.randomBytes(32).toString("hex");
+    roadmap._id = roadmapId;
+
+    //grab the user from the database
+    const user = await usersModel.findOne({ username: req.session.loggedUsername });
+
+    if (!user) {
+        throw new Error("User does not exist");
+    }
+
+    //add the roadmap to the user's savedRoadmaps array
+    await usersModel.updateOne(
+        { _id: user._id },
+        { $push: { savedRoadmaps: roadmap } }
+    );
+
+    console.log("Roadmap saved to user account");
+
+    res.status(200).send('Roadmap saved successfully');
+});
+
 app.post('/deleteBookmark', async (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
         const savedRoadmapId = req.body.mapid;
@@ -487,7 +645,7 @@ app.post('/deleteBookmark', async (req, res) => {
         if (!user) {
             throw new Error("User does not exist");
         }
-        
+
         await usersModel.updateOne(
             { _id: user._id },
             { $pull: { savedRoadmaps: { _id: savedRoadmapId } } }
@@ -556,11 +714,17 @@ app.post('/sendShareEmail', async (req, res) => {
     console.log('Form submission received');
     try {
         const recipient = req.body.inputShareEmailToSend;
-        const content = 'Example content'; 
+
+        const content = req.body.inputShareEmailContent;
+
+        // if email is successfully sent, have a popup that says "Email sent successfully"
+
+
 
         await sendShareEmail(recipient, content);
+  
 
-        res.status(200).json({ message: 'Email sent successfully' });
+        res.render('200emailsuccess.ejs');
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Failed to send email' });
@@ -568,9 +732,6 @@ app.post('/sendShareEmail', async (req, res) => {
 });
 
 
-// app.get("*", (req, res) => {
-//     res.status(404).render('error404.ejs');
-// });
 
 
 module.exports = app;

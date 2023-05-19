@@ -1,0 +1,83 @@
+<%- include('components/headHTML.ejs') %>
+
+<body class="py-4 px-4">
+  <style>
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 10px;
+      max-width: 90%;
+    }
+
+    ul li {
+      margin-left: 10px;
+      border: 2px #7951A0 solid;
+      backface-visibility: hidden;
+      padding: 5px;
+    }
+
+    ul li:hover {
+      background-color: #e6e6ff;
+    }
+
+    button {
+      text-align: center;
+      margin: auto;
+    }
+
+    .VIpgJd-ZVi9od-ORHb {
+      display: none;
+    }
+
+    .VIpgJd-ZVi9od-l4eHX-hSRGPD {
+      display: none;
+    }
+
+    #saveButtons {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #saveButtons button {
+      margin: 2px;
+      background-color: #7951A0;
+      border: none;
+    }
+  </style>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en'
+      }, 'google_translate_element');
+    }
+  </script>
+
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+
+  <%- include('components/navbar_header.ejs') %>
+
+  <%- include('components/roadmap.ejs') %>
+  <div class="container" id="saveButtons">
+    <% if (userOwnsMap) { %>
+    <button class="btn btn-primary col-6 col-md-12 py-md-3" id="save-progress-button" onclick=saveProgress(mapID)>Save
+      Progress</button>
+    <% } else { %>
+    <button class="btn btn-primary col-6 col-md-12 py-md-3" id="save-copy-button" onclick=saveCopy(mapID)>Save
+      A Copy</button>
+    <% } %>
+  </div>
+  <%- include('components/footer.ejs') %>
+</body>
+
+<script src="../scripts/trackProgress.js"></script>
+<script>
+  let mapID = "<%= mapid %>";
+</script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</html>
