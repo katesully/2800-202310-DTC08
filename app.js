@@ -586,6 +586,38 @@ app.post('/saveProgress', async (req, res) => {
     res.status(200).send('Progress saved successfully');
 });
 
+app.post('/saveCopy', async (req, res) => {
+    console.log(req.body);
+    // check that the user is logged in
+    if (!req.session.GLOBAL_AUTHENTICATED) {
+        return res.status(401).send('Unauthorized');
+    }
+
+    //grab the roadmap from the request body
+    const roadmap = req.body.roadmap;
+
+    //generate a random id for the roadmap
+    let roadmapId = crypto.randomBytes(32).toString("hex");
+    roadmap._id = roadmapId;
+
+    //grab the user from the database
+    const user = await usersModel.findOne({ username: req.session.loggedUsername });
+
+    if (!user) {
+        throw new Error("User does not exist");
+    }
+
+    //add the roadmap to the user's savedRoadmaps array
+    await usersModel.updateOne(
+        { _id: user._id },
+        { $push: { savedRoadmaps: roadmap } }
+    );
+
+    console.log("Roadmap saved to user account");
+
+    res.status(200).send('Roadmap saved successfully');
+});
+
 app.post('/deleteBookmark', async (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
         const savedRoadmapId = req.body.mapid;
