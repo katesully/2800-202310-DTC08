@@ -718,9 +718,14 @@ app.post('/sendShareEmail', async (req, res) => {
 
         const content = req.body.inputShareEmailContent;
 
-        await sendShareEmail(recipient, content);
+        // if email is successfully sent, have a popup that says "Email sent successfully"
 
-        res.status(200).json({ message: 'Email sent successfully' });
+
+
+        await sendShareEmail(recipient, content);
+  
+
+        res.render('200emailsuccess.ejs');
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Failed to send email' });
