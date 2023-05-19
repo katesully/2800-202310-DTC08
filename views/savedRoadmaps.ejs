@@ -11,7 +11,7 @@
 </style>
 
 <%- include('components/headHTML.ejs') %>
-    <%- include('components/navbar_header_logout.ejs') %>
+
 
         <div id="google_translate_element style=display: none;"></div>
 
@@ -56,7 +56,7 @@
                             src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 
-                        <div class="container col">
+                        <div class="container col mt-3">
                             <h1 class="text-center">Saved Roadmaps</h1>
                             <% let i=0; %>
                                 <% for(i=0; i < savedList.length; i++) { %>
