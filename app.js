@@ -530,7 +530,7 @@ app.get('/trackProgress', async (req, res) => {
 
         //check which user is logged in
         if (!req.session.GLOBAL_AUTHENTICATED) {
-            return res.status(401).send('Unauthorized');
+            res.render('error403');
         }
 
         let userOwnsMap;
@@ -546,7 +546,7 @@ app.get('/trackProgress', async (req, res) => {
         res.render('./trackProgress.ejs', { mapid: req.query.id, steps: steps, checkboxStates: checkboxStates, title: map.title, description: map.description, userOwnsMap: userOwnsMap });
     } catch (err) {
         console.error(err);
-        return res.status(500).send('Internal Server Error');
+        res.render('error500progressnotsaved');
     }
 });
 
@@ -583,12 +583,12 @@ app.post('/saveProgress', async (req, res) => {
 
         //check if user is logged in
         if (!req.session.GLOBAL_AUTHENTICATED) {
-            return res.status(401).send('Unauthorized');
+            res.render('error403');
         }
 
         //check if user owns the roadmap
         if (user.username !== req.session.loggedUsername) {
-            return res.status(401).send('Unauthorized');
+            res.render('error403');
         }
 
         //update the roadmap with the new checkbox states
@@ -599,7 +599,7 @@ app.post('/saveProgress', async (req, res) => {
 
     } catch (err) {
         console.error(err);
-        return res.status(500).send('Internal Server Error');
+        return res.status(500).send('Internal Server Error, Please try again later');
     }
 
     res.status(200).send('Progress saved successfully');
@@ -609,7 +609,7 @@ app.post('/saveCopy', async (req, res) => {
     console.log(req.body);
     // check that the user is logged in
     if (!req.session.GLOBAL_AUTHENTICATED) {
-        return res.status(401).send('Unauthorized');
+        res.render('error403');
     }
 
     //grab the roadmap from the request body
