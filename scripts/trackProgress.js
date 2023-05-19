@@ -47,4 +47,17 @@ function saveCopy() {
         steps: stepObjects
     };
 
+    //pass the roadmap object to the backend
+    axios.post("/saveCopy", { roadmap: roadmap }, {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then(response => {
+        console.log(response);
+    }
+    ).catch(error => {
+        console.log(error);
+    }
+    );
+
 }
