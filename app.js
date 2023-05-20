@@ -506,8 +506,6 @@ app.get('/trackProgress', async (req, res) => {
 
         const map = allSavedRoadMaps.find(roadmap => roadmap._id === mapid);
 
-        console.log("map in trackProgress route: ", map)
-
         //find the user who owns the roadmap
         const mapOwner = users.find(user => user.savedRoadmaps.includes(map));
 
