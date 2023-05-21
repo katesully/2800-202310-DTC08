@@ -55,9 +55,11 @@ app.use(express.json())
 
 
 app.get(['/', '/home'], (req, res) => {
-    // if (req.session.GLOBAL_AUTHENTICATED) {
+    if (req.session.GLOBAL_AUTHENTICATED) {
+        res.redirect('/main');
+    } else {
     res.render('./index.ejs');
-    // }
+    }
 });
 
 
