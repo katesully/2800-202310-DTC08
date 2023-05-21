@@ -24,6 +24,10 @@ a {
   text-decoration: none;
 }
 
+hr {
+  margin: 0;
+}
+
 .footer-box {
   display: flex;
   flex-grow: 1;
