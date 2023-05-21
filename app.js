@@ -193,6 +193,7 @@ app.post('/login', async (req, res) => {
 });
 
 
+// Route: settings page
 app.get('/settings', (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
         res.render('./settings.ejs', { username: req.session.loggedUsername, email: req.session.loggedEmail, city: req.session.loggedCity });
@@ -201,6 +202,7 @@ app.get('/settings', (req, res) => {
     }
 });
 
+// Route: main page
 app.get('/main', (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
         res.render('./main.ejs', {
@@ -208,7 +210,7 @@ app.get('/main', (req, res) => {
         });
     }
     else {
-        res.render('error403');
+        res.redirect('/login');
     }
 });
 
@@ -657,7 +659,8 @@ app.post('/deleteBookmark', async (req, res) => {
     }
 })
 
-app.get('/logout', function (req, res, next) {
+// Route: logout 
+app.post('/logout', function (req, res, next) {
     console.log("Before Logout: Session User:", req.session.loggedUsername, "; ", "Session Password: ", req.session.loggedPassword);
     console.log("Logging out. . .")
     req.session.loggedUsername = null;
