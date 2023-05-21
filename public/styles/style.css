@@ -79,3 +79,19 @@ iframe[id=":1.container"] {
 .remove-border {
     border: none;
 }
+
+
+    .VIpgJd-ZVi9od-ORHb {
+        display: none;
+    }
+
+    .VIpgJd-ZVi9od-l4eHX-hSRGPD {
+        display: none;
+    }
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
