@@ -53,6 +53,10 @@ a {
   display: flex;
 }
 
+.colour-yellow {
+    background-color: #F0C919;
+}
+
 .material-symbols-outlined {
   font-size: 36px;
   color: rgb(245, 245, 245);
@@ -68,7 +72,7 @@ a {
 }
 
 .shadow-custom {
-  box-shadow: 0 6px 5px 0 rgba(0, 0, 0, 0.082);
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.082);
   /* box-shadow: 0 0 10px 0 rgb(0, 0, 0); */
 }
 
