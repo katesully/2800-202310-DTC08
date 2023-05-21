@@ -21,7 +21,7 @@
   <%- include('shareModal.ejs') %>
 
   <div class="container col mt-3 mb-3">
-    <h1 class="text-center">Saved Roadmaps</h1>
+    <h1 class="text-center" style="color: #458a92;">Saved Roadmaps</h1>
     <% let i=0; %>
     <% for(i=0; i < savedList.length; i++) { %>
     <%- include("components/savedRoadmaps_card.ejs", savedList[i]) %>
