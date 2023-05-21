@@ -1,120 +1,65 @@
-<head>
-
-    <style>
-        .VIpgJd-ZVi9od-ORHb-oEVmcd {
-            display: none;
-        }
-
-        .VIpgJd-ZVi9od-ORHb {
-            display: none;
-        }
-    </style>
-
-
-</head>
-
-
-
 <%- include('components/headHTML.ejs') %>
-<script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="./scripts/index.js"></script>
-<script src="./scripts/firebase_authentication.js"></script>
-<script src="./scripts/settings.js"></script>
-<script type="text/javascript">
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
-    }
-    </script>
-
-<script type="text/javascript"
-src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<link rel="stylesheet" type="text/css" href="./styles/settings.css" />
-
 
 <body>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en'
+      }, 'google_translate_element');
+    }
+  </script>
 
-        <%- include('components/navbar_header_logout.ejs') %>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <link rel="stylesheet" type="text/css" href="./styles/settings.css" />
+  <%- include('components/navbar_header_logout.ejs') %>
+  <h1 style="text-align: center;">User Information </h1>
+  <div>
+    <h5 style="text-align: center;">Update your Preferred Language</h5>
+    <div id="google_translate_element" style="text-align: center;"></div>
+  </div>
+  <div class="container">
+    <form>
+      <fieldset class="mb-3" id="personalInfoFields" disabled>
+        <div class="form-group">
+          <label>Username </label>
+          <h2>
+            <%= username %>
+          </h2>
+        </div>
+        <div class="form-group">
+          <label>Language </label>
+          <h2 id="languageDisplay"></h2>
+        </div>
+        <div class="form-group">
+          <label>City</label>
+          <h2>
+            <%= city %>
+          </h2>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <h2>
+            <%= email %>
+          </h2>
+        </div>
+      </fieldset>
+      <br>
+    </form>
+    <%- include('components/footer.ejs') %>
+  </div>
 
+  <script src="./scripts/settings.js"></script>
+  <script type="text/javascript">
+    // Detect and store the language
+    var language = navigator.language || navigator.userLanguage;
 
-            <h1 style="text-align: center;">User Information </h1>
+    // Use the language variable as needed
+    console.log('Detected language:', language);
 
-            <div>
-                <h5 style="text-align: center;">Update your Preferred Language</h5>
-                <div id="google_translate_element" style="text-align: center;"></div>
-            </div>
+    //display language in element languageDisplay
+    var languageDisplay = document.getElementById("languageDisplay");
+    languageDisplay.innerHTML = language;
+  </script>
+</body>
 
-            <div class="container">
-
-                <form>
-                    <fieldset class="mb-3" id="personalInfoFields" disabled>
-                        <div class="form-group">
-                            <label>Username </label>
-                            <h2>
-                                <%= username %>
-                            </h2>
-                            <!-- <input type="text" id="nameInput" class="form-control" placeholder="Enter your name"> -->
-                        </div>
-                        <div class="form-group">
-                            <label>Language </label>
-                            <h2 id="languageDisplay"></h2>
-                            <!-- <input type="text" id="languageInput" class="form-control" -->
-                            <!-- placeholder="Enter your preferred language"> -->
-                        </div>
-                        <div class="form-group">
-                            <label>City</label>
-                            <h2>
-                                <%= city %>
-                            </h2>
-            
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <h2>
-                                <%= email %>
-                            </h2>
-                            <!-- <input type="text" id="languageInput" class="form-control" -->
-                            <!-- placeholder="Enter your preferred language"> -->
-                        </div>
-
-
-                    </fieldset>
-                    <br>
-
-
-                </form>
-                <!-- <div>
-                    <a class="btn btn-secondary" href="../login.html" id="logout-button">Logout</a>
-                </div>
-            </div> -->
-
-
-
-                <br>
-                <br>
-                <br>
-                <br>
-
-
-
-
-
-
-                <%- include('components/footer.ejs') %>
-
-
-
-    </body>
-    <script type="text/javascript">
-        // Detect and store the language
-        var language = navigator.language || navigator.userLanguage;
-
-        // Use the language variable as needed
-        console.log('Detected language:', language);
-
-        //display language in element languageDisplay
-        var languageDisplay = document.getElementById("languageDisplay");
-        languageDisplay.innerHTML = language;
-    </script>
-
-    </html>
+</html>
