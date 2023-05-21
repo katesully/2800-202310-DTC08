@@ -24,14 +24,22 @@ a {
   text-decoration: none;
 }
 
-
 .footer-box {
+  display: flex;
+  flex-grow: 1;
+}
+
+.flex-grow-one {
   display: flex;
   flex-grow: 1;
 }
 
 .block-height-63 {
   height: 63px;
+}
+
+.block-height-76 {
+  height: 76px;
 }
 
 .block-width-36 {
@@ -69,12 +77,11 @@ a {
 }
 
 .center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-  }
-  
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
 
 /************************************/
 /* Google Translate Bar */
