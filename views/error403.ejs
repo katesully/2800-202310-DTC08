@@ -1,4 +1,5 @@
 <%- include('components/headHTML.ejs') %>
+
 <body>
   <%- include('components/navbar_header_before_signin.ejs') %>
   <!-- Google Translate API -->
@@ -20,36 +21,26 @@
   </script>
   <div id="google_translate_element style=display: none;"></div>
   <!-- End of Google Translate API -->
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-lg-5">
-        <div class="error-template">
-          <div class="text-center">
-            <img src="sadface.png" alt="404 Error" class="error-image img-fluid" height="100px">
-          </div>
-          <h2 class="mb-3" style="text-align: center;">Authentication Error</h2>
-          <h5 class="mb-3" style="text-align: center;">Oops! Seems like you are not logged in</h5>
-          <p class="mb-3" style="text-align: center;">Please register or login to continue</p>
-          <div class="d-flex justify-content-center">
-            <div class="text-center me-2">
-              <a href="/" class="btn btn-warning">Home</a>
-            </div>
-            <div class="text-center">
-              <a href="/login" class="btn btn-warning">Login</a>
-            </div>
-          </div>
-
+  <div class="container d-flex justify-content-center align-items-center flex-grow-one">
+    <div class="error-template">
+      <div class="text-center">
+        <img src="sadface.png" alt="404 Error" class="error-image img-fluid" height="100px">
+      </div>
+      <h2 class="m-3" style="text-align: center;">Authentication Error</h2>
+      <h5 class="mb-3" style="text-align: center;">Oops! Seems like you are not logged in</h5>
+      <p style="text-align: center;">Please register or login to continue</p>
+      <div class="my-3 d-flex justify-content-center">
+        <div class="text-center me-2">
+          <a href="/" class="btn btn-warning">Home</a>
+        </div>
+        <div class="text-center">
+          <a href="/login" class="btn btn-warning">Login</a>
         </div>
       </div>
     </div>
   </div>
-
-
-
-
-  <div class="spacer py-5"></div>
-  <script src="../scripts/main.js"></script>
   <%- include('components/footer.ejs') %>
+  <script src="../scripts/main.js"></script>
 </body>
 
 </html>
