@@ -62,7 +62,17 @@ app.get(['/', '/home'], (req, res) => {
     }
 });
 
+function populateErrorPage(res, error_code, error_message, error_response, error_redirect = undefined, error_redirect_button = undefined) {
 
+    res.render('errorGeneral.ejs', {
+        error_code: error_code,
+        error_message: error_message,
+        error_response: error_response,
+        error_redirect: error_redirect,
+        error_redirect_button: error_redirect_button
+    });
+
+}
 
 
 app.get('/signup', (req, res) => {
@@ -93,36 +103,27 @@ app.post('/signup', async (req, res) => {
         if (err.details[0].context.key == "username") {
             console.log(err.details)
 
-            let error_code = '422';
-            let error_message = 'Error: Username can only contain letters and numbers and must not be empty';
-            let error_response = 'Please try again';
-            let error_redirect = '/signup';
-            let error_redirect_button = 'Try Again';
+            return populateErrorPage(
+                res, // res
+                '422', // error_code
+                'Error: Username can only contain letters and numbers and must not be empty', // error_message
+                'Please try again', // error_response
+                '/signup', // error_redirect
+                'Try Again' // error_redirect_button
+                );
 
-            return res.render('errorGeneral.ejs', {
-                error_code: error_code,
-                error_message: error_message,
-                error_response: error_response,
-                error_redirect: error_redirect,
-                error_redirect_button: error_redirect_button
-            });
         }
         if (err.details[0].context.key == "password") {
             console.log(err.details)
-
-            let error_code = '422';
-            let error_message = 'Error: Password did not meet requirements';
-            let error_response = 'Please try again';
-            let error_redirect = '/signup';
-            let error_redirect_button = 'Try Again';
-
-            return res.render('errorGeneral.ejs', {
-                error_code: error_code,
-                error_message: error_message,
-                error_response: error_response,
-                error_redirect: error_redirect,
-                error_redirect_button: error_redirect_button
-            });
+            
+            return populateErrorPage(
+                res, // res
+                '422', // error_code
+                'Error: Password did not meet requirements', // error_message
+                'Please try again', // error_response
+                '/signup', // error_redirect
+                'Try Again' // error_redirect_button
+                );
         }
     }
     const userresult = await usersModel.findOne({
@@ -130,20 +131,15 @@ app.post('/signup', async (req, res) => {
     })
     if (userresult) {
 
-        let error_code = '409';
-        let error_message = 'Error: User already exists';
-        let error_response = 'Please try again';
-        let error_redirect = '/signup';
-        let error_redirect_button = 'Try Again';
-
-        res.render('errorGeneral.ejs', {
-            error_code: error_code,
-            error_message: error_message,
-            error_response: error_response,
-            error_redirect: error_redirect,
-            error_redirect_button: error_redirect_button
-        });
-
+        populateErrorPage(
+            res, // res
+            '409', // error_code
+            'Error: User already exists', // error_message
+            'Please try again', // error_response
+            '/signup', // error_redirect
+            'Try Again' // error_redirect_button
+        );
+        
     } else {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const newUser = new usersModel({
@@ -188,11 +184,21 @@ app.post('/login', async (req, res) => {
         const value = await schema.validateAsync({ username: req.body.username, password: req.body.password });
     }
     catch (err) {
-        console.log(err.details);
-        console.log("Username or password is invalid")
 
-        
-        return
+        console.log(err.details);
+        let error_code = '401';
+        let error_message = `Error: ${err.details[0].message}}`;
+        let error_response = 'Please try again';
+        let error_redirect = '/login';
+        let error_redirect_button = 'Try Again';
+
+        return res.render('errorGeneral.ejs', {
+            error_code: error_code,
+            error_message: error_message,
+            error_response: error_response,
+            error_redirect: error_redirect,
+            error_redirect_button: error_redirect_button
+        });
     }
 
     const userresult = await usersModel.findOne({
@@ -209,15 +215,20 @@ app.post('/login', async (req, res) => {
         console.log("app.post(\'\/login\'): Current session cookie:", req.cookies)
         res.redirect('/main');
     } else {
-        let loginFailHTML = `
-        <br />
-        <a href="/">Home</a>
-        <h1>Invalid username or password</h1>
-        <input type="button" value="Try Again" onclick="window.history.back()" />
-        <br />
-        `
-        console.log("app.post(\'\/login\'): Current session cookie-id:", req.cookies)
-        res.send(loginFailHTML);
+
+        let error_code = '401';
+        let error_message = `Error: Invalid username or password`;
+        let error_response = 'Please try again';
+        let error_redirect = '/login';
+        let error_redirect_button = 'Try Again';
+
+        res.render('errorGeneral.ejs', {
+            error_code: error_code,
+            error_message: error_message,
+            error_response: error_response,
+            error_redirect: error_redirect,
+            error_redirect_button: error_redirect_button
+        });
     }
 });
 
