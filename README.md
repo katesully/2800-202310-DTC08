@@ -47,9 +47,9 @@ Content of the project folder:
 └── ...
 
 
-## 7. Names of Contributors
+## 7. Names of Contributors and Contact
 List team members and/or short bio's here... 
-* Charlie
-* Kate
-* Oceaan
-* Victor
+* Charlie: cz4100@gmail.com
+* Kate: sullivan.kate.e@gmail.com
+* Oceaan: oceaanpendharkar@gmail.com
+* Victor: vsctl95@gmail.com
