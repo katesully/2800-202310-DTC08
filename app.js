@@ -261,7 +261,14 @@ app.post('/bookmarkRoadmap', async (req, res) => {
         const user = await usersModel.findOne({ username: req.session.loggedUsername });
 
         if (!user) {
-            throw new Error("User does not exist");
+            return populateErrorPage(
+                res, // res
+                '404', // error_code
+                'Error: User does not exist', // error_message
+                'Please Log In', // error_response
+                '/login', // error_redirect
+                'Log In' // error_redirect_button
+            );
         }
 
         const roadmap = req.body;
