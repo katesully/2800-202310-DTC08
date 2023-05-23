@@ -58,19 +58,13 @@
     <script type="text/javascript"
       src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-
-
     <%- include('components/navbar_header_logout.ejs') %>
 
       <%- include('components/roadmap.ejs') %>
         <div class="container" id="saveButtons">
           <% if (userOwnsMap) { %>
-            <input type="checkbox" id="selectAll" onclick="selectAll()" style="width: 100%;">
-            <label for="selectAll">Select All</label>
-            <p>Check off each checkbox once you've completed each step. Your progress will be saved for later!</p>
-            <!-- <button class="btn btn-primary col-6 col-md-12 py-md-3" id="save-progress-button"
-              onclick=saveProgress(mapID)>Save
-              Progress</button> -->
+            <input type="checkbox" id="selectAll" onclick="selectAll()">
+            <label for="selectAll" style="padding: 5px;"> Check off all steps </label>
             <% } else { %>
               <button class="btn btn-primary col-6 col-md-12 py-md-3" id="save-copy-button" onclick=saveCopy(mapID)>Save
                 A Copy</button>
