@@ -33,9 +33,13 @@ Here are the steps to assemble a development environment (assuming you're a part
 5. A roadmap will appear before your eyes with step-by-step instructions on how to complete what you asked for instructions for. 
 
 * Users can save roadmaps
+1. After receiving a roadmap reply from the chatGPT API, There is a bookmark icon. Click it! 
+2. You will get a message saying your roadmap has been saved.
+3. Verify that your roadmap has been saved by navigating to "My Maps" (the middle icon on the bottom nav bar).
+
+* Users can check off steps they have completed of roadmaps
 
 * Users can change their language preferences
-* Users can check off steps they have completed of roadmaps
 * Users can share roadmaps to others using the app
 
 ## 4. Technologies and Resources Used
