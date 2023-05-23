@@ -137,13 +137,77 @@ What we'd like to build in the future:
 	
 ## 7. Contents of Folder
 Content of the project folder:
-
-
- Top level of project folder: 
+  
+├── models
+    ├── token.js
+    └── users.js
+├── node_modules 
+├── public 
+    ├── styles
+       ├── index.css
+       ├── main.css
+       ├── roadmap.css
+       ├── settings.css
+       ├── signup.css
+       └── style.css
+    ├── back_lrg.png
+    ├── background_family_1.png
+    ├── delete_lrg.png
+    ├── happyface.png
+    ├── home_lrg
+    ├── login.png
+    ├── LogoHeaderBar.png
+    ├── map_lrg.png
+    ├── ok-green.png
+    ├── sadface.png
+    ├── settings_lrg.png
+    ├── share_lrg.png
+    └── Welcomes.png
+├── scripts
+    ├── index.js
+    ├── login.js
+    ├── main.js
+    ├── passwordReset.js
+    ├── savedRoadmaps.js
+    ├── script.js
+    ├── signup.js
+    ├── trackProgress.js
+    └── translate.js
+├── views
+    ├── components               # components included in larger pages
+        ├── bookmark.ejs
+        ├── deleteModal.ejs
+        ├── footer.ejs
+        ├── headHTML.ejs
+        ├── navbar_footer.ejs
+        ├── header_before_signin.ejs
+        ├── navbar_header_logout.ejs
+        ├── navbar_header.ejs
+        ├── roadmap.ejs
+        └── savedRoadmaps_card.ejs
+    ├── 200emailsuccess.ejs
+    ├── error403.ejs
+    ├── error404.ejs
+    ├── error500progressnotsaved.ejs
+    ├── error501emailnotsent.ejs
+    ├── index.ejs
+    ├── login.ejs
+    ├── main.ejs
+    ├── newpassword.ejs
+    ├── passwordReset.ejs
+    ├── resetPassword.ejs
+    ├── savedRoadmaps.ejs
+    ├── settings.ejs
+    ├── shareModal.ejs
+    ├── signup.ejs
+    └── trackProgress.ejs
+├── .env
 ├── .gitignore                # Git ignore file
+├── app.js 
+├── package-lock.json
+├── package.json
 ├── README.md                 # README for this project
-└── ...
-
+└── server.js   
 
 ## 8. Names of Contributors and Contact
 List team members and/or short bio's here... 
