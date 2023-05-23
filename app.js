@@ -425,7 +425,7 @@ app.post('/sendResetEmail', async (req, res) => {
 
     console.log(user);
     if (!user) {
-        throw new Error("User does not exist");
+       return res.render('error502usernotexist.ejs');
     }
     let token = await tokenModel.findOne({ userId: user._id });
     if (token) {
@@ -435,12 +435,7 @@ app.post('/sendResetEmail', async (req, res) => {
     let resetToken = crypto.randomBytes(32).toString("hex");
 
     const hashedToken = await bcrypt.hash(resetToken, Number(bcryptSalt));
-    const emailTemplatePath = path.join(__dirname, 'views', 'components', 'emailtemplate.ejs');
-    const emailFooterTemplate = fs.readFileSync(emailTemplatePath, 'utf8');
-    const emailFooter = ejs.render(emailFooterTemplate);
-
-
-
+    
     await new tokenModel({
         userId: user._id,
         token: hashedToken,
@@ -449,9 +444,11 @@ app.post('/sendResetEmail', async (req, res) => {
 
 
     const link = `${clientURL}/passwordReset?token=${resetToken}&id=${user._id}`;
-    const emailBody = `Reset your password using the link: ${link}\n\n${emailFooter}`;
+    const emailBody = `
+  Reset your password using the link: ${link}`;
 
-    
+
+ 
     sendResetEmail(user.email, emailBody);
 
 
@@ -699,7 +696,7 @@ app.post('/deleteBookmark', async (req, res) => {
         const user = await usersModel.findOne({ username: req.session.loggedUsername });
 
         if (!user) {
-            throw new Error("User does not exist");
+           return res.render('error502usernotexist.ejs');
         }
 
         await usersModel.updateOne(
@@ -784,7 +781,7 @@ app.post('/sendShareEmail', async (req, res) => {
         res.render('200emailsuccess.ejs');
     } catch (error) {
         console.log(error);
-        res.status(500).json({ error: 'Failed to send email' });
+        res.render('error501emailnotsent.ejs');
     }
 });
 
