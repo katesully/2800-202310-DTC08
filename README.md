@@ -122,13 +122,11 @@ settings_lrg.png:
 share_lrg.png:
 Welcomes.png:
 
-
 ## 5. Known Bugs and Limitations
 Here are some known limitations:
 * The speed of ChatGPT replies are approximately 30 seconds. We have added a 'loading' animation so it's obvious that something is happening
 * The relevance of GPT replies - last trained on information from September 2021 some info will be out of date. This has been previously discussed
 * ...
-
 
 ## 6. Features for Future
 What we'd like to build in the future:
