@@ -60,6 +60,8 @@ If you are a developer working on this project with us (or an instructor marking
 4. If you wish to uncheck a step, you can click a checked checkbox and the page will reload with that checkbox unchecked and the text no longer crossed out.
 
 * Users can change their language preferences
+Users can do this by using the dropdown menu on the index page (the first point of contact), but also using the dropdown menu on the settings page which can be accessed by clicking the "settings" icon on the right side of the bottom nav bar. Notice that the user's browser language setting can also be viewed on the settings page, while their dropdown selection remains selected and viewable in the dropdown itself.
+
 * Users can share roadmaps to others using the app
 
 ## 4. Technologies and Resources Used
