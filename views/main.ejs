@@ -55,6 +55,9 @@
     </div>
   </div>
 </div>
+
+
+
 <div class="hideWhenLoading" id="hideWhenLoading">
   <!-- the code below was copied from the chatGPT website and subsequently edited by Oceaan -->
   <div class="md:flex items-start text-center gap-3.5 container">
@@ -137,6 +140,32 @@
 </div>
 <div class=" spacer py-5">
 </div>
+
+
+
+
 <script src="../scripts/main.js"></script>
 <%- include('components/footer.ejs') %>
+
+<div class="modal fade" id="additionalStepsModal" tabindex="-1" role="dialog" aria-labelledby="additionalStepsModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="additionalStepsModalLabel">Would you like to know more information about this step?</h5>
+        <button type="button" class="btn close" onclick="closeStepsModal()" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        If you click for more information, you will be guided away from this page. Please save current roadmap if you would like to refer to it later.
+      <div class="modal-footer">
+        <% if (typeof roadmap !=='undefined' ) { %>
+          <button type="button" class="btn btn-primary" onclick="saveRoadmap(<%=roadmap%>)">Save Current Roadmap</button>
+          <% } %>
+        <button type="button" class="btn btn-success" onclick="createAdditionalSteps()">Give Me More Info</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
