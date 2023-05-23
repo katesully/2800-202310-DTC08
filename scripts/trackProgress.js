@@ -37,13 +37,13 @@ function saveCopy() {
 
     //loop through each step and add an object with each step to the array
     steps.forEach((step) => {
-        stepObjects.push({ step: step.innerHTML, checked: false });
+        stepObjects.push({ step: step.innerText, checked: false });
     });
 
     //create new roadmap object to store the steps
     var roadmap = {
-        title: document.getElementById('roadmapTitle').innerHTML,
-        description: document.getElementById('roadmapDescription').innerHTML,
+        title: document.getElementById('roadmapTitle').innerText,
+        description: document.getElementById('roadmapDescription').innerText,
         steps: stepObjects
     };
 
