@@ -6,12 +6,16 @@
 ## 1. Project Description
 Our Project, NewJourney, is developing an app to provide multilingual assistance to help newcomers navigate everyday tasks in Vancouver by providing step-by-step, easy-to-digest road maps.
 
-## 2. Complete setup/installion/usage
+## 2. Complete setup & installion
 State what a user needs to do when they come to your project.  How do others start using your code or application?
-Here are the steps ...
-* ...
-* ...
-* ...
+Here are the steps to assemble a development environment (assuming you're a part of our development team):
+1. Ask us to add you as a collaborator on the github repo. Our contact information is at the bottom of this file.
+2. You will get an email from github - accept the invitation to collaborate.
+3. Clone the repo to your machine to be able to work on it locally. 
+4. Make sure to type "npm install" in your terminal to make sure your project has all the necessary modules to run.
+5. If you don't have nodemon, install it. Instructions can be found here: https://www.npmjs.com/package/nodemon 
+6. Now, you can run the project on localhost. Type "nodemon server.js" in your terminal.
+7. Type "localhost:3000" in your internet browser. There's our index.ejs page!
 
 ## 3. Core Features
 * Create account/login
