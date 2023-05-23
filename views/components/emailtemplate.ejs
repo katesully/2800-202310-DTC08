@@ -7,28 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Email footer</title>
 
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en'
-            }, 'google_translate_element');
-        }
-    </script>
-    
-    <script type="text/javascript"
-        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
 
 
 </head>
+
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en'
+        }, 'google_translate_element');
+    }
+</script>
+
+<script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <body>
 
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <img style="display: block;" src="/public/LogoHeaderBar.png" alt="logo" width="100px" height="100px" style="justify-content: center;">
-                <a>
+            <img src="cid:logo1" />
                     <%= emailBody %>
                 </a>
                 <a href <% emailLink %> >

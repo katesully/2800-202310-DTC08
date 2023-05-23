@@ -402,8 +402,14 @@ const sendResetEmail = async (email, payload) => {
             from: process.env.GMAIL_EMAIL,
             to: email,
             subject: 'Here is your password reset link!',
-            html: payload
-
+            html: payload,
+            attachments: [
+                {
+                    filename: 'LogoHeaderBar.png',
+                    path: `${__dirname}/./public/LogoHeaderBar.png`,
+                    cid: 'logo1'
+                }
+            ]
         };
 
         transporter.sendMail(mailOptions, function (error, info) {
@@ -416,7 +422,7 @@ const sendResetEmail = async (email, payload) => {
     } catch (error) {
         return error;
     }
-}
+};
 
 app.post('/sendResetEmail', async (req, res) => {
     const email = req.body.inputEmail;
