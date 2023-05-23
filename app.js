@@ -139,7 +139,7 @@ app.post('/signup', async (req, res) => {
             '/signup', // error_redirect
             'Try Again' // error_redirect_button
         );
-        
+
     } else {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const newUser = new usersModel({
@@ -186,19 +186,16 @@ app.post('/login', async (req, res) => {
     catch (err) {
 
         console.log(err.details);
-        let error_code = '401';
-        let error_message = `Error: ${err.details[0].message}}`;
-        let error_response = 'Please try again';
-        let error_redirect = '/login';
-        let error_redirect_button = 'Try Again';
 
-        return res.render('errorGeneral.ejs', {
-            error_code: error_code,
-            error_message: error_message,
-            error_response: error_response,
-            error_redirect: error_redirect,
-            error_redirect_button: error_redirect_button
-        });
+        return populateErrorPage(
+            res, // res
+            '401', // error_code
+            `Error: ${err.details[0].message}}`, // error_message
+            'Please try again', // error_response
+            '/login', // error_redirect
+            'Try Again' // error_redirect_button
+        );
+
     }
 
     const userresult = await usersModel.findOne({
@@ -216,19 +213,15 @@ app.post('/login', async (req, res) => {
         res.redirect('/main');
     } else {
 
-        let error_code = '401';
-        let error_message = `Error: Invalid username or password`;
-        let error_response = 'Please try again';
-        let error_redirect = '/login';
-        let error_redirect_button = 'Try Again';
+        populateErrorPage(
+            res, // res
+            '401', // error_code
+            'Error: Invalid username or password', // error_message
+            'Please try again', // error_response
+            '/login', // error_redirect
+            'Try Again' // error_redirect_button
+        );
 
-        res.render('errorGeneral.ejs', {
-            error_code: error_code,
-            error_message: error_message,
-            error_response: error_response,
-            error_redirect: error_redirect,
-            error_redirect_button: error_redirect_button
-        });
     }
 });
 
