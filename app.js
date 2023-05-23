@@ -58,7 +58,7 @@ app.get(['/', '/home'], (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
         res.redirect('/main');
     } else {
-    res.render('./index.ejs');
+    res.render('./index.ejs', { user: req.session.GLOBAL_AUTHENTICATED });
     }
 });
 
