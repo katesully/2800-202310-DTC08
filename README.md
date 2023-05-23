@@ -207,7 +207,17 @@ Content of the project folder:
 ├── README.md                 # README for this project
 └── server.js   
 
-## 9. Names of Contributors and Contact
+## 9. How We Used AI:
+    1. We did use AI to help create our app. We kept track of our use of chatGPT in our prompt log on notion. We used it for coding help, ideation, and within our app to create the roadmaps.
+
+    2. We did not use AI to create data sets or clean data.
+
+    3. Our app absolutely uses AI. We harness the power of chatGPT to give users step-by-step roadmaps to complete tasks in a new city. Our app sends a request to the chatGPT API to give a list of step-by-step instructions on how to do what the user has asked for help with, and converts the response into a roadmap. 
+
+    4. We encountered the limitation of chatGPT's information being out of date by about two years. We are unable to overcome this at the moment, but we will assume that in the future it will receive updated information more regularly. 
+    
+
+## 10. Names of Contributors and Contact
 List team members and/or short bio's here... 
 * Charlie: cz4100@gmail.com
 * Kate: sullivan.kate.e@gmail.com
