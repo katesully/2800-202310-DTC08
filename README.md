@@ -192,8 +192,8 @@ Content of the project folder:
     ├── login.ejs
     ├── main.ejs
     ├── newpassword.ejs
-    ├── passwordReset.ejs
-    ├── resetPassword.ejs
+    ├── passwordReset.ejs    # The page for actually resetting password
+    ├── resetPassword.ejs    # The page for asking to reset password
     ├── savedRoadmaps.ejs
     ├── settings.ejs
     ├── shareModal.ejs
