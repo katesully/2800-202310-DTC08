@@ -201,7 +201,7 @@ app.post('/login', async (req, res) => {
     const userresult = await usersModel.findOne({
         username: req.body.username
     });
-    console.log(userresult);
+
     if (userresult && bcrypt.compareSync(req.body.password, userresult.password)) {
         req.session.GLOBAL_AUTHENTICATED = true;
         req.session.loggedUsername = req.body.username;
@@ -295,7 +295,14 @@ app.post('/bookmarkRoadmap', async (req, res) => {
         res.json(responseData);
     }
     else {
-        // res.redirect('/login');
+        populateErrorPage(
+            res, // res
+            '401', // error_code
+            'Error: You are not logged in', // error_message
+            'Please Log In', // error_response
+            '/login', // error_redirect
+            'Log In' // error_redirect_button
+        );
     }
 });
 
@@ -307,7 +314,14 @@ app.post('/sendAdditionalRequest', async (req, res) => {
         const user = await usersModel.findOne({ username: req.session.loggedUsername });
 
         if (!user) {
-            throw new Error("User does not exist");
+            return populateErrorPage(
+                res, // res
+                '404', // error_code
+                'Error: User does not exist', // error_message
+                'Please Log In', // error_response
+                '/login', // error_redirect
+                'Log In' // error_redirect_button
+            );
         }
 
         const parentRoadmapId = req.body.roadmapId;
@@ -316,9 +330,21 @@ app.post('/sendAdditionalRequest', async (req, res) => {
         console.log(additionalSteps);
 
         let returnMessage = await getMessage(additionalSteps, req.session.loggedCity);
-        console.log("Got return message: " + returnMessage);
+
+        if (returnMessage.error !== undefined) {
+            console.log(returnMessage.error);
+            return populateErrorPage(
+                res, // res
+                returnMessage.error.type, // error_code
+                returnMessage.error.code, // error_message
+                returnMessage.error.message, // error_response
+                '/main', // error_redirect
+                'Try Again' // error_redirect_button
+            );
+        }
+
         let roadmapObject = createRoadmapObject(returnMessage.choices[0].message.content);
-        console.log("Got roadmap object: " + roadmapObject);
+
 
         res.render('./main.ejs', {
             //create an array the size of the number of steps in the roadmap
@@ -337,7 +363,7 @@ app.post('/sendAdditionalRequest', async (req, res) => {
 
     }
     else {
-        // res.redirect('/login');
+        res.redirect('/login');
     }
 });
 
@@ -370,7 +396,6 @@ async function getMessage(message, userCity) {
         })
     }
     try {
-
         const response = await fetch('https://api.openai.com/v1/chat/completions', options)
         const data = await response.json();
         console.log(data);
@@ -408,6 +433,20 @@ app.post('/sendRequest', async (req, res) => {
     var userInput = req.body.hiddenField || req.body.textInput;
 
     let returnMessage = await getMessage(userInput, req.session.loggedCity);
+
+    if (returnMessage.error !== undefined) {
+        console.log(returnMessage.error);
+        return populateErrorPage(
+            res, // res
+            returnMessage.error.type, // error_code
+            returnMessage.error.code, // error_message
+            returnMessage.error.message, // error_response
+            '/main', // error_redirect
+            'Try Again' // error_redirect_button
+        );
+    }
+
+
     let roadmapObject = createRoadmapObject(returnMessage.choices[0].message.content);
 
 
