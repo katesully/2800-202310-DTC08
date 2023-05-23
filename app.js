@@ -129,12 +129,21 @@ app.post('/signup', async (req, res) => {
         username: req.body.username
     })
     if (userresult) {
-        let createUserFailHTML = `
-            <br />
-            <h3>Error: User already exists - Please try again</h3>
-            <input type="button" value="Try Again" onclick="window.location.href='/signup'" />
-            `
-        res.send(createUserFailHTML)
+
+        let error_code = '409';
+        let error_message = 'Error: User already exists';
+        let error_response = 'Please try again';
+        let error_redirect = '/signup';
+        let error_redirect_button = 'Try Again';
+
+        res.render('errorGeneral.ejs', {
+            error_code: error_code,
+            error_message: error_message,
+            error_response: error_response,
+            error_redirect: error_redirect,
+            error_redirect_button: error_redirect_button
+        });
+
     } else {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const newUser = new usersModel({
@@ -181,6 +190,8 @@ app.post('/login', async (req, res) => {
     catch (err) {
         console.log(err.details);
         console.log("Username or password is invalid")
+
+        
         return
     }
 
