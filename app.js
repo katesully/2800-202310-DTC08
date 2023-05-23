@@ -10,19 +10,13 @@ const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const ejs = require('ejs');
 const { parse } = require('dotenv');
-
-
-
 var nodemailer = require('nodemailer');
 const tokenModel = require('./models/token.js');
 const crypto = require("crypto");
-
 const bcryptSalt = process.env.BCRYPT_SALT;
-
 const fs = require("fs");
 const path = require("path");
 const clientURL = process.env.CLIENT_URL;
-
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -59,11 +53,9 @@ app.get(['/', '/home'], (req, res) => {
         res.redirect('/main');
     } else {
     res.render('./index.ejs', { user: req.session.GLOBAL_AUTHENTICATED });
+        res.render('./index.ejs');
     }
 });
-
-
-
 
 app.get('/signup', (req, res) => {
     console.log("app.get(\'\/createUser\'): Current session cookie-id:", req.cookies)
@@ -140,7 +132,6 @@ app.post('/signup', async (req, res) => {
     }
 })
 
-
 app.get('/login', (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
         res.redirect('/main');
@@ -148,7 +139,6 @@ app.get('/login', (req, res) => {
         res.render('login.ejs')
     }
 });
-
 
 app.post('/login', async (req, res) => {
     console.log(`Username entered: ${req.body.username}`);
@@ -243,7 +233,7 @@ app.post('/bookmarkRoadmap', async (req, res) => {
 
         // res.redirect('/savedRoadmaps');
 
-        const responseData = { message: 'Server response', data: roadmapId};
+        const responseData = { message: 'Server response', data: roadmapId };
 
         // Send the response back to the client
         res.json(responseData);
@@ -252,7 +242,6 @@ app.post('/bookmarkRoadmap', async (req, res) => {
         // res.redirect('/login');
     }
 });
-
 
 app.post('/sendAdditionalRequest', async (req, res) => {
 
@@ -266,7 +255,7 @@ app.post('/sendAdditionalRequest', async (req, res) => {
 
         const parentRoadmapId = req.body.roadmapId;
         let prefix = "How to ";
-        const additionalSteps = prefix.concat(req.body.additionalSteps); 
+        const additionalSteps = prefix.concat(req.body.additionalSteps);
         console.log(additionalSteps);
 
         let returnMessage = await getMessage(additionalSteps, req.session.loggedCity);
@@ -278,7 +267,7 @@ app.post('/sendAdditionalRequest', async (req, res) => {
             //create an array the size of the number of steps in the roadmap
             //fill the array with true values
             //this is used to set the checkboxes to true by default
-    
+
             //only display steps that are not undefined
             steps: roadmapObject.steps.filter(step => step !== undefined),
             checkboxStates: Array(roadmapObject.steps.length).fill(false),
@@ -294,8 +283,6 @@ app.post('/sendAdditionalRequest', async (req, res) => {
         // res.redirect('/login');
     }
 });
-
-
 
 // Interface with OpenAI API
 async function getMessage(message, userCity) {
@@ -381,9 +368,7 @@ app.post('/sendRequest', async (req, res) => {
 
 });
 
-
 // Start password reset process
-
 app.get('/resetPassword', (req, res) => {
     res.render('resetPassword.ejs')
 });
@@ -402,7 +387,14 @@ const sendResetEmail = async (email, payload) => {
             from: process.env.GMAIL_EMAIL,
             to: email,
             subject: 'Here is your password reset link!',
-            text: payload
+            html: payload,
+            attachments: [
+                {
+                    filename: 'LogoHeaderBar.png',
+                    path: `${__dirname}/./public/LogoHeaderBar.png`,
+                    cid: 'logo1'
+                }
+            ]
         };
 
         transporter.sendMail(mailOptions, function (error, info) {
@@ -415,7 +407,7 @@ const sendResetEmail = async (email, payload) => {
     } catch (error) {
         return error;
     }
-}
+};
 
 app.post('/sendResetEmail', async (req, res) => {
     const email = req.body.inputEmail;
@@ -425,32 +417,51 @@ app.post('/sendResetEmail', async (req, res) => {
 
     console.log(user);
     if (!user) {
-        throw new Error("User does not exist");
+        return res.render('error502usernotexist.ejs');
+    } else {
+        let token = await tokenModel.findOne({ userId: user._id });
+        if (token) {
+            await token.deleteOne()
+        };
+
+        let resetToken = crypto.randomBytes(32).toString("hex");
+
+        const hashedToken = await bcrypt.hash(resetToken, Number(bcryptSalt));
+
+        await new tokenModel({
+            userId: user._id,
+            token: hashedToken,
+            createdAt: Date.now(),
+        }).save();
+
+        const link = `${clientURL}/passwordReset?token=${resetToken}&id=${user._id}`;
+
+        const emailBody = `Reset your password using the link: ${link}`;
+
+        ejs.renderFile('views/components/emailtemplate.ejs', { emailBody: emailBody, emailLink: link }, function (err, data) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+
+
+
+            sendResetEmail(user.email, data);
+
+        });
+
+
+
+
+
+
+        // sendResetEmail(user.email, emailBody);
+
     }
-    let token = await tokenModel.findOne({ userId: user._id });
-    if (token) {
-        await token.deleteOne()
-    };
+});
+//     }
+// })
 
-    let resetToken = crypto.randomBytes(32).toString("hex");
-
-    const hashedToken = await bcrypt.hash(resetToken, Number(bcryptSalt));
-
-
-
-    await new tokenModel({
-        userId: user._id,
-        token: hashedToken,
-        createdAt: Date.now(),
-    }).save();
-
-
-    const link = `${clientURL}/passwordReset?token=${resetToken}&id=${user._id}`;
-    sendResetEmail(user.email, link);
-
-
-
-})
 
 // Get new password
 
@@ -504,16 +515,9 @@ app.post('/confirmNewPassword', async (req, res) => {
 
 });
 
-
-// app.get('/passwordReset', (req, res) => {
-
-//     res.render('./savedRoadmaps.ejs', { savedList: roadmapsTemp });
-// });
-
 app.get('/newpassword', (req, res) => {
     res.render('./newpassword.ejs')
 })
-
 
 app.get('/savedRoadmaps', async (req, res) => {
 
@@ -693,7 +697,7 @@ app.post('/deleteBookmark', async (req, res) => {
         const user = await usersModel.findOne({ username: req.session.loggedUsername });
 
         if (!user) {
-            throw new Error("User does not exist");
+            return res.render('error502usernotexist.ejs');
         }
 
         await usersModel.updateOne(
@@ -725,11 +729,7 @@ app.post('/logout', function (req, res, next) {
     });
 })
 
-
-
-
 // sending an sharing email
-
 const sendShareEmail = async (email, payload) => {
     try {
         const transporter = nodemailer.createTransport({
@@ -759,8 +759,6 @@ const sendShareEmail = async (email, payload) => {
     }
 }
 
-
-
 app.post('/sendShareEmail', async (req, res) => {
     console.log('Form submission received');
     try {
@@ -768,7 +766,7 @@ app.post('/sendShareEmail', async (req, res) => {
 
         const content = req.body.inputShareEmailContent;
 
-        // if email is successfully sent, have a popup that says "Email sent successfully"
+
 
 
 
@@ -778,11 +776,8 @@ app.post('/sendShareEmail', async (req, res) => {
         res.render('200emailsuccess.ejs');
     } catch (error) {
         console.log(error);
-        res.status(500).json({ error: 'Failed to send email' });
+        res.render('error501emailnotsent.ejs');
     }
 });
-
-
-
 
 module.exports = app;
