@@ -63,6 +63,11 @@ If you are a developer working on this project with us (or an instructor marking
 Users can do this by using the dropdown menu on the index page (the first point of contact), but also using the dropdown menu on the settings page which can be accessed by clicking the "settings" icon on the right side of the bottom nav bar. Notice that the user's browser language setting can also be viewed on the settings page, while their dropdown selection remains selected and viewable in the dropdown itself.
 
 * Users can share roadmaps to others using the app
+1. From the "My Maps" page (which can be accessed by clicking the middle icon on the bottom nav bar), hit the share icon on the map you wish to share.
+2. In the modal that appears, click "copy" to copy the link. This link can be shared with anyone. To be able to view the map, the person receiving the link must be logged in to their NewJourney account.
+3. If you want to email the link, click the envelope icon in the modal that appears after clicking the share icon on the map you wish to share.
+4. Type in the email address you wish to send the map to.
+5. The link will be sent to the email you typed in!
 
 ## 4. Technologies and Resources Used
 List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that were used.
