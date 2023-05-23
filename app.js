@@ -92,12 +92,20 @@ app.post('/signup', async (req, res) => {
     } catch (err) {
         if (err.details[0].context.key == "username") {
             console.log(err.details)
-            let createUserFailHTML = `
-            <br />
-            <h3>Error: Username can only contain letters and numbers and must not be empty - Please try again</h3>
-            <input type="button" value="Try Again" onclick="window.location.href='/signup'" />
-            `
-            return res.send(createUserFailHTML)
+
+            let error_code = '422';
+            let error_message = 'Error: Username can only contain letters and numbers and must not be empty';
+            let error_response = 'Please try again';
+            let error_redirect = '/signup';
+            let error_redirect_button = 'Try Again';
+
+            return res.render('errorGeneral.ejs', {
+                error_code: error_code,
+                error_message: error_message,
+                error_response: error_response,
+                error_redirect: error_redirect,
+                error_redirect_button: error_redirect_button
+            });
         }
         if (err.details[0].context.key == "password") {
             console.log(err.details)
