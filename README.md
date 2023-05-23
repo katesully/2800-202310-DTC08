@@ -69,6 +69,16 @@ Users can do this by using the dropdown menu on the index page (the first point 
 4. Type in the email address you wish to send the map to.
 5. The link will be sent to the email you typed in!
 
+* Users can access roadmaps that have been shared with them.
+1. Once you receive a link to a roadmap, either click it (if you receive in an email), or paste it in the address bar of your web browser.
+2. You will get an authentication error if you are not logged in. Click the yellow button that says "go home".
+3. Select your language from the dropdown and click the green checkmark. Then, click login.
+4. Enter your username and password and click the yellow "login" button.
+5. Try clicking the link again, or paste it into the address bar of your web browser again.
+6. Click the "save a copy" button, below the map at the bottom of the page.
+7. Go to your saved maps by clicking the icon in the middle of the bottom nav bar.
+8. Now you can track your own progress on that map using the steps above (under "users can check off steps they have completed of roadmaps")!
+
 ## 4. Technologies and Resources Used
 List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that were used.
 * ...
