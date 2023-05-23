@@ -76,8 +76,10 @@ app.post('/signup', async (req, res) => {
             .min(1)
             .strict()
             .required(),
-        password: Joi.string()
-            .required()
+        password: Joi.string().required(),
+        email: Joi.string()
+            .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+            .required(),
     })
     try {
         const resultUsername = await schemaCreateUser.validateAsync(req.body);
