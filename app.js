@@ -229,6 +229,7 @@ app.post('/bookmarkRoadmap', async (req, res) => {
         console.log(roadmap);
         let roadmapId = crypto.randomBytes(32).toString("hex");
         roadmap._id = roadmapId;
+        roadmap.additionalSteps = [];
 
 
         await usersModel.updateOne(
@@ -241,6 +242,11 @@ app.post('/bookmarkRoadmap', async (req, res) => {
         console.log(user.savedRoadmaps);
 
         // res.redirect('/savedRoadmaps');
+
+        const responseData = { message: 'Server response', data: roadmapId};
+
+        // Send the response back to the client
+        res.json(responseData);
     }
     else {
         // res.redirect('/login');
@@ -248,6 +254,46 @@ app.post('/bookmarkRoadmap', async (req, res) => {
 });
 
 
+app.post('/sendAdditionalRequest', async (req, res) => {
+
+    if (req.session.GLOBAL_AUTHENTICATED) {
+
+        const user = await usersModel.findOne({ username: req.session.loggedUsername });
+
+        if (!user) {
+            throw new Error("User does not exist");
+        }
+
+        const parentRoadmapId = req.body.roadmapId;
+        let prefix = "How to ";
+        const additionalSteps = prefix.concat(req.body.additionalSteps); 
+        console.log(additionalSteps);
+
+        let returnMessage = await getMessage(additionalSteps, req.session.loggedCity);
+        console.log("Got return message: " + returnMessage);
+        let roadmapObject = createRoadmapObject(returnMessage.choices[0].message.content);
+        console.log("Got roadmap object: " + roadmapObject);
+
+        res.render('./main.ejs', {
+            //create an array the size of the number of steps in the roadmap
+            //fill the array with true values
+            //this is used to set the checkboxes to true by default
+    
+            //only display steps that are not undefined
+            steps: roadmapObject.steps.filter(step => step !== undefined),
+            checkboxStates: Array(roadmapObject.steps.length).fill(false),
+            roadmap: JSON.stringify(roadmapObject),
+            title: roadmapObject.title,
+            description: roadmapObject.description,
+            parentRoadmapId: parentRoadmapId
+        });
+
+
+    }
+    else {
+        // res.redirect('/login');
+    }
+});
 
 
 
