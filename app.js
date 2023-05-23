@@ -10,19 +10,13 @@ const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const ejs = require('ejs');
 const { parse } = require('dotenv');
-
-
-
 var nodemailer = require('nodemailer');
 const tokenModel = require('./models/token.js');
 const crypto = require("crypto");
-
 const bcryptSalt = process.env.BCRYPT_SALT;
-
 const fs = require("fs");
 const path = require("path");
 const clientURL = process.env.CLIENT_URL;
-
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -61,9 +55,6 @@ app.get(['/', '/home'], (req, res) => {
     res.render('./index.ejs', { user: req.session.GLOBAL_AUTHENTICATED });
     }
 });
-
-
-
 
 app.get('/signup', (req, res) => {
     console.log("app.get(\'\/createUser\'): Current session cookie-id:", req.cookies)
@@ -140,7 +131,6 @@ app.post('/signup', async (req, res) => {
     }
 })
 
-
 app.get('/login', (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
         res.redirect('/main');
@@ -148,7 +138,6 @@ app.get('/login', (req, res) => {
         res.render('login.ejs')
     }
 });
-
 
 app.post('/login', async (req, res) => {
     console.log(`Username entered: ${req.body.username}`);
@@ -253,7 +242,6 @@ app.post('/bookmarkRoadmap', async (req, res) => {
     }
 });
 
-
 app.post('/sendAdditionalRequest', async (req, res) => {
 
     if (req.session.GLOBAL_AUTHENTICATED) {
@@ -294,8 +282,6 @@ app.post('/sendAdditionalRequest', async (req, res) => {
         // res.redirect('/login');
     }
 });
-
-
 
 // Interface with OpenAI API
 async function getMessage(message, userCity) {
@@ -381,9 +367,7 @@ app.post('/sendRequest', async (req, res) => {
 
 });
 
-
 // Start password reset process
-
 app.get('/resetPassword', (req, res) => {
     res.render('resetPassword.ejs')
 });
@@ -453,7 +437,6 @@ app.post('/sendResetEmail', async (req, res) => {
 })
 
 // Get new password
-
 app.get('/passwordReset', async (req, res) => {
     const token = req.query.token;
     const id = req.query.id;
@@ -504,16 +487,9 @@ app.post('/confirmNewPassword', async (req, res) => {
 
 });
 
-
-// app.get('/passwordReset', (req, res) => {
-
-//     res.render('./savedRoadmaps.ejs', { savedList: roadmapsTemp });
-// });
-
 app.get('/newpassword', (req, res) => {
     res.render('./newpassword.ejs')
 })
-
 
 app.get('/savedRoadmaps', async (req, res) => {
 
@@ -725,11 +701,7 @@ app.post('/logout', function (req, res, next) {
     });
 })
 
-
-
-
 // sending an sharing email
-
 const sendShareEmail = async (email, payload) => {
     try {
         const transporter = nodemailer.createTransport({
@@ -759,8 +731,6 @@ const sendShareEmail = async (email, payload) => {
     }
 }
 
-
-
 app.post('/sendShareEmail', async (req, res) => {
     console.log('Form submission received');
     try {
@@ -781,8 +751,5 @@ app.post('/sendShareEmail', async (req, res) => {
         res.status(500).json({ error: 'Failed to send email' });
     }
 });
-
-
-
 
 module.exports = app;
