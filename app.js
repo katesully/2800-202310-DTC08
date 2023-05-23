@@ -243,7 +243,15 @@ app.get('/main', (req, res) => {
         });
     }
     else {
-        res.redirect('/login');
+        
+        populateErrorPage(
+            res, // res
+            '401', // error_code
+            'Error: You are not logged in', // error_message
+            'Please Log In', // error_response
+            '/login', // error_redirect
+            'Log In' // error_redirect_button
+        );
     }
 });
 
