@@ -58,7 +58,7 @@ app.get(['/', '/home'], (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
         res.redirect('/main');
     } else {
-    res.render('./index.ejs');
+        res.render('./index.ejs');
     }
 });
 
@@ -243,7 +243,7 @@ app.post('/bookmarkRoadmap', async (req, res) => {
 
         // res.redirect('/savedRoadmaps');
 
-        const responseData = { message: 'Server response', data: roadmapId};
+        const responseData = { message: 'Server response', data: roadmapId };
 
         // Send the response back to the client
         res.json(responseData);
@@ -266,7 +266,7 @@ app.post('/sendAdditionalRequest', async (req, res) => {
 
         const parentRoadmapId = req.body.roadmapId;
         let prefix = "How to ";
-        const additionalSteps = prefix.concat(req.body.additionalSteps); 
+        const additionalSteps = prefix.concat(req.body.additionalSteps);
         console.log(additionalSteps);
 
         let returnMessage = await getMessage(additionalSteps, req.session.loggedCity);
@@ -278,7 +278,7 @@ app.post('/sendAdditionalRequest', async (req, res) => {
             //create an array the size of the number of steps in the roadmap
             //fill the array with true values
             //this is used to set the checkboxes to true by default
-    
+
             //only display steps that are not undefined
             steps: roadmapObject.steps.filter(step => step !== undefined),
             checkboxStates: Array(roadmapObject.steps.length).fill(false),
@@ -402,7 +402,8 @@ const sendResetEmail = async (email, payload) => {
             from: process.env.GMAIL_EMAIL,
             to: email,
             subject: 'Here is your password reset link!',
-            text: payload
+            html: payload
+
         };
 
         transporter.sendMail(mailOptions, function (error, info) {
@@ -425,35 +426,51 @@ app.post('/sendResetEmail', async (req, res) => {
 
     console.log(user);
     if (!user) {
-       return res.render('error502usernotexist.ejs');
+        return res.render('error502usernotexist.ejs');
+    } else {
+        let token = await tokenModel.findOne({ userId: user._id });
+        if (token) {
+            await token.deleteOne()
+        };
+
+        let resetToken = crypto.randomBytes(32).toString("hex");
+
+        const hashedToken = await bcrypt.hash(resetToken, Number(bcryptSalt));
+
+        await new tokenModel({
+            userId: user._id,
+            token: hashedToken,
+            createdAt: Date.now(),
+        }).save();
+
+        const link = `${clientURL}/passwordReset?token=${resetToken}&id=${user._id}`;
+
+        const emailBody = `Reset your password using the link: ${link}`;
+
+        ejs.renderFile('views/components/emailtemplate.ejs', { emailBody: emailBody, emailLink: link }, function (err, data) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+
+
+
+            sendResetEmail(user.email, data);
+
+        });
+
+
+
+
+
+
+        // sendResetEmail(user.email, emailBody);
+
     }
-    let token = await tokenModel.findOne({ userId: user._id });
-    if (token) {
-        await token.deleteOne()
-    };
+});
+//     }
+// })
 
-    let resetToken = crypto.randomBytes(32).toString("hex");
-
-    const hashedToken = await bcrypt.hash(resetToken, Number(bcryptSalt));
-    
-    await new tokenModel({
-        userId: user._id,
-        token: hashedToken,
-        createdAt: Date.now(),
-    }).save();
-
-
-    const link = `${clientURL}/passwordReset?token=${resetToken}&id=${user._id}`;
-    const emailBody = `
-  Reset your password using the link: ${link}`;
-
-
- 
-    sendResetEmail(user.email, emailBody);
-
-
-
-})
 
 // Get new password
 
@@ -696,7 +713,7 @@ app.post('/deleteBookmark', async (req, res) => {
         const user = await usersModel.findOne({ username: req.session.loggedUsername });
 
         if (!user) {
-           return res.render('error502usernotexist.ejs');
+            return res.render('error502usernotexist.ejs');
         }
 
         await usersModel.updateOne(
@@ -771,7 +788,7 @@ app.post('/sendShareEmail', async (req, res) => {
 
         const content = req.body.inputShareEmailContent;
 
-        // if email is successfully sent, have a popup that says "Email sent successfully"
+
 
 
 
