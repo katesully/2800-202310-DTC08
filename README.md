@@ -215,7 +215,6 @@ Content of the project folder:
     3. Our app absolutely uses AI. We harness the power of chatGPT to give users step-by-step roadmaps to complete tasks in a new city. Our app sends a request to the chatGPT API to give a list of step-by-step instructions on how to do what the user has asked for help with, and converts the response into a roadmap. 
 
     4. We encountered the limitation of chatGPT's information being out of date by about two years. We are unable to overcome this at the moment, but we will assume that in the future it will receive updated information more regularly. 
-    
 
 ## 10. Names of Contributors and Contact
 List team members and/or short bio's here... 
