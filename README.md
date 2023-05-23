@@ -81,9 +81,47 @@ Users can do this by using the dropdown menu on the index page (the first point 
 
 ## 4. Technologies and Resources Used
 List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that were used.
-* We used Node
-* ...
-* ...
+* We used Node.js v18.13.0 and express v4.18.2 for our backend.
+* We used MongoDBAtlas for our database.
+* We used the chatGPT API to get responses that populate our roadmaps.
+* We used chatGPT for code suggestions, which we documented in our prompt log on Notion.
+* We used ejs templates to organize and format our html pages.
+* We used Javascript, JQuery, and CSS. 
+* We used Figma for our ideation (using a figjam board) and for clickable wireframes.
+* We used VS Code version 1.74.2 to work locally on the project.
+* Here are the npm packages we used and their versions: 
+├── axios@1.4.0
+├── bcrypt@5.1.0
+├── connect-mongo@5.0.0
+├── cookie-parser@1.4.6
+├── deepl-node@1.9.0
+├── dotenv@16.0.3
+├── ejs@3.1.9
+├── express-session@1.17.3
+├── express@4.18.2
+├── joi@17.9.2
+├── mime@3.0.0
+├── mongodb@5.5.0
+├── mongoose@7.1.1
+├── nodemailer@6.9.2
+├── nodemon@2.0.22
+└── openai@3.2.1
+
+**Image and icon sources:**
+back_lrg.png:
+background_family_1.png:
+delete_lrg.png:
+happyface.png:
+home_lrg:
+login.png:
+LogoHeaderBar.png:
+map_lrg.png:
+ok-green.png:
+sadface.png:
+settings_lrg.png:
+share_lrg.png:
+Welcomes.png:
+
 
 ## 5. Known Bugs and Limitations
 Here are some known limitations:
