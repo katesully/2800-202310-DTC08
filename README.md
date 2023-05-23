@@ -79,7 +79,7 @@ Users can do this by using the dropdown menu on the index page (the first point 
 7. Go to your saved maps by clicking the icon in the middle of the bottom nav bar.
 8. Now you can track your own progress on that map using the steps above (under "users can check off steps they have completed of roadmaps")!
 
-## 4. Technologies and Resources Used
+## 4. Technologies, Resources, and Credits
 List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that were used.
 * We used Node.js v18.13.0 and express v4.18.2 for our backend.
 * We used MongoDBAtlas for our database.
@@ -207,7 +207,7 @@ Content of the project folder:
 ├── README.md                 # README for this project
 └── server.js   
 
-## 8. Names of Contributors and Contact
+## 9. Names of Contributors and Contact
 List team members and/or short bio's here... 
 * Charlie: cz4100@gmail.com
 * Kate: sullivan.kate.e@gmail.com
