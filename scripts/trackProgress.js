@@ -69,5 +69,16 @@ function checkAll(mapID) {
     checkboxes.forEach((checkbox) => {
         checkbox.checked = true;
     });
+    unselectAll = document.getElementById("unselectAll");
+    unselectAll.checked = false;
+    saveProgress(mapID);
+}
+
+function uncheckAll(mapID) {
+    console.log("unselect all clicked");
+    var checkboxes = document.querySelectorAll('input[type=checkbox]');
+    checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+    });
     saveProgress(mapID);
 }

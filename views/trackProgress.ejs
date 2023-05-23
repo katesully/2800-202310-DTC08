@@ -64,7 +64,9 @@
         <div class="container" id="saveButtons">
           <% if (userOwnsMap) { %>
             <input type="checkbox" id="selectAll" onclick="checkAll(mapID)">
-            <label for="selectAll" style="padding: 5px;"> check off or uncheck all steps </label>
+            <label for="selectAll" style="padding: 5px;"> check off all steps </label>
+            <input type="checkbox" id="unselectAll" onclick="uncheckAll(mapID)">
+            <label for="unselectAll" style="padding: 5px;"> uncheck all steps </label>
             <% } else { %>
               <button class="btn btn-primary col-6 col-md-12 py-md-3" id="save-copy-button" onclick=saveCopy(mapID)>Save
                 A Copy</button>
