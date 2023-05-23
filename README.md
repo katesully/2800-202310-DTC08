@@ -12,10 +12,26 @@ Here are the steps to assemble a development environment (assuming you're a part
 1. Ask us to add you as a collaborator on the github repo. Our contact information is at the bottom of this file.
 2. You will get an email from github - accept the invitation to collaborate.
 3. Clone the repo to your machine to be able to work on it locally. 
-4. Make sure to type "npm install" in your terminal to make sure your project has all the necessary modules to run.
-5. If you don't have nodemon, install it. Instructions can be found here: https://www.npmjs.com/package/nodemon 
-6. Now, you can run the project on localhost. Type "nodemon server.js" in your terminal.
-7. Type "localhost:3000" in your internet browser. There's our index.ejs page!
+4. You will need a .env file with the following fields:
+```
+OPENAI_API_KEY 
+ATLAS_DB_USERNAME
+ATLAS_DB_PASSWORD
+ATLAS_DB_HOS
+NODE_SESSION_SECRET
+MONGO_SESSION_SECRET
+PORT=3000
+GMAIL_KEY0=2800-202310-DTC08
+GMAIL_KEY
+GMAIL_EMAIL
+BCRYPT_SALT
+CLIENT_URL
+```
+If you are a developer working on this project with us (or an instructor marking our project), which we assume you are if you are reading these instructions, we will provide the values of these keys to you separately to make sure anything posted to github is okay to be shared publicly.
+5. Make sure to type "npm install" in your terminal to make sure your project has all the necessary modules to run.
+6. If you don't have nodemon, install it. Instructions can be found here: https://www.npmjs.com/package/nodemon 
+7. Now, you can run the project on localhost. Type "nodemon server.js" in your terminal.
+8. Type "localhost:3000" in your internet browser. There's our index.ejs page!
 
 ## 3. Core Features
 * Create account/login
