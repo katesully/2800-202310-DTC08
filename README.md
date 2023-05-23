@@ -54,6 +54,10 @@ If you are a developer working on this project with us (or an instructor marking
 3. Verify that your roadmap has been saved by navigating to "My Maps" (the middle icon on the bottom nav bar).
 
 * Users can check off steps they have completed of roadmaps
+1. On "My Maps" (the page with your saved roadmaps), click on the title of a roadmap.
+2. You will be directed to the /trackProgress route, where you can see your current progress along your journey of steps for a particular roadmap.
+3. To check off a step, click the checkbox next to it. The page will reload with the checkbox checked off and the text crossed out.
+4. If you wish to uncheck a step, you can click a checked checkbox and the page will reload with that checkbox unchecked and the text no longer crossed out.
 
 * Users can change their language preferences
 * Users can share roadmaps to others using the app
