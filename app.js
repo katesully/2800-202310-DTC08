@@ -435,6 +435,9 @@ app.post('/sendResetEmail', async (req, res) => {
     let resetToken = crypto.randomBytes(32).toString("hex");
 
     const hashedToken = await bcrypt.hash(resetToken, Number(bcryptSalt));
+    const emailTemplatePath = path.join(__dirname, 'views', 'components', 'emailtemplate.ejs');
+    const emailFooterTemplate = fs.readFileSync(emailTemplatePath, 'utf8');
+    const emailFooter = ejs.render(emailFooterTemplate);
 
 
 
@@ -446,7 +449,10 @@ app.post('/sendResetEmail', async (req, res) => {
 
 
     const link = `${clientURL}/passwordReset?token=${resetToken}&id=${user._id}`;
-    sendResetEmail(user.email, link);
+    const emailBody = `Reset your password using the link: ${link}\n\n${emailFooter}`;
+
+    
+    sendResetEmail(user.email, emailBody);
 
 
 
