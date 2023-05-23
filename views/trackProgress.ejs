@@ -63,8 +63,8 @@
       <%- include('components/roadmap.ejs') %>
         <div class="container" id="saveButtons">
           <% if (userOwnsMap) { %>
-            <input type="checkbox" id="selectAll" onclick="selectAll()">
-            <label for="selectAll" style="padding: 5px;"> Check off all steps </label>
+            <input type="checkbox" id="selectAll" onclick="checkAll(mapID)">
+            <label for="selectAll" style="padding: 5px;"> check off or uncheck all steps </label>
             <% } else { %>
               <button class="btn btn-primary col-6 col-md-12 py-md-3" id="save-copy-button" onclick=saveCopy(mapID)>Save
                 A Copy</button>

@@ -23,7 +23,6 @@ async function saveProgress(mapID) {
 
     //reload page
     location.reload();
-
 }
 
 function saveCopy() {
@@ -62,4 +61,13 @@ function saveCopy() {
 
     alert("Your roadmap has been saved to your account.");
 
+}
+
+function checkAll(mapID) {
+    console.log("select all clicked");
+    var checkboxes = document.querySelectorAll('input[type=checkbox]');
+    checkboxes.forEach((checkbox) => {
+        checkbox.checked = true;
+    });
+    saveProgress(mapID);
 }
