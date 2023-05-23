@@ -510,7 +510,14 @@ app.post('/sendResetEmail', async (req, res) => {
 
     console.log(user);
     if (!user) {
-        throw new Error("User does not exist");
+        return populateErrorPage(
+            res, // res
+            '404', // error_code
+            'Error: User does not exist', // error_message
+            'Please Try Again', // error_response
+            '/resetPassword', // error_redirect
+            'Try Again' // error_redirect_button
+        );
     }
     let token = await tokenModel.findOne({ userId: user._id });
     if (token) {
@@ -589,11 +596,6 @@ app.post('/confirmNewPassword', async (req, res) => {
 
 });
 
-
-// app.get('/passwordReset', (req, res) => {
-
-//     res.render('./savedRoadmaps.ejs', { savedList: roadmapsTemp });
-// });
 
 app.get('/newpassword', (req, res) => {
     res.render('./newpassword.ejs')
