@@ -114,6 +114,7 @@ sun.addEventListener("click", function () {
 
 //save roadmap object to MongoDB under user's account
 async function saveRoadmap(roadmap) {
+    closeBookmarkModal();
     console.log("save roadmap clicked");
     console.log(roadmap);
     console.log(roadmap.title);
@@ -159,6 +160,8 @@ async function saveRoadmap(roadmap) {
 }
 
 async function createAdditionalSteps() {
+    closeStepsModal();
+    toggleLoader();
     console.log("create additional steps");
     console.log(additionalStepsSelected);
     console.log(savedRoadmapId);
@@ -191,8 +194,16 @@ function additionalStepsModal(stepParagraph) {
     console.log(additionalStepsSelected);
 }
 
+function bookmarkModal() {
+    $('#bookmarkModal').modal('show')
+}
+
 function closeStepsModal() {
     $('#additionalStepsModal').modal('hide');
+}
+
+function closeBookmarkModal() {
+    $('#bookmarkModal').modal('hide');
 }
 
 function toggleLoader() {

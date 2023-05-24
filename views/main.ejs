@@ -126,7 +126,7 @@
                   </ul>
                 </div>
               </div>
-              <form class="chat-bubble-input input-field mt-6 py-0 px-3" action="/sendRequest" method="post">
+              <form class="chat-bubble-input input-field mt-6 py-0 px-3" action="/sendRequest" method="post" onsubmit="toggleLoader()">
                 <input type="text" class="form-control" placeholder="How to ..." id="textInput" name="textInput">
                 <button type="submit" value="Submit" class="btn m-auto"><i class="fas fa-paper-plane d-block"
                     id="submitBtn" onclick="toggleLoader()"></i></button>
@@ -142,6 +142,8 @@
           <script src="../scripts/main.js"></script>
           <%- include('components/footer.ejs') %>
 
+
+
             <div class="modal fade" id="additionalStepsModal" tabindex="-1" role="dialog"
               aria-labelledby="additionalStepsModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
@@ -155,8 +157,8 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    If you click for more information, you will be guided away from this page. Please save current
-                    roadmap if you would like to refer to it later.
+                    <p>If you click for more information, you will be guided away from this page. Please save current
+                    roadmap if you would like to refer to it later.</p>
                     <div class="modal-footer">
                       <% if (typeof roadmap !=='undefined' ) { %>
                         <button type="button" class="btn btn-primary" onclick="saveRoadmap(<%=roadmap%>)">Save Current
@@ -168,6 +170,30 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="modal fade" id="bookmarkModal" tabindex="-1" role="dialog"
+              aria-labelledby="bookmarkModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="bookmarkModalLabel">Would you like to save this Roadmap?</h5>
+                    <button type="button" class="btn close" onclick="closeBookmarkModal()" data-dismiss="modal"
+                      aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Please save current roadmap and progress if you would like to refer to it at a later time.</p>
+                    <div class="modal-footer">
+                      <% if (typeof roadmap !=='undefined' ) { %>
+                        <button type="button" class="btn btn-primary" onclick="saveRoadmap(<%=roadmap%>)">Save Current
+                          Roadmap</button>
+                        <% } %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
   </body>
 
