@@ -20,38 +20,38 @@ function shareRoadmap(shareButton) {
     let maptoshare = shareButton.closest('.card');
     console.log(maptoshare.getAttribute("value"));
     let mapid = maptoshare.getAttribute("value");
-    let shareURL = "https://outrageous-gold-pullover.cyclic.app/trackProgress?id=" + mapid;
+    let shareURL = `<a href="https://outrageous-gold-pullover.cyclic.app/trackProgress?id=" + mapid>View Map</a>`;
     console.log(shareURL);
     let inputIdField = document.getElementById("savedID")
     // set value attribute to shareURL
     inputIdField.setAttribute("value", shareURL);
     let emailContent = document.getElementById("emailContent");
     emailContent.setAttribute("value", "I'm using this awesome app to track my progress on my roadmap. Check it out here: " + shareURL);
-    
+
 
     copyBtn = document.getElementById("copyButton");
     copyBtn.addEventListener("click", copyToClipboard);
 
     let modalElement = document.getElementById("shareModal");
-    modalElement.addEventListener("hidden.bs.modal", function() {
+    modalElement.addEventListener("hidden.bs.modal", function () {
         let copiedText = document.getElementById("copiedText");
         copiedText.innerHTML = "";
         let emailDiv = document.getElementById("emailDiv");
         emailDiv.setAttribute("hidden", true);
         let emailContent = document.getElementById("emailContent");
         emailContent.setAttribute("value", "");
-        
+
     });
 
     //add event listener to email button
     let emailBtn = document.getElementById("emailBtn");
-    emailBtn.addEventListener("click", function() {
+    emailBtn.addEventListener("click", function () {
         // reveal div called .emailDiv
         let emailDiv = document.getElementById("emailDiv");
         // remove attribute hidden
         emailDiv.removeAttribute("hidden");
     });
-        
+
 }
 
 function deleteRoadmap(deleteButton) {
