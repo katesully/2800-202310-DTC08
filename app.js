@@ -874,7 +874,14 @@ const sendShareEmail = async (email, payload) => {
             from: process.env.GMAIL_EMAIL,
             to: email,
             subject: 'Someone sent you a helpful Roadmap!',
-            text: payload
+            html: payload,
+            attachments: [
+                {
+                    filename: 'LogoHeaderBar.png',
+                    path: `${__dirname}/./public/LogoHeaderBar.png`,
+                    cid: 'logo1'
+                }
+            ]
         };
 
         transporter.sendMail(mailOptions, function (error, info) {
@@ -893,21 +900,25 @@ app.post('/sendShareEmail', async (req, res) => {
     console.log('Form submission received');
     try {
         const recipient = req.body.inputShareEmailToSend;
+        const emailBody = req.body.inputShareEmailContent;
 
-        const content = req.body.inputShareEmailContent;
+        ejs.renderFile('views/components/emailtemplate.ejs', { emailBody: emailBody }, async function (err, data) {
+            if (err) {
+                console.log(err);
+                return;
+            }
 
+            await sendShareEmail(recipient, data); // Use the rendered template content
 
-
-
-
-        await sendShareEmail(recipient, content);
-
-
-        res.render('200emailsuccess.ejs');
+            res.render('200emailsuccess.ejs');
+        });
     } catch (error) {
         console.log(error);
         res.render('error501emailnotsent.ejs');
     }
 });
+
+
+
 
 module.exports = app;
