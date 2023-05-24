@@ -112,10 +112,44 @@ iframe[id=":1.container"] {
   display: none;
 }
 
-/************************************/
-
-@media screen and (max-width: 430px) {
+/********************************************/
+/* For footer bar middle icon */
+@media screen and (max-width: 435px) {
   #footer-icon-middle {
     width: 100px !important;
   }
 }
+/********************************************/
+/* Mainly for index page and changing screen sizes and languages */
+@media screen and (max-width: 420px) {
+  #backgroundCard div.card-img-overlay {
+    padding-bottom: 0!important;
+    padding-top: 1.5rem!important;
+  }
+
+  #backgroundCard div.card-img-overlay p {
+    font-size: 0.75rem!important;
+  }
+
+  #backgroundCard div.card-img-overlay h2 {
+    font-size: 1em!important;
+  }
+
+  #backgroundCardB div.card-img-overlay {
+    padding-bottom: 0!important;
+    padding-top: 1.5rem!important;
+  }
+  
+  #backgroundCardB div.card-img-overlay h2 {
+    font-size: 1em!important;
+  }
+
+  #backgroundCardB div.card-img-overlay p {
+    font-size: 0.75rem!important;
+  }
+
+  #backgroundCardC h2 {
+    font-size: 1em!important;
+  }
+}
+/********************************************/
