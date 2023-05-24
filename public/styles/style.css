@@ -113,3 +113,9 @@ iframe[id=":1.container"] {
 }
 
 /************************************/
+
+@media screen and (max-width: 430px) {
+  #footer-icon-middle {
+    width: 100px !important;
+  }
+}
