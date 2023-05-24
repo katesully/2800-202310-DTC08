@@ -114,7 +114,7 @@ iframe[id=":1.container"] {
 
 /************************************/
 
-@media screen and (max-width: 429px) {
+@media screen and (max-width: 435px) {
   #footer-icon-middle {
     width: 100px !important;
   }
