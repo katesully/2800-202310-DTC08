@@ -112,14 +112,15 @@ iframe[id=":1.container"] {
   display: none;
 }
 
-/************************************/
-
+/********************************************/
+/* For footer bar middle icon */
 @media screen and (max-width: 435px) {
   #footer-icon-middle {
     width: 100px !important;
   }
 }
-
+/********************************************/
+/* Mainly for index page and changing screen sizes and languages */
 @media screen and (max-width: 420px) {
   #backgroundCard div.card-img-overlay {
     padding-bottom: 0!important;
@@ -150,5 +151,5 @@ iframe[id=":1.container"] {
   #backgroundCardC h2 {
     font-size: 1em!important;
   }
-
 }
+/********************************************/
