@@ -53,7 +53,6 @@ app.get(['/', '/home'], (req, res) => {
         res.redirect('/main');
     } else {
     res.render('./index.ejs', { user: req.session.GLOBAL_AUTHENTICATED });
-        res.render('./index.ejs');
     }
 });
 
