@@ -143,14 +143,14 @@ app.post('/signup', async (req, res) => {
             password: hashedPassword,
             type: "non-administrator",
             email: req.body.Email,
-            city: req.body.City
+            city: req.body.city
         })
         req.session.GLOBAL_AUTHENTICATED = true;
         req.session.loggedUsername = req.body.username;
         req.session.loggedPassword = hashedPassword;
         req.session.loggedType = "non-administrator";
         req.session.loggedEmail = req.body.Email;
-        req.session.loggedCity = req.body.City;
+        req.session.loggedCity = req.body.city;
         await newUser.save();
         console.log(`New user created: ${newUser}`);
         res.redirect('/main');
