@@ -108,19 +108,19 @@ List technologies (with version numbers), API's, icons, fonts, images, media or 
 └── openai@3.2.1
 
 **Image and icon sources:**
-back_lrg.png:
-background_family_1.png:
-delete_lrg.png:
-happyface.png:
-home_lrg:
-login.png:
-LogoHeaderBar.png:
-map_lrg.png:
+back_lrg.png: Google Material Symbols (edited in Photoshop)
+background_family_1.png: canva.com
+delete_lrg.png: Google Material Symbols (edited in Photoshop)
+happyface.png: pngwing.com (edited in Photoshop)
+home_lrg: Google Material Symbols (edited in Photoshop)
+login.png: flaticon.com (edited in Photoshop)
+LogoHeaderBar.png: logoAI.com
+map_lrg.png: Google Material Symbols (edited in Photoshop)
 ok-green.png:
-sadface.png:
-settings_lrg.png:
-share_lrg.png:
-Welcomes.png:
+sadface.png: pngwing.com (edited in Photoshop)
+settings_lrg.png: Google Material Symbols (edited in Photoshop)
+share_lrg.png: Google Material Symbols (edited in Photoshop)
+Welcomes.png: istockphoto.com
 
 ## 5. Known Bugs and Limitations
 Here are some known limitations:
