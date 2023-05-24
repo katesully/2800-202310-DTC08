@@ -157,6 +157,19 @@ async function saveRoadmap(roadmap) {
             console.error('Error making POST request:', error);
         });
 
+        document.getElementById("bookmarkSymbol").classList.toggle("fa-bounce");
+        document.getElementById("bookmarkSymbol").classList.toggle("fa-solid");
+        document.getElementById("bookmarkSymbolModal").classList.toggle("fa-bounce");
+        document.getElementById("bookmarkSymbolModal").classList.toggle("fa-solid");
+        document.getElementById("bookmarkSymbolStepsModal").classList.toggle("fa-bounce");
+        document.getElementById("bookmarkSymbolStepsModal").classList.toggle("fa-solid");
+
+        let bookmarkTexts = document.getElementsByClassName('bookmarkText')
+        console.log('bookmark texts: ' + bookmarkTexts)
+        for (let i = 0; i < bookmarkTexts.length; i++) {
+            bookmarkTexts[i].textContent = " Roadmap saved!"
+        }
+
 }
 
 async function createAdditionalSteps() {
