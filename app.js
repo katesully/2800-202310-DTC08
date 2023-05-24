@@ -225,7 +225,7 @@ app.get('/settings', (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
         res.render('./settings.ejs', { username: req.session.loggedUsername, email: req.session.loggedEmail, city: req.session.loggedCity });
     } else {
-        res.render('error403');
+        res.render('error401');
     }
 });
 
