@@ -390,7 +390,6 @@ async function getMessage(message, userCity) {
         const response = await fetch('https://api.openai.com/v1/chat/completions', options)
         const data = await response.json();
         console.log(data);
-        console.log(data.choices[0].message.content)
         return data;
     }
     catch (error) {
@@ -430,9 +429,9 @@ app.post('/sendRequest', async (req, res) => {
         console.log(returnMessage.error);
         return populateErrorPage(
             res, // res
-            returnMessage.error.type, // error_code
-            returnMessage.error.code, // error_message
-            returnMessage.error.message, // error_response
+            returnMessage.error.code,// error_code
+            returnMessage.error.message, // error_message
+            returnMessage.error.type, // error_response
             '/main', // error_redirect
             'Try Again' // error_redirect_button
         );
