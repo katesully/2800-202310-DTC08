@@ -52,7 +52,7 @@ app.get(['/', '/home'], (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
         res.redirect('/main');
     } else {
-    res.render('./index.ejs', { user: req.session.GLOBAL_AUTHENTICATED });
+        res.render('./index.ejs', { user: req.session.GLOBAL_AUTHENTICATED });
     }
 });
 
@@ -106,12 +106,12 @@ app.post('/signup', async (req, res) => {
                 'Please try again', // error_response
                 '/signup', // error_redirect
                 'Try Again' // error_redirect_button
-                );
+            );
 
         }
         if (err.details[0].context.key == "password") {
             console.log(err.details)
-            
+
             return populateErrorPage(
                 res, // res
                 '422', // error_code
@@ -119,7 +119,7 @@ app.post('/signup', async (req, res) => {
                 'Please try again', // error_response
                 '/signup', // error_redirect
                 'Try Again' // error_redirect_button
-                );
+            );
         }
     }
     const userresult = await usersModel.findOne({
@@ -237,7 +237,7 @@ app.get('/main', (req, res) => {
         });
     }
     else {
-        
+
         populateErrorPage(
             res, // res
             '401', // error_code
@@ -579,7 +579,7 @@ app.post('/confirmNewPassword', async (req, res) => {
             'Error: Passwords do not match', // error_message
             'Please Retry with Your Email Link', // error_response
         );
-    
+
     }
 
     const user = await usersModel.findOne({ _id: id });
@@ -899,9 +899,12 @@ app.post('/sendShareEmail', async (req, res) => {
     console.log('Form submission received');
     try {
         const recipient = req.body.inputShareEmailToSend;
-        const emailBody = req.body.inputShareEmailContent;
+        const emailBody = "I'm using this awesome app to track my progress on my roadmap. Check it out here: "
+        const emailLink = req.body.inputShareMapLink;
 
-        ejs.renderFile('views/components/emailtemplate.ejs', { emailBody: emailBody }, async function (err, data) {
+        console.log(emailLink);
+
+        ejs.renderFile('views/components/emailtemplate.ejs', { emailBody: emailBody, mapLink: emailLink }, async function (err, data) {
             if (err) {
                 console.log(err);
                 return;
