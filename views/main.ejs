@@ -161,8 +161,10 @@
                     roadmap if you would like to refer to it later.</p>
                     <div class="modal-footer">
                       <% if (typeof roadmap !=='undefined' ) { %>
-                        <button type="button" class="btn btn-primary" onclick="saveRoadmap(<%=roadmap%>)">Save Current
-                          Roadmap</button>
+                        <button type="button" class="btn btn-primary" onclick="saveRoadmap(<%=roadmap%>)">
+                          <i id="bookmarkSymbolStepsModal" class="fa-regular fa-bookmark" style="--fa-animation-iteration-count: 1;"></i>
+                          <span class="bookmarkText"> Save Current Roadmap</span>
+                        </button>
                         <% } %>
                           <button type="button" class="btn btn-success" onclick="createAdditionalSteps()">Give Me More
                             Info</button>
@@ -186,8 +188,10 @@
                     <p>Please save current roadmap and progress if you would like to refer to it at a later time.</p>
                     <div class="modal-footer">
                       <% if (typeof roadmap !=='undefined' ) { %>
-                        <button type="button" class="btn btn-primary" onclick="saveRoadmap(<%=roadmap%>)">Save Current
-                          Roadmap</button>
+                        <button type="button" class="btn btn-primary" onclick="saveRoadmap(<%=roadmap%>)">
+                          <i id="bookmarkSymbolModal" class="fa-regular fa-bookmark" style="--fa-animation-iteration-count: 1;"></i>
+                          <span class="bookmarkText"> Save Roadmap</span>
+                        </button>
                         <% } %>
                     </div>
                   </div>
