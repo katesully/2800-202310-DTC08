@@ -399,6 +399,7 @@ async function getMessage(message, userCity) {
         const response = await fetch('https://api.openai.com/v1/chat/completions', options)
         const data = await response.json();
         console.log(data);
+        console.log(data.choices[0].message.content)
         return data;
     }
     catch (error) {
@@ -565,22 +566,48 @@ app.post('/confirmNewPassword', async (req, res) => {
 
 
     if (newPassword !== confirmPassword) {
-        return res.send("Passwords do not match");
+        return populateErrorPage(
+            res, // res
+            '400 ', // error_code
+            'Error: Passwords do not match', // error_message
+            'Please Retry with Your Email Link', // error_response
+        );
+    
     }
 
     const user = await usersModel.findOne({ _id: id });
     if (!user) {
-        return res.send("User does not exist");
+        return populateErrorPage(
+            res, // res
+            '404', // error_code
+            'Error: User does not exist', // error_message
+            'Please Retry with Your Email Link', // error_response
+        );
     }
 
     const tokenDoc = await tokenModel.findOne({ userId: user._id });
     if (!tokenDoc) {
-        return res.send("Invalid or expired token");
+        return populateErrorPage(
+            res, // res
+            '403', // error_code
+            'Error: Reset Token does not exist or has expired', // error_message
+            'Your password reset link has expired. Please resubmit your email address to receive a new password reset link.', // error_response
+            '/resetPassword', // error_redirect
+            'Get New Reset Link' // error_redirect_button
+        );
+
     }
 
     const isValid = await bcrypt.compare(token, tokenDoc.token);
     if (!isValid) {
-        return res.send("Invalid or expired token");
+        return populateErrorPage(
+            res, // res
+            '403', // error_code
+            'Error: Reset Token does not exist or has expired', // error_message
+            'Your password reset link has expired. Please resubmit your email address to receive a new password reset link.', // error_response
+            '/resetPassword', // error_redirect
+            'Get New Reset Link' // error_redirect_button
+        );
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, Number(bcryptSalt));
@@ -609,7 +636,14 @@ app.get('/savedRoadmaps', async (req, res) => {
         const user = await usersModel.findOne({ username: req.session.loggedUsername });
 
         if (!user) {
-            throw new Error("User does not exist");
+            return populateErrorPage(
+                res, // res
+                '404', // error_code
+                'Error: User does not exist', // error_message
+                'Please Log In', // error_response
+                '/login', // error_redirect
+                'Log In' // error_redirect_button
+            );
         }
 
         const roadmapsList = user.savedRoadmaps;
@@ -620,7 +654,14 @@ app.get('/savedRoadmaps', async (req, res) => {
 
     }
     else {
-        res.redirect('/login')
+        populateErrorPage(
+            res, // res
+            '401', // error_code
+            'Error: You are not logged in', // error_message
+            'Please Log In', // error_response
+            '/login', // error_redirect
+            'Log In' // error_redirect_button
+        );
     }
 });
 
