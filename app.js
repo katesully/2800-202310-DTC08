@@ -57,6 +57,19 @@ app.get(['/', '/home'], (req, res) => {
     }
 });
 
+function populateErrorPage(res, error_code, error_message, error_response, error_redirect = undefined, error_redirect_button = undefined) {
+
+    res.render('errorGeneral.ejs', {
+        error_code: error_code,
+        error_message: error_message,
+        error_response: error_response,
+        error_redirect: error_redirect,
+        error_redirect_button: error_redirect_button
+    });
+
+}
+
+
 app.get('/signup', (req, res) => {
     console.log("app.get(\'\/createUser\'): Current session cookie-id:", req.cookies)
     if (req.session.GLOBAL_AUTHENTICATED) {
@@ -86,33 +99,44 @@ app.post('/signup', async (req, res) => {
     } catch (err) {
         if (err.details[0].context.key == "username") {
             console.log(err.details)
-            let createUserFailHTML = `
-            <br />
-            <h3>Error: Username can only contain letters and numbers and must not be empty - Please try again</h3>
-            <input type="button" value="Try Again" onclick="window.location.href='/signup'" />
-            `
-            return res.send(createUserFailHTML)
+
+            return populateErrorPage(
+                res, // res
+                '422', // error_code
+                'Error: Username can only contain letters and numbers and must not be empty', // error_message
+                'Please try again', // error_response
+                '/signup', // error_redirect
+                'Try Again' // error_redirect_button
+                );
+
         }
         if (err.details[0].context.key == "password") {
             console.log(err.details)
-            let createUserFailHTML = `
-            <br />
-            <h3>Error: Password is empty - Please try again</h3>
-            <input type="button" value="Try Again" onclick="window.location.href='/signup'" />
-            `
-            return res.send(createUserFailHTML)
+            
+            return populateErrorPage(
+                res, // res
+                '422', // error_code
+                'Error: Password did not meet requirements', // error_message
+                'Please try again', // error_response
+                '/signup', // error_redirect
+                'Try Again' // error_redirect_button
+                );
         }
     }
     const userresult = await usersModel.findOne({
         username: req.body.username
     })
     if (userresult) {
-        let createUserFailHTML = `
-            <br />
-            <h3>Error: User already exists - Please try again</h3>
-            <input type="button" value="Try Again" onclick="window.location.href='/signup'" />
-            `
-        res.send(createUserFailHTML)
+
+        populateErrorPage(
+            res, // res
+            '409', // error_code
+            'Error: User already exists', // error_message
+            'Please try again', // error_response
+            '/signup', // error_redirect
+            'Try Again' // error_redirect_button
+        );
+
     } else {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const newUser = new usersModel({
@@ -155,15 +179,24 @@ app.post('/login', async (req, res) => {
         const value = await schema.validateAsync({ username: req.body.username, password: req.body.password });
     }
     catch (err) {
+
         console.log(err.details);
-        console.log("Username or password is invalid")
-        return
+
+        return populateErrorPage(
+            res, // res
+            '401', // error_code
+            `Error: ${err.details[0].message}}`, // error_message
+            'Please try again', // error_response
+            '/login', // error_redirect
+            'Try Again' // error_redirect_button
+        );
+
     }
 
     const userresult = await usersModel.findOne({
         username: req.body.username
     });
-    console.log(userresult);
+
     if (userresult && bcrypt.compareSync(req.body.password, userresult.password)) {
         req.session.GLOBAL_AUTHENTICATED = true;
         req.session.loggedUsername = req.body.username;
@@ -174,15 +207,16 @@ app.post('/login', async (req, res) => {
         console.log("app.post(\'\/login\'): Current session cookie:", req.cookies)
         res.redirect('/main');
     } else {
-        let loginFailHTML = `
-        <br />
-        <a href="/">Home</a>
-        <h1>Invalid username or password</h1>
-        <input type="button" value="Try Again" onclick="window.history.back()" />
-        <br />
-        `
-        console.log("app.post(\'\/login\'): Current session cookie-id:", req.cookies)
-        res.send(loginFailHTML);
+
+        populateErrorPage(
+            res, // res
+            '401', // error_code
+            'Error: Invalid username or password', // error_message
+            'Please try again', // error_response
+            '/login', // error_redirect
+            'Try Again' // error_redirect_button
+        );
+
     }
 });
 
@@ -204,7 +238,15 @@ app.get('/main', (req, res) => {
         });
     }
     else {
-        res.redirect('/login');
+        
+        populateErrorPage(
+            res, // res
+            '401', // error_code
+            'Error: You are not logged in', // error_message
+            'Please Log In', // error_response
+            '/login', // error_redirect
+            'Log In' // error_redirect_button
+        );
     }
 });
 
@@ -214,7 +256,14 @@ app.post('/bookmarkRoadmap', async (req, res) => {
         const user = await usersModel.findOne({ username: req.session.loggedUsername });
 
         if (!user) {
-            throw new Error("User does not exist");
+            return populateErrorPage(
+                res, // res
+                '404', // error_code
+                'Error: User does not exist', // error_message
+                'Please Log In', // error_response
+                '/login', // error_redirect
+                'Log In' // error_redirect_button
+            );
         }
 
         const roadmap = req.body;
@@ -241,7 +290,14 @@ app.post('/bookmarkRoadmap', async (req, res) => {
         res.json(responseData);
     }
     else {
-        // res.redirect('/login');
+        populateErrorPage(
+            res, // res
+            '401', // error_code
+            'Error: You are not logged in', // error_message
+            'Please Log In', // error_response
+            '/login', // error_redirect
+            'Log In' // error_redirect_button
+        );
     }
 });
 
@@ -252,7 +308,14 @@ app.post('/sendAdditionalRequest', async (req, res) => {
         const user = await usersModel.findOne({ username: req.session.loggedUsername });
 
         if (!user) {
-            throw new Error("User does not exist");
+            return populateErrorPage(
+                res, // res
+                '404', // error_code
+                'Error: User does not exist', // error_message
+                'Please Log In', // error_response
+                '/login', // error_redirect
+                'Log In' // error_redirect_button
+            );
         }
 
         const parentRoadmapId = req.body.roadmapId;
@@ -261,9 +324,21 @@ app.post('/sendAdditionalRequest', async (req, res) => {
         console.log(additionalSteps);
 
         let returnMessage = await getMessage(additionalSteps, req.session.loggedCity);
-        console.log("Got return message: " + returnMessage);
+
+        if (returnMessage.error !== undefined) {
+            console.log(returnMessage.error);
+            return populateErrorPage(
+                res, // res
+                returnMessage.error.type, // error_code
+                returnMessage.error.code, // error_message
+                returnMessage.error.message, // error_response
+                '/main', // error_redirect
+                'Try Again' // error_redirect_button
+            );
+        }
+
         let roadmapObject = createRoadmapObject(returnMessage.choices[0].message.content);
-        console.log("Got roadmap object: " + roadmapObject);
+
 
         res.render('./main.ejs', {
             //create an array the size of the number of steps in the roadmap
@@ -282,7 +357,7 @@ app.post('/sendAdditionalRequest', async (req, res) => {
 
     }
     else {
-        // res.redirect('/login');
+        res.redirect('/login');
     }
 });
 
@@ -313,10 +388,10 @@ async function getMessage(message, userCity) {
         })
     }
     try {
-
         const response = await fetch('https://api.openai.com/v1/chat/completions', options)
         const data = await response.json();
         console.log(data);
+        console.log(data.choices[0].message.content)
         return data;
     }
     catch (error) {
@@ -351,6 +426,20 @@ app.post('/sendRequest', async (req, res) => {
     var userInput = req.body.hiddenField || req.body.textInput;
 
     let returnMessage = await getMessage(userInput, req.session.loggedCity);
+
+    if (returnMessage.error !== undefined) {
+        console.log(returnMessage.error);
+        return populateErrorPage(
+            res, // res
+            returnMessage.error.type, // error_code
+            returnMessage.error.code, // error_message
+            returnMessage.error.message, // error_response
+            '/main', // error_redirect
+            'Try Again' // error_redirect_button
+        );
+    }
+
+
     let roadmapObject = createRoadmapObject(returnMessage.choices[0].message.content);
 
 
@@ -486,22 +575,48 @@ app.post('/confirmNewPassword', async (req, res) => {
 
 
     if (newPassword !== confirmPassword) {
-        return res.send("Passwords do not match");
+        return populateErrorPage(
+            res, // res
+            '400 ', // error_code
+            'Error: Passwords do not match', // error_message
+            'Please Retry with Your Email Link', // error_response
+        );
+    
     }
 
     const user = await usersModel.findOne({ _id: id });
     if (!user) {
-        return res.send("User does not exist");
+        return populateErrorPage(
+            res, // res
+            '404', // error_code
+            'Error: User does not exist', // error_message
+            'Please Retry with Your Email Link', // error_response
+        );
     }
 
     const tokenDoc = await tokenModel.findOne({ userId: user._id });
     if (!tokenDoc) {
-        return res.send("Invalid or expired token");
+        return populateErrorPage(
+            res, // res
+            '403', // error_code
+            'Error: Reset Token does not exist or has expired', // error_message
+            'Your password reset link has expired. Please resubmit your email address to receive a new password reset link.', // error_response
+            '/resetPassword', // error_redirect
+            'Get New Reset Link' // error_redirect_button
+        );
+
     }
 
     const isValid = await bcrypt.compare(token, tokenDoc.token);
     if (!isValid) {
-        return res.send("Invalid or expired token");
+        return populateErrorPage(
+            res, // res
+            '403', // error_code
+            'Error: Reset Token does not exist or has expired', // error_message
+            'Your password reset link has expired. Please resubmit your email address to receive a new password reset link.', // error_response
+            '/resetPassword', // error_redirect
+            'Get New Reset Link' // error_redirect_button
+        );
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, Number(bcryptSalt));
@@ -528,7 +643,14 @@ app.get('/savedRoadmaps', async (req, res) => {
         const user = await usersModel.findOne({ username: req.session.loggedUsername });
 
         if (!user) {
-            throw new Error("User does not exist");
+            return populateErrorPage(
+                res, // res
+                '404', // error_code
+                'Error: User does not exist', // error_message
+                'Please Log In', // error_response
+                '/login', // error_redirect
+                'Log In' // error_redirect_button
+            );
         }
 
         const roadmapsList = user.savedRoadmaps;
@@ -539,7 +661,14 @@ app.get('/savedRoadmaps', async (req, res) => {
 
     }
     else {
-        res.redirect('/login')
+        populateErrorPage(
+            res, // res
+            '401', // error_code
+            'Error: You are not logged in', // error_message
+            'Please Log In', // error_response
+            '/login', // error_redirect
+            'Log In' // error_redirect_button
+        );
     }
 });
 
