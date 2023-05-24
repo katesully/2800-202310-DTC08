@@ -26,7 +26,7 @@ function shareRoadmap(shareButton) {
     // set value attribute to shareURL
     inputIdField.setAttribute("value", shareURL);
     let emailContent = document.getElementById("emailContent");
-    emailContent.setAttribute("value", "I'm using this awesome app to track my progress on my roadmap. Check it out here: " + shareURL);
+    emailContent.setAttribute("value", shareURL);
 
 
     copyBtn = document.getElementById("copyButton");
