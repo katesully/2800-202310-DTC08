@@ -329,9 +329,9 @@ app.post('/sendAdditionalRequest', async (req, res) => {
             console.log(returnMessage.error);
             return populateErrorPage(
                 res, // res
-                returnMessage.error.type, // error_code
-                returnMessage.error.code, // error_message
-                returnMessage.error.message, // error_response
+                returnMessage.error.code || "500",// error_code
+                returnMessage.error.message || "Internal Server Error", // error_message
+                returnMessage.error.type || "Please Try Again", // error_response
                 '/main', // error_redirect
                 'Try Again' // error_redirect_button
             );
@@ -394,7 +394,7 @@ async function getMessage(message, userCity) {
         return data;
     }
     catch (error) {
-        console.log(error);
+        return {error: error};
     }
 }
 
@@ -430,9 +430,9 @@ app.post('/sendRequest', async (req, res) => {
         console.log(returnMessage.error);
         return populateErrorPage(
             res, // res
-            returnMessage.error.code,// error_code
-            returnMessage.error.message, // error_message
-            returnMessage.error.type, // error_response
+            returnMessage.error.code || "500",// error_code
+            returnMessage.error.message || "Internal Server Error", // error_message
+            returnMessage.error.type || "Please Try Again", // error_response
             '/main', // error_redirect
             'Try Again' // error_redirect_button
         );
@@ -509,48 +509,52 @@ app.post('/sendResetEmail', async (req, res) => {
     if (!user) {
         return res.render('error502usernotexist.ejs');
     } else {
-        let token = await tokenModel.findOne({ userId: user._id });
-        if (token) {
-            await token.deleteOne()
-        };
+        try {
+            let token = await tokenModel.findOne({ userId: user._id });
+            if (token) {
+                await token.deleteOne()
+            };
 
-        let resetToken = crypto.randomBytes(32).toString("hex");
+            let resetToken = crypto.randomBytes(32).toString("hex");
 
-        const hashedToken = await bcrypt.hash(resetToken, Number(bcryptSalt));
+            const hashedToken = await bcrypt.hash(resetToken, Number(bcryptSalt));
 
-        await new tokenModel({
-            userId: user._id,
-            token: hashedToken,
-            createdAt: Date.now(),
-        }).save();
+            await new tokenModel({
+                userId: user._id,
+                token: hashedToken,
+                createdAt: Date.now(),
+            }).save();
 
-        const link = `${clientURL}/passwordReset?token=${resetToken}&id=${user._id}`;
+            const link = `${clientURL}/passwordReset?token=${resetToken}&id=${user._id}`;
 
-        const emailBody = `Reset your password using the link: ${link}`;
+            const emailBody = `Reset your password using the link: `;
 
-        ejs.renderFile('views/components/emailtemplate.ejs', { emailBody: emailBody, emailLink: link }, function (err, data) {
-            if (err) {
-                console.log(err);
-                return;
-            }
+            ejs.renderFile('views/components/emailtemplate.ejs', { emailBody: emailBody, resetLink: link }, async function (err, data) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
 
+                await sendResetEmail(user.email, data);
 
+                res.render('200emailsuccess.ejs', {reset: true})
 
-            sendResetEmail(user.email, data);
+            });
+        } catch (error) {
+            console.log(error);
+            return populateErrorPage(
+                res, // res
+                "501",// error_code
+                "Email not sent", // error_message
+                "Please Try Again", // error_response
+                '/resetPassword', // error_redirect
+                'Try Again' // error_redirect_button
+            );
 
-        });
-
-
-
-
-
-
-        // sendResetEmail(user.email, emailBody);
-
+        }
     }
 });
-//     }
-// })
+
 
 
 // Get new password
