@@ -143,7 +143,7 @@ app.post('/signup', async (req, res) => {
         );
 
     } else if (emailresult) {
-            
+
         populateErrorPage(
             res, // res
             '409', // error_code
@@ -228,7 +228,7 @@ app.post('/login', async (req, res) => {
         console.log("app.post(\'\/login\'): Current session cookie:", req.cookies);
         res.redirect('/main');
     } else {
-        console.log("app.post('/login'): Invalid username or password");  
+        console.log("app.post('/login'): Invalid username or password");
         populateErrorPage(
             res, // res
             '401', // error_code
@@ -251,7 +251,11 @@ app.get('/settings', (req, res) => {
 });
 
 // Route: main page
-app.get('/main', (req, res) => {
+app.get('/main', async (req, res) => {
+
+    const tempSession = await req.session.GLOBAL_AUTHENTICATED;
+    console.log("app.get('/main'): Variable Global_Authenticated(tempSession):", tempSession);
+
     if (req.session.GLOBAL_AUTHENTICATED) {
         console.log("app.get('/main'): Current session cookie:", req.cookies);
         console.log("app.get('/main'): Current user:", req.session.loggedUsername);
@@ -410,7 +414,7 @@ async function getMessage(message, userCity) {
         return data;
     }
     catch (error) {
-        return {error: error};
+        return { error: error };
     }
 }
 
@@ -553,7 +557,7 @@ app.post('/sendResetEmail', async (req, res) => {
 
                 await sendResetEmail(user.email, data);
 
-                res.render('200emailsuccess.ejs', {reset: true})
+                res.render('200emailsuccess.ejs', { reset: true })
 
             });
         } catch (error) {
