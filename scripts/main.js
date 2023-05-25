@@ -1,10 +1,7 @@
-// const { func } = require("joi");
-
 // add a blank event listener to all checkboxes
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 let additionalStepsSelected = "";
 let savedRoadmapId = "";
-
 
 checkboxes.forEach((checkbox) => {
     checkbox.addEventListener("click", function () {
@@ -68,7 +65,6 @@ sun.addEventListener("click", function () {
         element.style.display = "block";
     });
 
-
     for (var i = 0; i < 20; i++) {
         setTimeout(function () {
             var sunCloneContainer = document.createElement("div");
@@ -109,9 +105,6 @@ sun.addEventListener("click", function () {
         , 9000);
 });
 
-
-
-
 //save roadmap object to MongoDB under user's account
 async function saveRoadmap(roadmap) {
     closeBookmarkModal();
@@ -130,7 +123,6 @@ async function saveRoadmap(roadmap) {
     roadmap.steps = roadmap.steps.map(function (message, i) {
         return { step: message, checked: checkboxeStates[i] };
     });
-
 
     fetch("/bookmarkRoadmap", {
         method: 'POST',
