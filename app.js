@@ -446,12 +446,12 @@ app.post('/sendRequest', async (req, res) => {
 
     let returnMessage = await getMessage(userInput, req.session.loggedCity);
 
-    if (returnMessage.error !== undefined) {
+    if (returnMessage.error !== undefined || returnMessage.message !== undefined) {
         console.log(returnMessage.error);
         return populateErrorPage(
             res, // res
-            returnMessage.error.code || "500",// error_code
-            returnMessage.error.message || "Internal Server Error", // error_message
+            returnMessage.error.code || "503",// error_code
+            returnMessage.error.message || "Service Unavailable", // error_message
             returnMessage.error.type || "Please Try Again.", // error_response
             '/main', // error_redirect
             'Try Again' // error_redirect_button
