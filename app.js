@@ -379,6 +379,7 @@ app.post('/sendAdditionalRequest', async (req, res) => {
 // Interface with OpenAI API
 async function getMessage(message, userCity) {
     console.log('clicked');
+    console.log('message:' + message.trim());
     let city = userCity;
     const options = {
         method: 'POST',
@@ -390,7 +391,7 @@ async function getMessage(message, userCity) {
             model: "gpt-3.5-turbo",
             messages: [{
                 role: "user",
-                content: `Please give me a step by step guide on ${message} in ${city}, BC Canada in the form of (with no preambles or postambles):
+                content: `Please give me a step by step guide on ${message.trim()} in ${city}, BC Canada in the form of (with no preambles or postambles):
                 Title: How to ...
                 Description: A step by step guide on how to ...
                 1. ...
