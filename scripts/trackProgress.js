@@ -1,6 +1,4 @@
 async function saveProgress(mapID) {
-    console.log('Saving progress...');
-
     //get all the checkboxes and save their state
     var checkboxes = document.querySelectorAll('input[type=checkbox]');
     var checkboxStates = [];
@@ -13,7 +11,6 @@ async function saveProgress(mapID) {
     await axios.post("/saveProgress", { mapID: mapID, checkboxStates: checkboxStates }, {
         headers: {
             'Content-Type': 'application/json',
-
         }
     }).then(response => {
         console.log(response);
@@ -26,8 +23,6 @@ async function saveProgress(mapID) {
 }
 
 function saveCopy() {
-    console.log('Saving a copy...');
-
     //get the array of steps
     var steps = document.querySelectorAll('.step');
 
@@ -60,11 +55,9 @@ function saveCopy() {
     );
 
     alert("Your roadmap has been saved to your account.");
-
 }
 
 function checkAll(mapID) {
-    console.log("select all clicked");
     var checkboxes = document.querySelectorAll('input[type=checkbox]');
     checkboxes.forEach((checkbox) => {
         checkbox.checked = true;
@@ -75,7 +68,6 @@ function checkAll(mapID) {
 }
 
 function uncheckAll(mapID) {
-    console.log("unselect all clicked");
     var checkboxes = document.querySelectorAll('input[type=checkbox]');
     checkboxes.forEach((checkbox) => {
         checkbox.checked = false;
