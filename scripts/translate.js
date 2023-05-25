@@ -1,3 +1,4 @@
+//from Google Translate
 function Translate() { 
 	//initialization
 	this.init =  function(attribute, lng){
@@ -25,7 +26,6 @@ function Translate() {
 							elem.innerHTML = LngObject[key]  ;
 						}
 					}
-				
 				}
 			}
 		}

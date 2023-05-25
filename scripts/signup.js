@@ -1,17 +1,3 @@
-// this code was written by Oceaan with help from
-//https://stackoverflow.com/questions/21727317/how-to-check-confirm-password-field-in-form-without-reloading-page
-
-// var check = function () {
-//     if (document.getElementById('passwordInput').value ==
-//         document.getElementById('confirmPassword').value) {
-//         document.getElementById('message').style.color = 'green';
-//         document.getElementById('message').innerHTML = 'Your passwords match!';
-//     } else {
-//         document.getElementById('message').style.color = 'red';
-//         document.getElementById('message').innerHTML = 'Your passwords do not match.';
-//     }
-// }
-
 const newPassword = document.querySelector('#password');
 const confirmPassword = document.querySelector('#passwordRepeat');
 
@@ -20,7 +6,6 @@ newPassword.addEventListener('input', validatePasswords);
 confirmPassword.addEventListener('input', validatePasswords);
 
 function validatePasswords() {
-    console.log("signup.js: validatePasswords() called");
   if (newPassword.value !== confirmPassword.value) {
     // Set a custom error message and mark the confirm password field as invalid
     

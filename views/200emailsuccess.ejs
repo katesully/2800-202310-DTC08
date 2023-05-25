@@ -3,8 +3,6 @@
         display: none;
     }
 
-
-
     .VIpgJd-ZVi9od-l4eHX-hSRGPD {
         display: none;
     }
@@ -15,7 +13,6 @@
   margin-right: auto;
   width: 50%;
 }
-
 </style>
 
 <%- include('components/headHTML.ejs') %>
@@ -38,13 +35,10 @@
             // Use the language variable as needed
             console.log('Detected language:', language);
         </script>
-
-      
-              
+          
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
  
-
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6 col-lg-5">
@@ -52,7 +46,6 @@
             <div class="text-center">
                 <img src="happyface.png" alt="200 Success" class="success-image img-fluid" height="100px">
             </div>
-
           <% if (typeof reset !=='undefined' ) { %>
             <h3 class="mb-3" style="text-align: center;">Reset link sent successfully!</h1>
             <h4 class="mb-3" style="text-align: center;">Thanks for you for your patience</h2>
@@ -60,7 +53,6 @@
             <h3 class="mb-3" style="text-align: center;">Email sent successfully!</h1>
             <h4 class="mb-3" style="text-align: center;">Thanks for sharing your journey</h2>
           <% } %>
-
         <div class="text-center">
           <% if (typeof reset !=='undefined' ) { %>
             <a href="/login" class="btn btn-warning">Return to Login</a>
@@ -72,13 +64,8 @@
       </div>
     </div>
   </div>
-               
-
-
-
                 <div class="spacer py-5"></div>
                 <script src="../scripts/main.js"></script>
                 <%- include('components/footer.ejs') %>
                     </body>
-
                     </html>

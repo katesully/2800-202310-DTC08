@@ -1,7 +1,4 @@
-
-
 console.log("index.js loaded");
-
 
 function saveLanguageAndShowSignup() {
   console.log("saveLanguageAndShowSignup called");
@@ -11,4 +8,3 @@ function saveLanguageAndShowSignup() {
   loginButton.style.display = "inline-block";
   signupButton.style.display = "inline-block";
 }
-

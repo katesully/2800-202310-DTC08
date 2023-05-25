@@ -7,7 +7,6 @@
 Our Project, NewJourney, is developing an app to provide multilingual assistance to help newcomers navigate everyday tasks in Vancouver by providing step-by-step, easy-to-digest road maps.
 
 ## 2. Complete setup & installion
-State what a user needs to do when they come to your project.  How do others start using your code or application?
 Here are the steps to assemble a development environment (assuming you're a part of our development team):
 1. Ask us to add you as a collaborator on the github repo. Our contact information is at the bottom of this file.
 2. You will get an email from github - accept the invitation to collaborate.
@@ -21,13 +20,30 @@ ATLAS_DB_HOS
 NODE_SESSION_SECRET
 MONGO_SESSION_SECRET
 PORT=3000
-GMAIL_KEY0=2800-202310-DTC08
 GMAIL_KEY
 GMAIL_EMAIL
 BCRYPT_SALT
 CLIENT_URL
 ```
 If you are a developer working on this project with us (or an instructor marking our project), which we assume you are if you are reading these instructions, we will provide the values of these keys to you separately to make sure anything posted to github is okay to be shared publicly.
+Otherwise, if you would like to create your own .env file for your own clone of our app, you can get the values for these keys by creating an account on the following websites:
+
+OPENAI_API_KEY: 
+    https://platform.openai.com/ 
+        You will need to request access to the ChatGPT API
+ATLAS_DB_USERNAME, ATLAS_DB_PASSWORD, ATLAS_DB_HOST: 
+    https://www.mongodb.com/cloud/atlas
+        This is for the database that stores user information, session information, and roadmap information.
+NODE_SESSION_SECRET, MONGO_SESSION_SECRET: 
+    Generate your own random strings and use them as values for these keys.
+GMAIL_KEY, GMAIL_EMAIL: 
+    https://mail.google.com/
+        This is for sending emails to users who wish to share roadmaps with others. You will need to generate an app password for this in the GMail settings.
+BCRYPT_SALT:
+    Salt for hashing passwords.
+CLIENT_URL:
+    The url of the client. For example, if you are running the app on localhost, the client url is http://localhost:3000. If you are running the app on cyclic, the client url would be the app address in cyclic and will be entered in the variable section during the cyclic deployment.
+
 5. Make sure to type "npm install" in your terminal to make sure your project has all the necessary modules to run.
 6. If you don't have nodemon, install it. Instructions can be found here: https://www.npmjs.com/package/nodemon 
 7. Now, you can run the project on localhost. Type "nodemon server.js" in your terminal.
@@ -89,6 +105,7 @@ List technologies (with version numbers), API's, icons, fonts, images, media or 
 * We used Javascript, JQuery, and CSS. 
 * We used Figma for our ideation (using a figjam board) and for clickable wireframes.
 * We used VS Code version 1.74.2 to work locally on the project.
+* We used cyclic to host our app.
 * Here are the npm packages we used and their versions: 
 ├── axios@1.4.0
 ├── bcrypt@5.1.0
@@ -116,7 +133,7 @@ home_lrg: Google Material Symbols (edited in Photoshop)
 login.png: flaticon.com (edited in Photoshop)
 LogoHeaderBar.png: logoAI.com
 map_lrg.png: Google Material Symbols (edited in Photoshop)
-photo_family_travel.jpg: 
+photo_family_travel.jpg: unsplash
 sadface.png: pngwing.com (edited in Photoshop)
 settings_lrg.png: Google Material Symbols (edited in Photoshop)
 share_lrg.png: Google Material Symbols (edited in Photoshop)
@@ -197,7 +214,7 @@ Content of the project folder:
     ├── main.ejs
     ├── newpassword.ejs
     ├── passwordReset.ejs    # The page for actually resetting password
-    ├── resetPassword.ejs    # The page for asking to reset password
+    ├── resetPassword.ejs    # The page for asking to reset password through email
     ├── savedRoadmaps.ejs
     ├── settings.ejs
     ├── shareModal.ejs
@@ -221,7 +238,6 @@ Content of the project folder:
     4. We encountered the limitation of chatGPT's information being out of date by about two years. We are unable to overcome this at the moment, but we will assume that in the future it will receive updated information more regularly. 
 
 ## 10. Names of Contributors and Contact
-List team members and/or short bio's here... 
 * Charlie: cz4100@gmail.com
 * Kate: sullivan.kate.e@gmail.com
 * Oceaan: oceaanpendharkar@gmail.com
