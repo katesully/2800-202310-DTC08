@@ -1,3 +1,4 @@
+//from Google Translate
 function Translate() { 
 	//initialization
 	this.init =  function(attribute, lng){
