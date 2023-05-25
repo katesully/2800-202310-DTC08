@@ -383,7 +383,7 @@ app.post('/sendAdditionalRequest', async (req, res) => {
 // Interface with OpenAI API
 async function getMessage(message, userCity) {
     console.log('clicked');
-    console.log('message:' + message.trim());
+    // console.log('message:' + message.trim() + "test");
     let city = userCity;
     const options = {
         method: 'POST',
