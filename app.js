@@ -126,6 +126,11 @@ app.post('/signup', async (req, res) => {
     const userresult = await usersModel.findOne({
         username: req.body.username
     })
+
+    const emailresult = await usersModel.findOne({
+        email: req.body.Email
+    })
+
     if (userresult) {
 
         populateErrorPage(
@@ -133,6 +138,17 @@ app.post('/signup', async (req, res) => {
             '409', // error_code
             'Error: User already exists', // error_message
             'Please try again', // error_response
+            '/signup', // error_redirect
+            'Try Again' // error_redirect_button
+        );
+
+    } else if (emailresult) {
+            
+        populateErrorPage(
+            res, // res
+            '409', // error_code
+            'Error: Email already exists.', // error_message
+            'Please try again.', // error_response
             '/signup', // error_redirect
             'Try Again' // error_redirect_button
         );

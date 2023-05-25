@@ -8,10 +8,21 @@ const usersSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    "password": String,
+    "password": {
+        type: String,
+        required: true
+    },
     "type": String,
-    "email": String,
-    "city": String,
+    "email": {
+        type: String,
+        required: true,
+        unique: true
+    },
+
+    "city": {
+        type: String,
+        required: true
+    },
     "savedRoadmaps": {
         type: Array,
         default: []
