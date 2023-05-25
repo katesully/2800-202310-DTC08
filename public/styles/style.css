@@ -58,7 +58,7 @@ hr {
 }
 
 .colour-yellow {
-    background-color: #F0C919;
+  background-color: #F0C919;
 }
 
 .material-symbols-outlined {
@@ -69,8 +69,6 @@ hr {
 #logoutBtn {
   font-size: 9px;
 }
-
-
 
 .shadow-custom {
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.082);
@@ -90,8 +88,7 @@ hr {
 
 /************************************/
 /* Google Translate Bar */
-a[href="https://translate.google.com"]
-{
+a[href="https://translate.google.com"] {
   display: none;
 }
 
@@ -119,37 +116,39 @@ iframe[id=":1.container"] {
     width: 100px !important;
   }
 }
+
 /********************************************/
 /* Mainly for index page and changing screen sizes and languages */
 @media screen and (max-width: 420px) {
   #backgroundCard div.card-img-overlay {
-    padding-bottom: 0!important;
-    padding-top: 1.5rem!important;
+    padding-bottom: 0 !important;
+    padding-top: 1.5rem !important;
   }
 
   #backgroundCard div.card-img-overlay p {
-    font-size: 0.75rem!important;
+    font-size: 0.75rem !important;
   }
 
   #backgroundCard div.card-img-overlay h2 {
-    font-size: 1em!important;
+    font-size: 1em !important;
   }
 
   #backgroundCardB div.card-img-overlay {
-    padding-bottom: 0!important;
-    padding-top: 1.5rem!important;
+    padding-bottom: 0 !important;
+    padding-top: 1.5rem !important;
   }
-  
+
   #backgroundCardB div.card-img-overlay h2 {
-    font-size: 1em!important;
+    font-size: 1em !important;
   }
 
   #backgroundCardB div.card-img-overlay p {
-    font-size: 0.75rem!important;
+    font-size: 0.75rem !important;
   }
 
   #backgroundCardC h2 {
-    font-size: 1em!important;
+    font-size: 1em !important;
   }
 }
+
 /********************************************/
