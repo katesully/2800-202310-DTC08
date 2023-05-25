@@ -93,6 +93,16 @@ h1 {
     display: none;
 }
 
+/* add a hover event for class submitHover */
+
+#submitBtn {
+    color: #458a92;
+}
+
+#submitBtn:hover {
+    /* background-color: #458A92; */
+    color: #6528e0;
+}
 .hidden {
     display: none !important;
 }
