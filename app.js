@@ -72,6 +72,7 @@ function populateErrorPage(res, error_code, error_message, error_response, error
 app.get('/signup', (req, res) => {
     console.log("app.get(\'\/createUser\'): Current session cookie-id:", req.cookies)
     if (req.session.GLOBAL_AUTHENTICATED) {
+        console.log("app.get(\'\/signup\'): User already logged in, redirecting to /main")
         res.redirect('/main');
     } else {
         res.render('./signup.ejs');
@@ -79,7 +80,7 @@ app.get('/signup', (req, res) => {
 })
 
 app.post('/signup', async (req, res) => {
-    console.log(req.body)
+    console.log("app.post('/signup'): ", req.body)
     const schemaCreateUser = Joi.object({
         username: Joi.string()
             .alphanum()
@@ -153,13 +154,15 @@ app.post('/signup', async (req, res) => {
         req.session.loggedEmail = req.body.Email;
         req.session.loggedCity = req.body.city;
         await newUser.save();
-        console.log(`New user created: ${newUser}`);
+        console.log(`New user: ${newUser}`);
+        console.log("app.post(\'\/signup\'): New user created, redirecting to /main")
         res.redirect('/main');
     }
 })
 
 app.get('/login', (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
+        console.log("app.get(\'\/login\'): User already logged in, redirecting to /main");
         res.redirect('/main');
     } else {
         res.render('login.ejs')
@@ -234,6 +237,7 @@ app.get('/settings', (req, res) => {
 // Route: main page
 app.get('/main', (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
+        console.log("app.get('/main'): Current session cookie:", req.cookies);
         console.log("app.get('/main'): Current user:", req.session.loggedUsername);
         res.render('./main.ejs', {
             username: req.session.loggedUsername,
