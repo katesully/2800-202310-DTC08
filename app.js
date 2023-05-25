@@ -328,9 +328,9 @@ app.post('/sendAdditionalRequest', async (req, res) => {
             console.log(returnMessage.error);
             return populateErrorPage(
                 res, // res
-                returnMessage.error.type, // error_code
-                returnMessage.error.code, // error_message
-                returnMessage.error.message, // error_response
+                returnMessage.error.code || "500",// error_code
+                returnMessage.error.message || "Internal Server Error", // error_message
+                returnMessage.error.type || "Please Try Again", // error_response
                 '/main', // error_redirect
                 'Try Again' // error_redirect_button
             );
@@ -393,7 +393,7 @@ async function getMessage(message, userCity) {
         return data;
     }
     catch (error) {
-        console.log(error);
+        return {error: error};
     }
 }
 
@@ -429,9 +429,9 @@ app.post('/sendRequest', async (req, res) => {
         console.log(returnMessage.error);
         return populateErrorPage(
             res, // res
-            returnMessage.error.code,// error_code
-            returnMessage.error.message, // error_message
-            returnMessage.error.type, // error_response
+            returnMessage.error.code || "500",// error_code
+            returnMessage.error.message || "Internal Server Error", // error_message
+            returnMessage.error.type || "Please Try Again", // error_response
             '/main', // error_redirect
             'Try Again' // error_redirect_button
         );
@@ -533,23 +533,13 @@ app.post('/sendResetEmail', async (req, res) => {
                 return;
             }
 
-
-
             sendResetEmail(user.email, data);
 
         });
 
-
-
-
-
-
-        // sendResetEmail(user.email, emailBody);
-
     }
 });
-//     }
-// })
+
 
 
 // Get new password
