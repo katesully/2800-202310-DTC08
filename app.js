@@ -137,6 +137,7 @@ app.post('/signup', async (req, res) => {
         );
 
     } else {
+        // If user does not exist, create a new user
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const newUser = new usersModel({
             username: req.body.username,
@@ -232,17 +233,17 @@ app.get('/settings', (req, res) => {
 // Route: main page
 app.get('/main', (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
+        console.log("/main: Current user:", req.session.loggedUsername);
         res.render('./main.ejs', {
             username: req.session.loggedUsername,
         });
     }
     else {
-
         populateErrorPage(
             res, // res
             '401', // error_code
             'Error: You are not logged in', // error_message
-            'Please Log In', // error_response
+            'Please register or login to continue', // error_response
             '/login', // error_redirect
             'Log In' // error_redirect_button
         );
@@ -645,7 +646,7 @@ app.get('/savedRoadmaps', async (req, res) => {
                 res, // res
                 '404', // error_code
                 'Error: User does not exist', // error_message
-                'Please Log In', // error_response
+                'Please register or login to continue', // error_response
                 '/login', // error_redirect
                 'Log In' // error_redirect_button
             );
