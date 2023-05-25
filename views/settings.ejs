@@ -1,69 +1,70 @@
 <%- include('components/headHTML.ejs') %>
 
-<body>
-  <script type="text/javascript">
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({
-        pageLanguage: 'en'
-      }, 'google_translate_element');
-    }
-  </script>
+  <body>
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+          pageLanguage: 'en'
+        }, 'google_translate_element');
+      }
+    </script>
 
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-  <link rel="stylesheet" type="text/css" href="./styles/settings.css" />
-  <%- include('components/navbar_header_logout.ejs') %>
-  <h1 style="text-align: center;">User Information </h1>
-  <div>
-    <h5 style="text-align: center;"> App language (click to update) </h5>
-    <div id="google_translate_element" style="text-align: center;"></div>
-  </div>
-  <div class="container">
-    <form>
-      <fieldset class="mb-3" id="personalInfoFields" disabled>
-        <div class="form-group">
-          <label>Username </label>
-          <h2>
-            <%= username %>
-          </h2>
-        </div>
-        <hr>
-        <div class="form-group">
-          <label> Browser Language </label>
-          <h2 id="languageDisplay"></h2>
-        </div>
-        <hr>
-        <div class="form-group">
-          <label>City</label>
-          <h2>
-            <%= city %>
-          </h2>
-        </div>
-        <hr>
-        <div class="form-group">
-          <label>Email</label>
-          <h2>
-            <%= email %>
-          </h2>
-        </div>
-        <hr>
-      </fieldset>
-      <br>
-    </form>
-    <%- include('components/footer.ejs') %>
-  </div>
+    <script type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <link rel="stylesheet" type="text/css" href="./styles/settings.css" />
+    <%- include('components/navbar_header_logout.ejs') %>
+      <h1 style="text-align: center;">User Information </h1>
+      <div>
+        <h5 style="text-align: center;"> App Language (click to update) </h5>
+        <div id="google_translate_element" style="text-align: center;"></div>
+      </div>
+      <div class="container">
+        <form>
+          <fieldset class="mb-3" id="personalInfoFields" disabled>
+            <div class="form-group">
+              <label>Username </label>
+              <h2 class="notranslate">
+                <%= username %>
+              </h2>
+            </div>
+            <hr>
+            <div class="form-group">
+              <label> Browser Language </label>
+              <h2 id="languageDisplay"></h2>
+            </div>
+            <hr>
+            <div class="form-group">
+              <label>City</label>
+              <h2>
+                <%= city %>
+              </h2>
+            </div>
+            <hr>
+            <div class="form-group">
+              <label>Email</label>
+              <h2>
+                <%= email %>
+              </h2>
+            </div>
+            <hr>
+          </fieldset>
+          <br>
+        </form>
+        <%- include('components/footer.ejs') %>
+      </div>
 
-  <script src="./scripts/settings.js"></script>
-  <script type="text/javascript">
-    // Detect and store the language
-    var language = navigator.language || navigator.userLanguage;
+      <script src="./scripts/settings.js"></script>
+      <script type="text/javascript">
+        // Detect and store the language
+        var language = navigator.language || navigator.userLanguage;
 
-    // Use the language variable as needed
-    console.log('Detected language:', language);
+        // Use the language variable as needed
+        console.log('Detected language:', language);
 
-    //display language in element languageDisplay
-    var languageDisplay = document.getElementById("languageDisplay");
-    languageDisplay.innerHTML = language;
-  </script>
-</body>
+        //display language in element languageDisplay
+        var languageDisplay = document.getElementById("languageDisplay");
+        languageDisplay.innerHTML = language;
+      </script>
+  </body>
 
-</html>
+  </html>

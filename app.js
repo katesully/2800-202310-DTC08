@@ -72,6 +72,7 @@ function populateErrorPage(res, error_code, error_message, error_response, error
 app.get('/signup', (req, res) => {
     console.log("app.get(\'\/createUser\'): Current session cookie-id:", req.cookies)
     if (req.session.GLOBAL_AUTHENTICATED) {
+        console.log("app.get(\'\/signup\'): User already logged in, redirecting to /main")
         res.redirect('/main');
     } else {
         res.render('./signup.ejs');
@@ -79,7 +80,7 @@ app.get('/signup', (req, res) => {
 })
 
 app.post('/signup', async (req, res) => {
-    console.log(req.body)
+    console.log("app.post('/signup'): ", req.body)
     const schemaCreateUser = Joi.object({
         username: Joi.string()
             .alphanum()
@@ -102,8 +103,8 @@ app.post('/signup', async (req, res) => {
             return populateErrorPage(
                 res, // res
                 '422', // error_code
-                'Error: Username can only contain letters and numbers and must not be empty', // error_message
-                'Please try again', // error_response
+                'Error: Username can only contain letters and numbers and must not be empty.', // error_message
+                'Please try again.', // error_response
                 '/signup', // error_redirect
                 'Try Again' // error_redirect_button
             );
@@ -115,8 +116,8 @@ app.post('/signup', async (req, res) => {
             return populateErrorPage(
                 res, // res
                 '422', // error_code
-                'Error: Password did not meet requirements', // error_message
-                'Please try again', // error_response
+                'Error: Password did not meet requirements.', // error_message
+                'Please try again.', // error_response
                 '/signup', // error_redirect
                 'Try Again' // error_redirect_button
             );
@@ -137,6 +138,7 @@ app.post('/signup', async (req, res) => {
         );
 
     } else {
+        // If user does not exist, create a new user
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const newUser = new usersModel({
             username: req.body.username,
@@ -152,13 +154,15 @@ app.post('/signup', async (req, res) => {
         req.session.loggedEmail = req.body.Email;
         req.session.loggedCity = req.body.city;
         await newUser.save();
-        console.log(`New user created: ${newUser}`);
+        console.log(`New user: ${newUser}`);
+        console.log("app.post(\'\/signup\'): New user created, redirecting to /main")
         res.redirect('/main');
     }
 })
 
 app.get('/login', (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
+        console.log("app.get(\'\/login\'): User already logged in, redirecting to /main");
         res.redirect('/main');
     } else {
         res.render('login.ejs')
@@ -179,13 +183,13 @@ app.post('/login', async (req, res) => {
     }
     catch (err) {
 
-        console.log(err.details);
+        console.log("app.post('/login'): ", err.details);
 
         return populateErrorPage(
             res, // res
             '401', // error_code
-            `Error: ${err.details[0].message}}`, // error_message
-            'Please try again', // error_response
+            `Error: ${err.details[0].message}.`, // error_message
+            'Please try again.', // error_response
             '/login', // error_redirect
             'Try Again' // error_redirect_button
         );
@@ -203,19 +207,20 @@ app.post('/login', async (req, res) => {
         req.session.loggedType = userresult?.type;
         req.session.loggedEmail = userresult.email;
         req.session.loggedCity = userresult.city;
-        console.log("app.post(\'\/login\'): Current session cookie:", req.cookies)
+        console.log("Login successful");
+        console.log("app.post(\'\/login\'): Variable Global_Authenticated:", req.session.GLOBAL_AUTHENTICATED);
+        console.log("app.post(\'\/login\'): Current session cookie:", req.cookies);
         res.redirect('/main');
     } else {
-
+        console.log("app.post('/login'): Invalid username or password");  
         populateErrorPage(
             res, // res
             '401', // error_code
-            'Error: Invalid username or password', // error_message
-            'Please try again', // error_response
+            'Error: Invalid username or password.', // error_message
+            'Please try again.', // error_response
             '/login', // error_redirect
             'Try Again' // error_redirect_button
         );
-
     }
 });
 
@@ -232,20 +237,15 @@ app.get('/settings', (req, res) => {
 // Route: main page
 app.get('/main', (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
+        console.log("app.get('/main'): Current session cookie:", req.cookies);
+        console.log("app.get('/main'): Current user:", req.session.loggedUsername);
         res.render('./main.ejs', {
             username: req.session.loggedUsername,
         });
     }
     else {
-
-        populateErrorPage(
-            res, // res
-            '401', // error_code
-            'Error: You are not logged in', // error_message
-            'Please Log In', // error_response
-            '/login', // error_redirect
-            'Log In' // error_redirect_button
-        );
+        console.log("app.get('/main'): Error with authenticating: ", req.session.GLOBAL_AUTHENTICATED);
+        res.render('error401');
     }
 });
 
@@ -258,8 +258,8 @@ app.post('/bookmarkRoadmap', async (req, res) => {
             return populateErrorPage(
                 res, // res
                 '404', // error_code
-                'Error: User does not exist', // error_message
-                'Please Log In', // error_response
+                'Error: User does not exist.', // error_message
+                'Please Log In.', // error_response
                 '/login', // error_redirect
                 'Log In' // error_redirect_button
             );
@@ -310,8 +310,8 @@ app.post('/sendAdditionalRequest', async (req, res) => {
             return populateErrorPage(
                 res, // res
                 '404', // error_code
-                'Error: User does not exist', // error_message
-                'Please Log In', // error_response
+                'Error: User does not exist.', // error_message
+                'Please Log In.', // error_response
                 '/login', // error_redirect
                 'Log In' // error_redirect_button
             );
@@ -328,9 +328,9 @@ app.post('/sendAdditionalRequest', async (req, res) => {
             console.log(returnMessage.error);
             return populateErrorPage(
                 res, // res
-                returnMessage.error.type, // error_code
-                returnMessage.error.code, // error_message
-                returnMessage.error.message, // error_response
+                returnMessage.error.code || "500",// error_code
+                returnMessage.error.message || "Internal Server Error", // error_message
+                returnMessage.error.type || "Please Try Again", // error_response
                 '/main', // error_redirect
                 'Try Again' // error_redirect_button
             );
@@ -393,7 +393,7 @@ async function getMessage(message, userCity) {
         return data;
     }
     catch (error) {
-        console.log(error);
+        return {error: error};
     }
 }
 
@@ -429,9 +429,9 @@ app.post('/sendRequest', async (req, res) => {
         console.log(returnMessage.error);
         return populateErrorPage(
             res, // res
-            returnMessage.error.code,// error_code
-            returnMessage.error.message, // error_message
-            returnMessage.error.type, // error_response
+            returnMessage.error.code || "500",// error_code
+            returnMessage.error.message || "Internal Server Error", // error_message
+            returnMessage.error.type || "Please Try Again.", // error_response
             '/main', // error_redirect
             'Try Again' // error_redirect_button
         );
@@ -508,48 +508,52 @@ app.post('/sendResetEmail', async (req, res) => {
     if (!user) {
         return res.render('error502usernotexist.ejs');
     } else {
-        let token = await tokenModel.findOne({ userId: user._id });
-        if (token) {
-            await token.deleteOne()
-        };
+        try {
+            let token = await tokenModel.findOne({ userId: user._id });
+            if (token) {
+                await token.deleteOne()
+            };
 
-        let resetToken = crypto.randomBytes(32).toString("hex");
+            let resetToken = crypto.randomBytes(32).toString("hex");
 
-        const hashedToken = await bcrypt.hash(resetToken, Number(bcryptSalt));
+            const hashedToken = await bcrypt.hash(resetToken, Number(bcryptSalt));
 
-        await new tokenModel({
-            userId: user._id,
-            token: hashedToken,
-            createdAt: Date.now(),
-        }).save();
+            await new tokenModel({
+                userId: user._id,
+                token: hashedToken,
+                createdAt: Date.now(),
+            }).save();
 
-        const link = `${clientURL}/passwordReset?token=${resetToken}&id=${user._id}`;
+            const link = `${clientURL}/passwordReset?token=${resetToken}&id=${user._id}`;
 
-        const emailBody = `Reset your password using the link: ${link}`;
+            const emailBody = `Reset your password using the link: `;
 
-        ejs.renderFile('views/components/emailtemplate.ejs', { emailBody: emailBody, emailLink: link }, function (err, data) {
-            if (err) {
-                console.log(err);
-                return;
-            }
+            ejs.renderFile('views/components/emailtemplate.ejs', { emailBody: emailBody, resetLink: link }, async function (err, data) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
 
+                await sendResetEmail(user.email, data);
 
+                res.render('200emailsuccess.ejs', {reset: true})
 
-            sendResetEmail(user.email, data);
+            });
+        } catch (error) {
+            console.log(error);
+            return populateErrorPage(
+                res, // res
+                "501",// error_code
+                "Email not sent.", // error_message
+                "Please Try Again.", // error_response
+                '/resetPassword', // error_redirect
+                'Try Again' // error_redirect_button
+            );
 
-        });
-
-
-
-
-
-
-        // sendResetEmail(user.email, emailBody);
-
+        }
     }
 });
-//     }
-// })
+
 
 
 // Get new password
@@ -576,8 +580,8 @@ app.post('/confirmNewPassword', async (req, res) => {
         return populateErrorPage(
             res, // res
             '400 ', // error_code
-            'Error: Passwords do not match', // error_message
-            'Please Retry with Your Email Link', // error_response
+            'Error: Passwords do not match.', // error_message
+            'Please Retry with Your Email Link.', // error_response
         );
 
     }
@@ -587,8 +591,8 @@ app.post('/confirmNewPassword', async (req, res) => {
         return populateErrorPage(
             res, // res
             '404', // error_code
-            'Error: User does not exist', // error_message
-            'Please Retry with Your Email Link', // error_response
+            'Error: User does not exist.', // error_message
+            'Please Retry with Your Email Link.', // error_response
         );
     }
 
@@ -597,7 +601,7 @@ app.post('/confirmNewPassword', async (req, res) => {
         return populateErrorPage(
             res, // res
             '403', // error_code
-            'Error: Reset Token does not exist or has expired', // error_message
+            'Error: Reset Token does not exist or has expired.', // error_message
             'Your password reset link has expired. Please resubmit your email address to receive a new password reset link.', // error_response
             '/resetPassword', // error_redirect
             'Get New Reset Link' // error_redirect_button
@@ -610,7 +614,7 @@ app.post('/confirmNewPassword', async (req, res) => {
         return populateErrorPage(
             res, // res
             '403', // error_code
-            'Error: Reset Token does not exist or has expired', // error_message
+            'Error: Reset Token does not exist or has expired.', // error_message
             'Your password reset link has expired. Please resubmit your email address to receive a new password reset link.', // error_response
             '/resetPassword', // error_redirect
             'Get New Reset Link' // error_redirect_button
@@ -644,8 +648,8 @@ app.get('/savedRoadmaps', async (req, res) => {
             return populateErrorPage(
                 res, // res
                 '404', // error_code
-                'Error: User does not exist', // error_message
-                'Please Log In', // error_response
+                'Error: User does not exist.', // error_message
+                'Please register or login to continue.', // error_response
                 '/login', // error_redirect
                 'Log In' // error_redirect_button
             );
