@@ -108,9 +108,6 @@ sun.addEventListener("click", function () {
 //save roadmap object to MongoDB under user's account
 async function saveRoadmap(roadmap) {
     closeBookmarkModal();
-    console.log("save roadmap clicked");
-    console.log(roadmap);
-    console.log(roadmap.title);
     //make checkbox array for state of each checkbox
     var checkboxeStates = [];
 
@@ -140,10 +137,8 @@ async function saveRoadmap(roadmap) {
         })
           .then(data => {
             // Handle the server response
-            console.log('Server response:', data);
             // Perform any further actions or update the page based on the response
             savedRoadmapId = data.data
-            console.log("Roadmap id =" + savedRoadmapId);
         })
         .catch(error => {
             console.error('Error making POST request:', error);
@@ -157,7 +152,6 @@ async function saveRoadmap(roadmap) {
         document.getElementById("bookmarkSymbolStepsModal").classList.toggle("fa-solid");
 
         let bookmarkTexts = document.getElementsByClassName('bookmarkText')
-        console.log('bookmark texts: ' + bookmarkTexts)
         for (let i = 0; i < bookmarkTexts.length; i++) {
             bookmarkTexts[i].textContent = " Roadmap saved!"
         }
@@ -167,9 +161,6 @@ async function saveRoadmap(roadmap) {
 async function createAdditionalSteps() {
     closeStepsModal();
     toggleLoader();
-    console.log("create additional steps");
-    console.log(additionalStepsSelected);
-    console.log(savedRoadmapId);
 
     fetch("/sendAdditionalRequest", {
         method: 'POST',
@@ -191,12 +182,10 @@ async function createAdditionalSteps() {
 }
 
 function additionalStepsModal(stepParagraph) {
-    console.log("create additonal roadmap clicked");
     //access modal
     $('#additionalStepsModal').modal('show')
     
     additionalStepsSelected = stepParagraph.textContent.trim();
-    console.log(additionalStepsSelected);
 }
 
 function bookmarkModal() {
