@@ -103,8 +103,8 @@ app.post('/signup', async (req, res) => {
             return populateErrorPage(
                 res, // res
                 '422', // error_code
-                'Error: Username can only contain letters and numbers and must not be empty', // error_message
-                'Please try again', // error_response
+                'Error: Username can only contain letters and numbers and must not be empty.', // error_message
+                'Please try again.', // error_response
                 '/signup', // error_redirect
                 'Try Again' // error_redirect_button
             );
@@ -116,8 +116,8 @@ app.post('/signup', async (req, res) => {
             return populateErrorPage(
                 res, // res
                 '422', // error_code
-                'Error: Password did not meet requirements', // error_message
-                'Please try again', // error_response
+                'Error: Password did not meet requirements.', // error_message
+                'Please try again.', // error_response
                 '/signup', // error_redirect
                 'Try Again' // error_redirect_button
             );
@@ -188,8 +188,8 @@ app.post('/login', async (req, res) => {
         return populateErrorPage(
             res, // res
             '401', // error_code
-            `Error: ${err.details[0].message}}`, // error_message
-            'Please try again', // error_response
+            `Error: ${err.details[0].message}.`, // error_message
+            'Please try again.', // error_response
             '/login', // error_redirect
             'Try Again' // error_redirect_button
         );
@@ -216,8 +216,8 @@ app.post('/login', async (req, res) => {
         populateErrorPage(
             res, // res
             '401', // error_code
-            'Error: Invalid username or password', // error_message
-            'Please try again', // error_response
+            'Error: Invalid username or password.', // error_message
+            'Please try again.', // error_response
             '/login', // error_redirect
             'Try Again' // error_redirect_button
         );
@@ -258,8 +258,8 @@ app.post('/bookmarkRoadmap', async (req, res) => {
             return populateErrorPage(
                 res, // res
                 '404', // error_code
-                'Error: User does not exist', // error_message
-                'Please Log In', // error_response
+                'Error: User does not exist.', // error_message
+                'Please Log In.', // error_response
                 '/login', // error_redirect
                 'Log In' // error_redirect_button
             );
@@ -310,8 +310,8 @@ app.post('/sendAdditionalRequest', async (req, res) => {
             return populateErrorPage(
                 res, // res
                 '404', // error_code
-                'Error: User does not exist', // error_message
-                'Please Log In', // error_response
+                'Error: User does not exist.', // error_message
+                'Please Log In.', // error_response
                 '/login', // error_redirect
                 'Log In' // error_redirect_button
             );
@@ -431,7 +431,7 @@ app.post('/sendRequest', async (req, res) => {
             res, // res
             returnMessage.error.code || "500",// error_code
             returnMessage.error.message || "Internal Server Error", // error_message
-            returnMessage.error.type || "Please Try Again", // error_response
+            returnMessage.error.type || "Please Try Again.", // error_response
             '/main', // error_redirect
             'Try Again' // error_redirect_button
         );
@@ -544,8 +544,8 @@ app.post('/sendResetEmail', async (req, res) => {
             return populateErrorPage(
                 res, // res
                 "501",// error_code
-                "Email not sent", // error_message
-                "Please Try Again", // error_response
+                "Email not sent.", // error_message
+                "Please Try Again.", // error_response
                 '/resetPassword', // error_redirect
                 'Try Again' // error_redirect_button
             );
@@ -580,8 +580,8 @@ app.post('/confirmNewPassword', async (req, res) => {
         return populateErrorPage(
             res, // res
             '400 ', // error_code
-            'Error: Passwords do not match', // error_message
-            'Please Retry with Your Email Link', // error_response
+            'Error: Passwords do not match.', // error_message
+            'Please Retry with Your Email Link.', // error_response
         );
 
     }
@@ -591,8 +591,8 @@ app.post('/confirmNewPassword', async (req, res) => {
         return populateErrorPage(
             res, // res
             '404', // error_code
-            'Error: User does not exist', // error_message
-            'Please Retry with Your Email Link', // error_response
+            'Error: User does not exist.', // error_message
+            'Please Retry with Your Email Link.', // error_response
         );
     }
 
@@ -601,7 +601,7 @@ app.post('/confirmNewPassword', async (req, res) => {
         return populateErrorPage(
             res, // res
             '403', // error_code
-            'Error: Reset Token does not exist or has expired', // error_message
+            'Error: Reset Token does not exist or has expired.', // error_message
             'Your password reset link has expired. Please resubmit your email address to receive a new password reset link.', // error_response
             '/resetPassword', // error_redirect
             'Get New Reset Link' // error_redirect_button
@@ -614,7 +614,7 @@ app.post('/confirmNewPassword', async (req, res) => {
         return populateErrorPage(
             res, // res
             '403', // error_code
-            'Error: Reset Token does not exist or has expired', // error_message
+            'Error: Reset Token does not exist or has expired.', // error_message
             'Your password reset link has expired. Please resubmit your email address to receive a new password reset link.', // error_response
             '/resetPassword', // error_redirect
             'Get New Reset Link' // error_redirect_button
@@ -648,8 +648,8 @@ app.get('/savedRoadmaps', async (req, res) => {
             return populateErrorPage(
                 res, // res
                 '404', // error_code
-                'Error: User does not exist', // error_message
-                'Please register or login to continue', // error_response
+                'Error: User does not exist.', // error_message
+                'Please register or login to continue.', // error_response
                 '/login', // error_redirect
                 'Log In' // error_redirect_button
             );
