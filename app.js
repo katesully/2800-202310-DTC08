@@ -126,6 +126,11 @@ app.post('/signup', async (req, res) => {
     const userresult = await usersModel.findOne({
         username: req.body.username
     })
+
+    const emailresult = await usersModel.findOne({
+        email: req.body.Email
+    })
+
     if (userresult) {
 
         populateErrorPage(
@@ -133,6 +138,17 @@ app.post('/signup', async (req, res) => {
             '409', // error_code
             'Error: User already exists', // error_message
             'Please try again', // error_response
+            '/signup', // error_redirect
+            'Try Again' // error_redirect_button
+        );
+
+    } else if (emailresult) {
+            
+        populateErrorPage(
+            res, // res
+            '409', // error_code
+            'Error: Email already exists.', // error_message
+            'Please try again.', // error_response
             '/signup', // error_redirect
             'Try Again' // error_redirect_button
         );
@@ -490,7 +506,7 @@ const sendResetEmail = async (email, payload) => {
             if (error) {
                 console.log(error);
             } else {
-                console.log('Email sent: ' + info.response);
+                console.log('Email sent: ' + info.response + ' to ' + email);
             }
         });
     } catch (error) {
@@ -526,7 +542,7 @@ app.post('/sendResetEmail', async (req, res) => {
 
             const link = `${clientURL}/passwordReset?token=${resetToken}&id=${user._id}`;
 
-            const emailBody = `Reset your password using the link: `;
+            const emailBody = `Hello ${user.username}! You can reset your password using the link: `;
 
             ejs.renderFile('views/components/emailtemplate.ejs', { emailBody: emailBody, resetLink: link }, async function (err, data) {
                 if (err) {
@@ -863,7 +879,7 @@ app.post('/logout', function (req, res, next) {
 })
 
 // sending an sharing email
-const sendShareEmail = async (email, payload) => {
+const sendShareEmail = async (email, payload, req) => {
     try {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -876,7 +892,7 @@ const sendShareEmail = async (email, payload) => {
         var mailOptions = {
             from: process.env.GMAIL_EMAIL,
             to: email,
-            subject: 'Someone sent you a helpful Roadmap!',
+            subject: `${req.session.loggedUsername} sent you a helpful Roadmap!`,
             html: payload,
             attachments: [
                 {
@@ -891,7 +907,7 @@ const sendShareEmail = async (email, payload) => {
             if (error) {
                 console.log(error);
             } else {
-                console.log('Email sent: ' + info.response);
+                console.log('Email sent: ' + info.response + ' to ' + email);
             }
         });
     } catch (error) {
@@ -907,6 +923,7 @@ app.post('/sendShareEmail', async (req, res) => {
         const emailLink = req.body.inputShareMapLink;
 
         console.log(emailLink);
+        console.log(recipient);
 
         ejs.renderFile('views/components/emailtemplate.ejs', { emailBody: emailBody, mapLink: emailLink }, async function (err, data) {
             if (err) {
@@ -914,7 +931,7 @@ app.post('/sendShareEmail', async (req, res) => {
                 return;
             }
 
-            await sendShareEmail(recipient, data); // Use the rendered template content
+            await sendShareEmail(recipient, data, req); // Use the rendered template content
 
             res.render('200emailsuccess.ejs');
         });
