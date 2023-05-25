@@ -1,55 +1,49 @@
-<style>
-    .VIpgJd-ZVi9od-ORHb {
-        display: none;
-    }
-
-    .VIpgJd-ZVi9od-l4eHX-hSRGPD {
-        display: none;
-    }
-</style>
-
 <%- include('components/headHTML.ejs') %>
+
+  <body>
     <%- include('components/navbar_header_logout.ejs') %>
-        <link rel="stylesheet" type="text/css" href="./styles/main.css" />
+      <link rel="stylesheet" type="text/css" href="./styles/main.css" />
 
-        <div id="google_translate_element style=display: none;"></div>
+      <div id="google_translate_element" style="display: none;"></div>
 
-        <script type="text/javascript">
-            function googleTranslateElementInit() {
-                new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
-            }
-        </script>
+      <script type="text/javascript">
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+        }
+      </script>
 
-        <script type="text/javascript"
-            src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-        <script type="text/javascript">
-            // Detect and store the language
-            var language = navigator.language || navigator.userLanguage;
-            // Use the language variable as needed
-            console.log('Detected language:', language);
-        </script>
+      <script type="text/javascript"
+        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+      <script type="text/javascript">
+        // Detect and store the language
+        var language = navigator.language || navigator.userLanguage;
+        // Use the language variable as needed
+        console.log('Detected language:', language);
+      </script>
 
-              <title>Error! </title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
- 
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-6 col-lg-5">
-        <div class="error-template">
-            <div class="text-center">
-          <img src="sadface.png" alt="500 Error" class="error-image img-fluid" height="100px">
-        </div>
-          <h3 class="mb-3" style="text-align: center;">Sorry</h1>
-          <h4 class="mb-3" style="text-align: center;">There seems to be a problem saving</h2>
-          <p class="mb-5" style="text-align: center;">Sorry about that, please go back and try again</p>
-          <a href="/savedRoadmaps" class="btn btn-primary">Back to saved maps</a>
+      <title>Error! </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" type="text/css"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-6 col-lg-5">
+            <div class="error-template">
+              <div class="text-center">
+                <img src="sadface.png" alt="500 Error" class="error-image img-fluid" height="100">
+              </div>
+              <h3 class="mb-3" style="text-align: center;">Sorry</h1>
+                <h4 class="mb-3" style="text-align: center;">There seems to be a problem saving</h2>
+                  <p class="mb-5" style="text-align: center;">Sorry about that, please go back and try again</p>
+                  <a href="/savedRoadmaps" class="btn btn-primary">Back to saved maps</a>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-                <div class="spacer py-5"></div>
-                <script src="../scripts/main.js"></script>
-                <%- include('components/footer.ejs') %>
-                    </body>
-                    </html>
+      <div class="spacer py-5"></div>
+      <script src="../scripts/main.js"></script>
+      <%- include('components/footer.ejs') %>
+  </body>
+
+  </html>
