@@ -1,5 +1,3 @@
-
-
 const newPassword = document.querySelector('#newPassword');
 const confirmPassword = document.querySelector('#confirmPassword');
 
