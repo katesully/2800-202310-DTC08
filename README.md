@@ -117,7 +117,7 @@ home_lrg: Google Material Symbols (edited in Photoshop)
 login.png: flaticon.com (edited in Photoshop)
 LogoHeaderBar.png: logoAI.com
 map_lrg.png: Google Material Symbols (edited in Photoshop)
-photo_family_travel.jpg: 
+photo_family_travel.jpg: unsplash
 sadface.png: pngwing.com (edited in Photoshop)
 settings_lrg.png: Google Material Symbols (edited in Photoshop)
 share_lrg.png: Google Material Symbols (edited in Photoshop)
