@@ -530,12 +530,12 @@ svg {
 }
 
 .loader--dot:first-child {
-    background-color: #8cc759;
+    background-color: #43d519;
     animation-delay: 0.5s;
 }
 
 .loader--dot:nth-child(2) {
-    background-color: #8c6daf;
+    background-color: #663091;
     animation-delay: 0.4s;
 }
 
@@ -550,12 +550,12 @@ svg {
 }
 
 .loader--dot:nth-child(5) {
-    background-color: #60beeb;
+    background-color: #23bfe2;
     animation-delay: 0.1s;
 }
 
 .loader--dot:nth-child(6) {
-    background-color: #fbef5a;
+    background-color: #f2c918;
     animation-delay: 0s;
 }
 
