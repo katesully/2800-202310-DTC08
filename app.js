@@ -90,7 +90,7 @@ app.post('/signup', async (req, res) => {
             .required(),
         password: Joi.string().required(),
         email: Joi.string()
-            .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+            .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'ca'] } })
             .required(),
     })
     try {
