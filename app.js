@@ -180,7 +180,7 @@ app.post('/login', async (req, res) => {
     }
     catch (err) {
 
-        console.log(err.details);
+        console.log("app.post('/login'): ", err.details);
 
         return populateErrorPage(
             res, // res
@@ -204,10 +204,13 @@ app.post('/login', async (req, res) => {
         req.session.loggedType = userresult?.type;
         req.session.loggedEmail = userresult.email;
         req.session.loggedCity = userresult.city;
-        console.log("app.post(\'\/login\'): Current session cookie:", req.cookies)
+        console.log("Login successful");
+        console.log("app.post(\'\/login\'): Current session cookie:", req.cookies);
         res.redirect('/main');
     } else {
-
+        console.log("app.post('/login'): Invalid username or password");
+        console.log(req.session.loggedUsername)
+        console.log(req.session.loggedPassword)   
         populateErrorPage(
             res, // res
             '401', // error_code
