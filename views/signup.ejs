@@ -1,147 +1,132 @@
-<style>
-  .VIpgJd-ZVi9od-ORHb-oEVmcd {
-    display: none;
-  }
-
-   .VIpgJd-ZVi9od-ORHb {
-    display: none;
-  }
-
-    #goog-gt-tt {
-            display: none;
-        }
-</style>
-
 <%- include('components/headHTML.ejs') %>
 
   <body>
-
     <%- include('components/navbar_header_before_signin.ejs') %>
 
-        <link rel="stylesheet" type="text/css" href="./styles/signup.css" >
-        <link rel="stylesheet" type="text/css" href="./styles/style.css" >
+      <link rel="stylesheet" type="text/css" href="./styles/signup.css">
+      <link rel="stylesheet" type="text/css" href="./styles/style.css">
 
-        <div id="google_translate_element style=display: none;"></div>
+      <div id="google_translate_element" style="display: none;"></div>
 
-        <script type="text/javascript">
-          function googleTranslateElementInit() {
-            new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+      <script type="text/javascript">
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+        }
+      </script>
+
+      <script type="text/javascript"
+        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+      <script type="text/javascript">
+        function closeTranslatePopup() {
+          const popup = document.querySelector('#VIpgJd-ZVi9od-ORHb');
+          if (popup) {
+            setTimeout(function () {
+              popup.parentNode.removeChild(popup);
+            }, 500); // close popup after .5 seconds
           }
-        </script>
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+          new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+          }, 'google_translate_element');
+          closeTranslatePopup();
+        });
+      </script>
 
-        <script type="text/javascript"
-          src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+      <section class="vh-100" style="background-color: #eee">
+        <div class="container mt-4">
+          <div class="row d-flex justify-content-center">
+            <div class="col-lg-12 col-xl-11">
+              <div class="card text-black" style="border-radius: 25px">
+                <div class="card-body p-md-5">
+                  <div class="row justify-content-center">
+                    <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                      <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3">
+                        Sign up - New Account
+                      </p>
 
-        <script type="text/javascript">
-          function closeTranslatePopup() {
-            const popup = document.querySelector('#VIpgJd-ZVi9od-ORHb');
-            if (popup) {
-              setTimeout(function () {
-                popup.parentNode.removeChild(popup);
-              }, 500); // close popup after .5 seconds
-            }
-          }
-          document.addEventListener('DOMContentLoaded', function () {
-            new google.translate.TranslateElement({
-              pageLanguage: 'en',
-              layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-            }, 'google_translate_element');
-            closeTranslatePopup();
-          });
-        </script>
-
-        <section class="vh-100" style="background-color: #eee">
-          <div class="container mt-4">
-            <div class="row d-flex justify-content-center">
-              <div class="col-lg-12 col-xl-11">
-                <div class="card text-black" style="border-radius: 25px">
-                  <div class="card-body p-md-5">
-                    <div class="row justify-content-center">
-                      <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                        <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3">
-                          Sign up - New Account
-                        </p>
-
-                        <form class="form-floating mx-1 mx-md-4 needs-validation mb-0" action="/signup" method="POST"
-                          novalidate>
-                          <div class="d-flex flex-row align-items-center mb-3">
-                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                            <div class="form-floating flex-fill mb-0">
-                              <input type="username" id="form3Example1c" class="form-control" placeholder="user"
-                                name="username" required autocomplete="off" >
-                              <label class="form-label" for="form3Example1c">Username *</label>
-                              <div class="invalid-feedback">
-                                Please enter your username.
-                              </div>
-                            </div>
-                          </div>
-                          <div class="d-flex flex-row align-items-center mb-3">
-                            <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-    
-                            <div class="form-floating flex-fill mb-0">
-                              <input type="email" id="form3Example1cd" class="form-control" placeholder="email"
-                                name="Email" required autocomplete="off" >
-                              <label class="form-label" for="form3Example1c">Email *</label>
-                              <div class="invalid-feedback">
-                                Please enter your email.
-                              </div>
-                            </div>
-                          </div>
-                          <div class="d-flex flex-row align-items-center mb-3">
-                            <i class="fas fa-light fa-tree-city fa-lg me-3 fa-fw"></i>
-                            <div class="form-floating flex-fill mb-0">
-                              <input type="text" id="form3Example1cd" class="form-control" placeholder="city"
-                                name="city" required autocomplete="off" >
-                              <label class="form-label" for="form3Example1c">City *</label>
-                              <div class="invalid-feedback">
-                                Please enter your City
-                              </div>
-                            </div>
-                          </div>
-                          <div class="d-flex flex-row align-items-center mb-3">
-                            <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                            <div class="form-floating flex-fill mb-0">
-                              <input type="password" id="password" class="form-control" name="password"
-                                placeholder="password" required autocomplete="off" >
-                              <label class="form-label" for="form3Example4c">Password *</label>
-                              <div class="invalid-feedback">
-                                Please enter your password.
-                              </div>
-                            </div>
-                          </div>
-                          <div class="d-flex flex-row align-items-center mb-3">
-                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                            <div class="form-floating flex-fill mb-0">
-                              <input type="password" id="passwordRepeat" class="form-control"
-                                name="passwordRepeat" placeholder="password" required autocomplete="off" />
-                              <label class="form-label" for="form3Example4cd">Repeat your password *</label>
-                            </div>
+                      <form class="form-floating mx-1 mx-md-4 needs-validation mb-0" action="/signup" method="POST"
+                        novalidate>
+                        <div class="d-flex flex-row align-items-center mb-3">
+                          <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                          <div class="form-floating flex-fill mb-0">
+                            <input type="username" id="form3Example1c" class="form-control" placeholder="user"
+                              name="username" required autocomplete="off">
+                            <label class="form-label" for="form3Example1c">Username *</label>
                             <div class="invalid-feedback">
-                              Password not a match.
+                              Please enter your username.
                             </div>
                           </div>
-                           <p style="color: gray"> * is a required field </p>
+                        </div>
+                        <div class="d-flex flex-row align-items-center mb-3">
+                          <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
 
-                          <div class="d-flex justify-content-center mx-4 mt-4 mb-5 mb-lg-4">
-                            <button type="submit" class="btn btn-warning btn-lg">
-                              Register
-                            </button>
+                          <div class="form-floating flex-fill mb-0">
+                            <input type="email" id="form3Example1cd" class="form-control" placeholder="email"
+                              name="Email" required autocomplete="off">
+                            <label class="form-label" for="form3Example1cd">Email *</label>
+                            <div class="invalid-feedback">
+                              Please enter your email.
+                            </div>
                           </div>
-                        </form>
-                      </div>
-                      <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+                        </div>
+                        <div class="d-flex flex-row align-items-center mb-3">
+                          <i class="fas fa-light fa-tree-city fa-lg me-3 fa-fw"></i>
+                          <div class="form-floating flex-fill mb-0">
+                            <input type="text" id="form3Example1ce" class="form-control" placeholder="city" name="city"
+                              required autocomplete="off">
+                            <label class="form-label" for="form3Example1ce">City *</label>
+                            <div class="invalid-feedback">
+                              Please enter your City
+                            </div>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row align-items-center mb-3">
+                          <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                          <div class="form-floating flex-fill mb-0">
+                            <input type="password" id="password" class="form-control" name="password"
+                              placeholder="password" required autocomplete="off">
+                            <label class="form-label" for="form3Example4c">Password *</label>
+                            <div class="invalid-feedback">
+                              Please enter your password.
+                            </div>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row align-items-center mb-3">
+                          <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                          <div class="form-floating flex-fill mb-0">
+                            <input type="password" id="passwordRepeat" class="form-control" name="passwordRepeat"
+                              placeholder="password" required autocomplete="off" />
+                            <label class="form-label" for="form3Example4cd">Repeat your password *</label>
+                          </div>
+                          <div class="invalid-feedback">
+                            Password not a match.
+                          </div>
+                        </div>
+                        <p style="color: gray"> * is a required field </p>
 
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                          class="img-fluid" alt="Sample image">
+                        <div class="d-flex justify-content-center mx-4 mt-4 mb-5 mb-lg-4">
+                          <button type="submit" class="btn btn-warning btn-lg">
+                            Register
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                      </div>
+                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                        class="img-fluid" alt="Sample image">
+
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <script src="/scripts/signup.js" type="text/javascript"></script>
-        <%- include('components/footer.ejs') %>
+      <script src="/scripts/signup.js" type="text/javascript"></script>
+      <%- include('components/footer.ejs') %>
