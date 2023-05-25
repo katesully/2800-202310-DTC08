@@ -116,10 +116,11 @@ home_lrg: Google Material Symbols (edited in Photoshop)
 login.png: flaticon.com (edited in Photoshop)
 LogoHeaderBar.png: logoAI.com
 map_lrg.png: Google Material Symbols (edited in Photoshop)
-ok-green.png:
+photo_family_travel.jpg: 
 sadface.png: pngwing.com (edited in Photoshop)
 settings_lrg.png: Google Material Symbols (edited in Photoshop)
 share_lrg.png: Google Material Symbols (edited in Photoshop)
+stock_roadmap.jpg: https://www.freepik.com/free-vector/isometric-roadmap-infographic-template_16133588.htm#page=2&query=roadmap%20progress&position=19&from_view=search&track=ais
 Welcomes.png: istockphoto.com
 
 ## 5. Known Bugs and Limitations
