@@ -6,7 +6,6 @@ newPassword.addEventListener('input', validatePasswords);
 confirmPassword.addEventListener('input', validatePasswords);
 
 function validatePasswords() {
-    console.log("signup.js: validatePasswords() called");
   if (newPassword.value !== confirmPassword.value) {
     // Set a custom error message and mark the confirm password field as invalid
     
