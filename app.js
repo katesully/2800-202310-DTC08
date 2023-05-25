@@ -91,7 +91,7 @@ app.post('/signup', async (req, res) => {
             .required(),
         password: Joi.string().required(),
         email: Joi.string()
-            .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+            .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'ca'] } })
             .required(),
     })
     try {
@@ -490,7 +490,7 @@ const sendResetEmail = async (email, payload) => {
             if (error) {
                 console.log(error);
             } else {
-                console.log('Email sent: ' + info.response);
+                console.log('Email sent: ' + info.response + ' to ' + email);
             }
         });
     } catch (error) {
@@ -526,7 +526,7 @@ app.post('/sendResetEmail', async (req, res) => {
 
             const link = `${clientURL}/passwordReset?token=${resetToken}&id=${user._id}`;
 
-            const emailBody = `Reset your password using the link: `;
+            const emailBody = `Hello ${user.username}! You can reset your password using the link: `;
 
             ejs.renderFile('views/components/emailtemplate.ejs', { emailBody: emailBody, resetLink: link }, async function (err, data) {
                 if (err) {
@@ -863,7 +863,7 @@ app.post('/logout', function (req, res, next) {
 })
 
 // sending an sharing email
-const sendShareEmail = async (email, payload) => {
+const sendShareEmail = async (email, payload, req) => {
     try {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -876,7 +876,7 @@ const sendShareEmail = async (email, payload) => {
         var mailOptions = {
             from: process.env.GMAIL_EMAIL,
             to: email,
-            subject: 'Someone sent you a helpful Roadmap!',
+            subject: `${req.session.loggedUsername} sent you a helpful Roadmap!`,
             html: payload,
             attachments: [
                 {
@@ -891,7 +891,7 @@ const sendShareEmail = async (email, payload) => {
             if (error) {
                 console.log(error);
             } else {
-                console.log('Email sent: ' + info.response);
+                console.log('Email sent: ' + info.response + ' to ' + email);
             }
         });
     } catch (error) {
@@ -907,6 +907,7 @@ app.post('/sendShareEmail', async (req, res) => {
         const emailLink = req.body.inputShareMapLink;
 
         console.log(emailLink);
+        console.log(recipient);
 
         ejs.renderFile('views/components/emailtemplate.ejs', { emailBody: emailBody, mapLink: emailLink }, async function (err, data) {
             if (err) {
@@ -914,7 +915,7 @@ app.post('/sendShareEmail', async (req, res) => {
                 return;
             }
 
-            await sendShareEmail(recipient, data); // Use the rendered template content
+            await sendShareEmail(recipient, data, req); // Use the rendered template content
 
             res.render('200emailsuccess.ejs');
         });
