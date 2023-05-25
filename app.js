@@ -205,12 +205,11 @@ app.post('/login', async (req, res) => {
         req.session.loggedEmail = userresult.email;
         req.session.loggedCity = userresult.city;
         console.log("Login successful");
+        console.log("app.post(\'\/login\'): Variable Global_Authenticated:", req.session.GLOBAL_AUTHENTICATED);
         console.log("app.post(\'\/login\'): Current session cookie:", req.cookies);
         res.redirect('/main');
     } else {
-        console.log("app.post('/login'): Invalid username or password");
-        console.log(req.session.loggedUsername)
-        console.log(req.session.loggedPassword)   
+        console.log("app.post('/login'): Invalid username or password");  
         populateErrorPage(
             res, // res
             '401', // error_code
@@ -219,7 +218,6 @@ app.post('/login', async (req, res) => {
             '/login', // error_redirect
             'Try Again' // error_redirect_button
         );
-
     }
 });
 
@@ -236,20 +234,14 @@ app.get('/settings', (req, res) => {
 // Route: main page
 app.get('/main', (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
-        console.log("/main: Current user:", req.session.loggedUsername);
+        console.log("app.get('/main'): Current user:", req.session.loggedUsername);
         res.render('./main.ejs', {
             username: req.session.loggedUsername,
         });
     }
     else {
-        populateErrorPage(
-            res, // res
-            '401', // error_code
-            'Error: You are not logged in', // error_message
-            'Please register or login to continue', // error_response
-            '/login', // error_redirect
-            'Log In' // error_redirect_button
-        );
+        console.log("app.get('/main'): Error with authenticating: ", req.session.GLOBAL_AUTHENTICATED);
+        res.render('error401');
     }
 });
 
