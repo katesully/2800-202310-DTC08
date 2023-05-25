@@ -256,7 +256,7 @@ app.get('/main', async (req, res) => {
     const tempSession = await req.session.GLOBAL_AUTHENTICATED;
     console.log("app.get('/main'): Variable Global_Authenticated(tempSession):", tempSession);
 
-    if (req.session.GLOBAL_AUTHENTICATED) {
+    if (tempSession) {
         console.log("app.get('/main'): Current session cookie:", req.cookies);
         console.log("app.get('/main'): Current user:", req.session.loggedUsername);
         res.render('./main.ejs', {
