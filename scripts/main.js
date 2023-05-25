@@ -1,5 +1,10 @@
+// const { func } = require("joi");
+
 // add a blank event listener to all checkboxes
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+let additionalStepsSelected = "";
+let savedRoadmapId = "";
+
 
 checkboxes.forEach((checkbox) => {
     checkbox.addEventListener("click", function () {
@@ -109,6 +114,7 @@ sun.addEventListener("click", function () {
 
 //save roadmap object to MongoDB under user's account
 async function saveRoadmap(roadmap) {
+    closeBookmarkModal();
     console.log("save roadmap clicked");
     console.log(roadmap);
     console.log(roadmap.title);
@@ -132,11 +138,85 @@ async function saveRoadmap(roadmap) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(roadmap)
-    })
+        })
+        .then(response => {
+            if (response.ok) {
+              return response.json(); // Parse response body as JSON
+            } else {
+              throw new Error('Error: ' + response.status);
+            }
+        })
+          .then(data => {
+            // Handle the server response
+            console.log('Server response:', data);
+            // Perform any further actions or update the page based on the response
+            savedRoadmapId = data.data
+            console.log("Roadmap id =" + savedRoadmapId);
+        })
         .catch(error => {
             console.error('Error making POST request:', error);
         });
 
+        document.getElementById("bookmarkSymbol").classList.toggle("fa-bounce");
+        document.getElementById("bookmarkSymbol").classList.toggle("fa-solid");
+        document.getElementById("bookmarkSymbolModal").classList.toggle("fa-bounce");
+        document.getElementById("bookmarkSymbolModal").classList.toggle("fa-solid");
+        document.getElementById("bookmarkSymbolStepsModal").classList.toggle("fa-bounce");
+        document.getElementById("bookmarkSymbolStepsModal").classList.toggle("fa-solid");
+
+        let bookmarkTexts = document.getElementsByClassName('bookmarkText')
+        console.log('bookmark texts: ' + bookmarkTexts)
+        for (let i = 0; i < bookmarkTexts.length; i++) {
+            bookmarkTexts[i].textContent = " Roadmap saved!"
+        }
+
+}
+
+async function createAdditionalSteps() {
+    closeStepsModal();
+    toggleLoader();
+    console.log("create additional steps");
+    console.log(additionalStepsSelected);
+    console.log(savedRoadmapId);
+
+    fetch("/sendAdditionalRequest", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({additionalSteps: additionalStepsSelected, roadmapId: savedRoadmapId})
+        })
+        .then(response => response.text())
+        .then(html => {
+        // Update the current page with the new HTML content
+        document.documentElement.innerHTML = html;
+        })
+        .catch(error => {
+            console.error('Error making POST request:', error);
+        });
+
+
+}
+
+function additionalStepsModal(stepParagraph) {
+    console.log("create additonal roadmap clicked");
+    //access modal
+    $('#additionalStepsModal').modal('show')
+    
+    additionalStepsSelected = stepParagraph.textContent.trim();
+    console.log(additionalStepsSelected);
+}
+
+function bookmarkModal() {
+    $('#bookmarkModal').modal('show')
+}
+
+function closeStepsModal() {
+    $('#additionalStepsModal').modal('hide');
+}
+
+function closeBookmarkModal() {
+    $('#bookmarkModal').modal('hide');
 }
 
 function toggleLoader() {

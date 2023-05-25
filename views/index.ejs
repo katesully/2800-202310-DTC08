@@ -1,19 +1,11 @@
-<head>
-
-  <script src="/scripts/index.js"></script>
-
-</head>
-
-
-
 <%- include('components/headHTML.ejs') %>
 
-
-
   <body>
-    <%- include('components/navbar_header_before_signin.ejs') %>
+    <%- include('components/navbar_header_index.ejs') %>
 
-      <h1 id="title" style="text-align: center;">NewJourney</h1>
+      <div class="mt-4">
+        <h1 id="title" style="text-align: center;" class="notranslate">NewJourney</h1>
+      </div>
 
       <!-- translate automatically to users device language  -->
       <link rel="stylesheet" type="text/css" href="./styles/index.css" />
@@ -27,69 +19,81 @@
 
       <script type="text/javascript"
         src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-  <img src="Welcomes.png" alt="welcomes" style="
+      <img src="Welcomes.png" alt="welcomes" style="
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    background-size: cover;
+
     background-repeat: no-repeat;
     opacity: 0.2;
     background-position: center center;
     z-index: -1;
   ">
-  <br>
+      <br>
+      <!-- language choice dropdown  -->
+      <div class="container px-0">
+        <div class="container-fluid card-shadow pt-5 pb-4" style="background-color: #F0C919;">
+          <h5 style="text-align: center;"> Select your language to begin </h5>
+          <div class="container d-flex align-items-center justify-content-between">
+            <div class="container dropdown-container mt-3">
+            </div>
+            <div id="google_translate_element" class="translate-down"></div>
 
-
-
-  <!-- language choice dropdown  -->
-  <h5 style="text-align: center;"> Select your language to begin </h5>
-
-  <div class="container">
-    <div class="container-fluid card card-shadow">
-      <div class="container d-flex align-items-center justify-content-between">
-        <div class="container dropdown-container mt-3">
-        </div>
-        <div id="google_translate_element" class="translate-down"></div>
-
-        <div class="container main-button mt-3">
-          <button type="button" class="btn btn-light" onclick="saveLanguageAndShowSignup()" style="height: 50px;">
-            <img src="ok-green.png" alt="OK" style="height: 100%;">
-          </button>
+            <div class="container main-button">
+              <button type="button" class="btn" onclick="saveLanguageAndShowSignup()" style="height: 50px;">
+                <!-- <img src="ok-green.png" alt="OK" style="height: 100%;"> -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor"
+                  class="bi bi-check-circle-fill" viewBox="0 0 16 16"
+                  style="background-color: none; color: rgb(16, 198, 71)">
+                  <path
+                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center mt-4">
+            <button type="button" id="login-button" class="btn btn-sm btn-primary mx-2"
+              style="display: none; min-width: 100px" onclick="window.location.href='/login'">Login</button>
+            <button type="button" id="signup-button" class="btn btn-sm btn-outline-primary mx-2"
+              style="display: none; min-width: 100px" onclick="window.location.href='/signup'">Signup</button>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+      <div class="card" id="backgroundCard" style="border: 0; border-radius: 0;">
+        <img src="background_family_1.png" class="card-img" alt="Background image">
 
-
-
-
-  <div class="d-flex justify-content-center mt-1">
-    <button type="button" id="login-button" class="btn btn-secondary mx-2" style="display: none; width: 100px" onclick="window.location.href='/login'">Login</button>
-    <button type="button" id="signup-button" class="btn btn-warning mx-2" style="display: none; width: 100px" onclick="window.location.href='/signup'">Signup</button>
-  </div>
-
-
-
-  <!-- explanation card -->
-
-
-  <div class="card" id="backgroundCard" style="border-radius: 10px; display: none">
-    <img src="background_family_1.png" class="card-img" alt="Background image">
-
-        <div class="card-img-overlay">
-          <h5 class="card-title text-white">Helping you on your new path</h5>
-          <p class="card-text text-white intro-text"> <span class="notranslate">NewJourney </span> is your helping hand to navigating life in your new home town
-         Whether you need help with finding a house, navigating transit or figuring out the healthcare system, 
-        <span class="notranslate">NewJourney </span> is here to help you.  </p>
+        <div class="card-img-overlay px-4 py-5">
+          <h2 class="card-title text-white">Helping you on your new path</h2>
+          <br>
+          <p class="card-text text-white intro-text line-height-custom"> <span class="notranslate">NewJourney </span> is
+            your helping hand
+            to navigating life in your new home town.
+            Whether you need help with finding a house, navigating transit, or figuring out the healthcare system,
+            <span class="notranslate">NewJourney </span> is here to help you.
+          </p>
         </div>
-      </div> 
+      </div>
+      <div class="card px-3 pt-4 pb-3" id="backgroundCardC" style="border: 0; border-radius: 0;">
+        <h2 class="card-title ps-2">Personalized solutions with NewJourney</h2>
+        <img src="stock_roadmap.jpg">
+      </div>
+      <div class="card" id="backgroundCardB" style="border: 0; border-radius: 0;">
+        <img src="photo_family_travel.jpg" class="card-img" alt="Background image">
+
+        <div class="card-img-overlay px-4 py-5">
+          <h2 class="card-title text-white">Your AI companion at your fingertips</h2>
+
+          <p class="card-text text-white intro-text line-height-custom">
+            Simplify your move to a new city with <span class="notranslate"> NewJourney </span> and AI at your
+            fingertips. Leave the guesswork behind in your new city; receive a personalized experience with
+            <span class="notranslate">NewJourney</span>, ensuring you have all the answers and support you need.
+          </p>
+        </div>
+      </div>
       <br>
       <br>
+      <script src="/scripts/index.js"></script>
+  </body>
 
-
-
-</body>
-
-</html>
+  </html>

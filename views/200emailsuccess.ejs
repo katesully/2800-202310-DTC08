@@ -19,7 +19,7 @@
 </style>
 
 <%- include('components/headHTML.ejs') %>
-    <%- include('components/navbar_header_logout.ejs') %>
+    <%- include('components/navbar_header_before_signin.ejs') %>
         <link rel="stylesheet" type="text/css" href="./styles/main.css" />
 
         <div id="google_translate_element style=display: none;"></div>
@@ -52,10 +52,21 @@
             <div class="text-center">
                 <img src="happyface.png" alt="200 Success" class="success-image img-fluid" height="100px">
             </div>
-          <h3 class="mb-3" style="text-align: center;">Email sent successfully!</h1>
-          <h4 class="mb-3" style="text-align: center;">Thanks for sharing your journey </h2>
+
+          <% if (typeof reset !=='undefined' ) { %>
+            <h3 class="mb-3" style="text-align: center;">Reset link sent successfully!</h1>
+            <h4 class="mb-3" style="text-align: center;">Thanks for you for your patience</h2>
+          <% } else { %>
+            <h3 class="mb-3" style="text-align: center;">Email sent successfully!</h1>
+            <h4 class="mb-3" style="text-align: center;">Thanks for sharing your journey</h2>
+          <% } %>
+
         <div class="text-center">
-          <a href="/savedRoadmaps" class="btn btn-warning">Return to Maps</a>
+          <% if (typeof reset !=='undefined' ) { %>
+            <a href="/login" class="btn btn-warning">Return to Login</a>
+          <% } else { %>
+            <a href="/savedRoadmaps" class="btn btn-warning">Return to Maps</a>
+          <% } %>
         </div>
         </div>
       </div>

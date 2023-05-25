@@ -18,21 +18,22 @@
                                 <div class="form-check false">
                                     <% } %>
                                         <% if (checkboxStates[index]==false) { %>
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="step<%-index%>">
+                                            <input class="form-check-input" type="checkbox" value="" id="step<%-index%>"
+                                                onclick=saveProgress(mapID)>
                                             <label class="form-check-label" for="step<%-index%>">Step <%= index + 1 %>
                                             </label>
                                             <% } else { %>
                                                 <input class="form-check-input" type="checkbox" value=""
-                                                    id="step<%-index%>" checked>
+                                                    id="step<%-index%>" onclick=saveProgress(mapID) checked>
                                                 <label class="form-check-label step" for="step<%-index%>">Step <%= index
                                                         + 1 %>
                                                 </label>
                                                 <% } %>
-                                                    <p class="step">
+                                                    <p class="step" id="additionalStep_<%-index%>" onclick="additionalStepsModal(this)">
                                                         <%= step %>
                                                     </p>
                                 </div>
             </li>
             <% }); %>
 </ul>
+<script src="./scripts/trackProgress.js"></script>

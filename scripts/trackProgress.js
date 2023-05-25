@@ -23,7 +23,6 @@ async function saveProgress(mapID) {
 
     //reload page
     location.reload();
-
 }
 
 function saveCopy() {
@@ -37,13 +36,13 @@ function saveCopy() {
 
     //loop through each step and add an object with each step to the array
     steps.forEach((step) => {
-        stepObjects.push({ step: step.innerHTML, checked: false });
+        stepObjects.push({ step: step.innerText, checked: false });
     });
 
     //create new roadmap object to store the steps
     var roadmap = {
-        title: document.getElementById('roadmapTitle').innerHTML,
-        description: document.getElementById('roadmapDescription').innerHTML,
+        title: document.getElementById('roadmapTitle').innerText,
+        description: document.getElementById('roadmapDescription').innerText,
         steps: stepObjects
     };
 
@@ -62,4 +61,24 @@ function saveCopy() {
 
     alert("Your roadmap has been saved to your account.");
 
+}
+
+function checkAll(mapID) {
+    console.log("select all clicked");
+    var checkboxes = document.querySelectorAll('input[type=checkbox]');
+    checkboxes.forEach((checkbox) => {
+        checkbox.checked = true;
+    });
+    unselectAll = document.getElementById("unselectAll");
+    unselectAll.checked = false;
+    saveProgress(mapID);
+}
+
+function uncheckAll(mapID) {
+    console.log("unselect all clicked");
+    var checkboxes = document.querySelectorAll('input[type=checkbox]');
+    checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+    });
+    saveProgress(mapID);
 }

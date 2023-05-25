@@ -10,19 +10,13 @@ const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const ejs = require('ejs');
 const { parse } = require('dotenv');
-
-
-
 var nodemailer = require('nodemailer');
 const tokenModel = require('./models/token.js');
 const crypto = require("crypto");
-
 const bcryptSalt = process.env.BCRYPT_SALT;
-
 const fs = require("fs");
 const path = require("path");
 const clientURL = process.env.CLIENT_URL;
-
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -55,17 +49,30 @@ app.use(express.json())
 
 
 app.get(['/', '/home'], (req, res) => {
-    // if (req.session.GLOBAL_AUTHENTICATED) {
-    res.render('./index.ejs');
-    // }
+    if (req.session.GLOBAL_AUTHENTICATED) {
+        res.redirect('/main');
+    } else {
+        res.render('./index.ejs', { user: req.session.GLOBAL_AUTHENTICATED });
+    }
 });
 
+function populateErrorPage(res, error_code, error_message, error_response, error_redirect = undefined, error_redirect_button = undefined) {
 
+    res.render('errorGeneral.ejs', {
+        error_code: error_code,
+        error_message: error_message,
+        error_response: error_response,
+        error_redirect: error_redirect,
+        error_redirect_button: error_redirect_button
+    });
+
+}
 
 
 app.get('/signup', (req, res) => {
     console.log("app.get(\'\/createUser\'): Current session cookie-id:", req.cookies)
     if (req.session.GLOBAL_AUTHENTICATED) {
+        console.log("app.get(\'\/signup\'): User already logged in, redirecting to /main")
         res.redirect('/main');
     } else {
         res.render('./signup.ejs');
@@ -73,7 +80,7 @@ app.get('/signup', (req, res) => {
 })
 
 app.post('/signup', async (req, res) => {
-    console.log(req.body)
+    console.log("app.post('/signup'): ", req.body)
     const schemaCreateUser = Joi.object({
         username: Joi.string()
             .alphanum()
@@ -82,71 +89,101 @@ app.post('/signup', async (req, res) => {
             .min(1)
             .strict()
             .required(),
-        password: Joi.string()
-            .required()
+        password: Joi.string().required(),
+        email: Joi.string()
+            .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'ca'] } })
+            .required(),
     })
     try {
         const resultUsername = await schemaCreateUser.validateAsync(req.body);
     } catch (err) {
         if (err.details[0].context.key == "username") {
             console.log(err.details)
-            let createUserFailHTML = `
-            <br />
-            <h3>Error: Username can only contain letters and numbers and must not be empty - Please try again</h3>
-            <input type="button" value="Try Again" onclick="window.location.href='/signup'" />
-            `
-            return res.send(createUserFailHTML)
+
+            return populateErrorPage(
+                res, // res
+                '422', // error_code
+                'Error: Username can only contain letters and numbers and must not be empty.', // error_message
+                'Please try again.', // error_response
+                '/signup', // error_redirect
+                'Try Again' // error_redirect_button
+            );
+
         }
         if (err.details[0].context.key == "password") {
             console.log(err.details)
-            let createUserFailHTML = `
-            <br />
-            <h3>Error: Password is empty - Please try again</h3>
-            <input type="button" value="Try Again" onclick="window.location.href='/signup'" />
-            `
-            return res.send(createUserFailHTML)
+
+            return populateErrorPage(
+                res, // res
+                '422', // error_code
+                'Error: Password did not meet requirements.', // error_message
+                'Please try again.', // error_response
+                '/signup', // error_redirect
+                'Try Again' // error_redirect_button
+            );
         }
     }
     const userresult = await usersModel.findOne({
         username: req.body.username
     })
+
+    const emailresult = await usersModel.findOne({
+        email: req.body.Email
+    })
+
     if (userresult) {
-        let createUserFailHTML = `
-            <br />
-            <h3>Error: User already exists - Please try again</h3>
-            <input type="button" value="Try Again" onclick="window.location.href='/signup'" />
-            `
-        res.send(createUserFailHTML)
+
+        populateErrorPage(
+            res, // res
+            '409', // error_code
+            'Error: User already exists', // error_message
+            'Please try again', // error_response
+            '/signup', // error_redirect
+            'Try Again' // error_redirect_button
+        );
+
+    } else if (emailresult) {
+
+        populateErrorPage(
+            res, // res
+            '409', // error_code
+            'Error: Email already exists.', // error_message
+            'Please try again.', // error_response
+            '/signup', // error_redirect
+            'Try Again' // error_redirect_button
+        );
+
     } else {
+        // If user does not exist, create a new user
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const newUser = new usersModel({
             username: req.body.username,
             password: hashedPassword,
             type: "non-administrator",
             email: req.body.Email,
-            city: req.body.City
+            city: req.body.city
         })
         req.session.GLOBAL_AUTHENTICATED = true;
         req.session.loggedUsername = req.body.username;
         req.session.loggedPassword = hashedPassword;
         req.session.loggedType = "non-administrator";
         req.session.loggedEmail = req.body.Email;
-        req.session.loggedCity = req.body.City;
+        req.session.loggedCity = req.body.city;
         await newUser.save();
-        console.log(`New user created: ${newUser}`);
+        console.log(`New user: ${newUser}`);
+        console.log("app.post(\'\/signup\'): New user created, redirecting to /main")
         res.redirect('/main');
     }
 })
 
-
 app.get('/login', (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
+        console.log("app.get(\'\/login\'): User already logged in, redirecting to /main");
         res.redirect('/main');
     } else {
         res.render('login.ejs')
     }
 });
-
 
 app.post('/login', async (req, res) => {
     console.log(`Username entered: ${req.body.username}`);
@@ -161,15 +198,24 @@ app.post('/login', async (req, res) => {
         const value = await schema.validateAsync({ username: req.body.username, password: req.body.password });
     }
     catch (err) {
-        console.log(err.details);
-        console.log("Username or password is invalid")
-        return
+
+        console.log("app.post('/login'): ", err.details);
+
+        return populateErrorPage(
+            res, // res
+            '401', // error_code
+            `Error: ${err.details[0].message}.`, // error_message
+            'Please try again.', // error_response
+            '/login', // error_redirect
+            'Try Again' // error_redirect_button
+        );
+
     }
 
     const userresult = await usersModel.findOne({
         username: req.body.username
     });
-    console.log(userresult);
+
     if (userresult && bcrypt.compareSync(req.body.password, userresult.password)) {
         req.session.GLOBAL_AUTHENTICATED = true;
         req.session.loggedUsername = req.body.username;
@@ -177,38 +223,49 @@ app.post('/login', async (req, res) => {
         req.session.loggedType = userresult?.type;
         req.session.loggedEmail = userresult.email;
         req.session.loggedCity = userresult.city;
-        console.log("app.post(\'\/login\'): Current session cookie:", req.cookies)
+        console.log("Login successful");
+        console.log("app.post(\'\/login\'): Variable Global_Authenticated:", req.session.GLOBAL_AUTHENTICATED);
+        console.log("app.post(\'\/login\'): Current session cookie:", req.cookies);
         res.redirect('/main');
     } else {
-        let loginFailHTML = `
-        <br />
-        <a href="/">Home</a>
-        <h1>Invalid username or password</h1>
-        <input type="button" value="Try Again" onclick="window.history.back()" />
-        <br />
-        `
-        console.log("app.post(\'\/login\'): Current session cookie-id:", req.cookies)
-        res.send(loginFailHTML);
+        console.log("app.post('/login'): Invalid username or password");
+        populateErrorPage(
+            res, // res
+            '401', // error_code
+            'Error: Invalid username or password.', // error_message
+            'Please try again.', // error_response
+            '/login', // error_redirect
+            'Try Again' // error_redirect_button
+        );
     }
 });
 
 
+// Route: settings page
 app.get('/settings', (req, res) => {
     if (req.session.GLOBAL_AUTHENTICATED) {
         res.render('./settings.ejs', { username: req.session.loggedUsername, email: req.session.loggedEmail, city: req.session.loggedCity });
     } else {
-        res.render('error403');
+        res.render('error401');
     }
 });
 
-app.get('/main', (req, res) => {
-    if (req.session.GLOBAL_AUTHENTICATED) {
+// Route: main page
+app.get('/main', async (req, res) => {
+
+    const tempSession = await req.session.GLOBAL_AUTHENTICATED;
+    console.log("app.get('/main'): Variable Global_Authenticated(tempSession):", tempSession);
+
+    if (tempSession) {
+        console.log("app.get('/main'): Current session cookie:", req.cookies);
+        console.log("app.get('/main'): Current user:", req.session.loggedUsername);
         res.render('./main.ejs', {
             username: req.session.loggedUsername,
         });
     }
     else {
-        res.render('error403');
+        console.log("app.get('/main'): Error with authenticating: ", req.session.GLOBAL_AUTHENTICATED);
+        res.render('error401');
     }
 });
 
@@ -218,13 +275,21 @@ app.post('/bookmarkRoadmap', async (req, res) => {
         const user = await usersModel.findOne({ username: req.session.loggedUsername });
 
         if (!user) {
-            throw new Error("User does not exist");
+            return populateErrorPage(
+                res, // res
+                '404', // error_code
+                'Error: User does not exist.', // error_message
+                'Please Log In.', // error_response
+                '/login', // error_redirect
+                'Log In' // error_redirect_button
+            );
         }
 
         const roadmap = req.body;
         console.log(roadmap);
         let roadmapId = crypto.randomBytes(32).toString("hex");
         roadmap._id = roadmapId;
+        roadmap.additionalSteps = [];
 
 
         await usersModel.updateOne(
@@ -237,19 +302,88 @@ app.post('/bookmarkRoadmap', async (req, res) => {
         console.log(user.savedRoadmaps);
 
         // res.redirect('/savedRoadmaps');
+
+        const responseData = { message: 'Server response', data: roadmapId };
+
+        // Send the response back to the client
+        res.json(responseData);
     }
     else {
-        // res.redirect('/login');
+        populateErrorPage(
+            res, // res
+            '401', // error_code
+            'Error: You are not logged in', // error_message
+            'Please Log In', // error_response
+            '/login', // error_redirect
+            'Log In' // error_redirect_button
+        );
     }
 });
 
+app.post('/sendAdditionalRequest', async (req, res) => {
+
+    if (req.session.GLOBAL_AUTHENTICATED) {
+
+        const user = await usersModel.findOne({ username: req.session.loggedUsername });
+
+        if (!user) {
+            return populateErrorPage(
+                res, // res
+                '404', // error_code
+                'Error: User does not exist.', // error_message
+                'Please Log In.', // error_response
+                '/login', // error_redirect
+                'Log In' // error_redirect_button
+            );
+        }
+
+        const parentRoadmapId = req.body.roadmapId;
+        let prefix = "How to ";
+        const additionalSteps = prefix.concat(req.body.additionalSteps);
+        console.log(additionalSteps);
+
+        let returnMessage = await getMessage(additionalSteps, req.session.loggedCity);
+
+        if (returnMessage.error !== undefined) {
+            console.log(returnMessage.error);
+            return populateErrorPage(
+                res, // res
+                returnMessage.error.code || "500",// error_code
+                returnMessage.error.message || "Internal Server Error", // error_message
+                returnMessage.error.type || "Please Try Again", // error_response
+                '/main', // error_redirect
+                'Try Again' // error_redirect_button
+            );
+        }
+
+        let roadmapObject = createRoadmapObject(returnMessage.choices[0].message.content);
 
 
+        res.render('./main.ejs', {
+            //create an array the size of the number of steps in the roadmap
+            //fill the array with true values
+            //this is used to set the checkboxes to true by default
 
+            //only display steps that are not undefined
+            steps: roadmapObject.steps.filter(step => step !== undefined),
+            checkboxStates: Array(roadmapObject.steps.length).fill(false),
+            roadmap: JSON.stringify(roadmapObject),
+            title: roadmapObject.title,
+            description: roadmapObject.description,
+            parentRoadmapId: parentRoadmapId
+        });
+
+
+    }
+    else {
+        res.redirect('/login');
+    }
+});
 
 // Interface with OpenAI API
 async function getMessage(message, userCity) {
     console.log('clicked');
+    // console.log('message:' + message.trim() + "test");
     let city = userCity;
     const options = {
         method: 'POST',
@@ -261,7 +395,7 @@ async function getMessage(message, userCity) {
             model: "gpt-3.5-turbo",
             messages: [{
                 role: "user",
-                content: `Please give me a step by step guide on ${message} in ${city}, BC Canada in the form of (with no preambles or postambles):
+                content: `Please give me a step by step guide on ${message.trim()} in ${city}, BC Canada in the form of (with no preambles or postambles):
                 Title: How to ...
                 Description: A step by step guide on how to ...
                 1. ...
@@ -274,14 +408,13 @@ async function getMessage(message, userCity) {
         })
     }
     try {
-
         const response = await fetch('https://api.openai.com/v1/chat/completions', options)
         const data = await response.json();
         console.log(data);
         return data;
     }
     catch (error) {
-        console.log(error);
+        return { error: error };
     }
 }
 
@@ -312,6 +445,20 @@ app.post('/sendRequest', async (req, res) => {
     var userInput = req.body.hiddenField || req.body.textInput;
 
     let returnMessage = await getMessage(userInput, req.session.loggedCity);
+
+    if (returnMessage.error !== undefined) {
+        console.log(returnMessage.error);
+        return populateErrorPage(
+            res, // res
+            returnMessage.error.code || "500",// error_code
+            returnMessage.error.message || "Internal Server Error", // error_message
+            returnMessage.error.type || "Please Try Again.", // error_response
+            '/main', // error_redirect
+            'Try Again' // error_redirect_button
+        );
+    }
+
+
     let roadmapObject = createRoadmapObject(returnMessage.choices[0].message.content);
 
 
@@ -331,9 +478,7 @@ app.post('/sendRequest', async (req, res) => {
 
 });
 
-
 // Start password reset process
-
 app.get('/resetPassword', (req, res) => {
     res.render('resetPassword.ejs')
 });
@@ -352,20 +497,27 @@ const sendResetEmail = async (email, payload) => {
             from: process.env.GMAIL_EMAIL,
             to: email,
             subject: 'Here is your password reset link!',
-            text: payload
+            html: payload,
+            attachments: [
+                {
+                    filename: 'LogoHeaderBar.png',
+                    path: `${__dirname}/./public/LogoHeaderBar.png`,
+                    cid: 'logo1'
+                }
+            ]
         };
 
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                 console.log(error);
             } else {
-                console.log('Email sent: ' + info.response);
+                console.log('Email sent: ' + info.response + ' to ' + email);
             }
         });
     } catch (error) {
         return error;
     }
-}
+};
 
 app.post('/sendResetEmail', async (req, res) => {
     const email = req.body.inputEmail;
@@ -375,32 +527,55 @@ app.post('/sendResetEmail', async (req, res) => {
 
     console.log(user);
     if (!user) {
-        throw new Error("User does not exist");
+        return res.render('error502usernotexist.ejs');
+    } else {
+        try {
+            let token = await tokenModel.findOne({ userId: user._id });
+            if (token) {
+                await token.deleteOne()
+            };
+
+            let resetToken = crypto.randomBytes(32).toString("hex");
+
+            const hashedToken = await bcrypt.hash(resetToken, Number(bcryptSalt));
+
+            await new tokenModel({
+                userId: user._id,
+                token: hashedToken,
+                createdAt: Date.now(),
+            }).save();
+
+            const link = `${clientURL}/passwordReset?token=${resetToken}&id=${user._id}`;
+
+            const emailBody = `Hello ${user.username}! You can reset your password using the link: `;
+
+            ejs.renderFile('views/components/emailtemplate.ejs', { emailBody: emailBody, resetLink: link }, async function (err, data) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+
+                await sendResetEmail(user.email, data);
+
+                res.render('200emailsuccess.ejs', { reset: true })
+
+            });
+        } catch (error) {
+            console.log(error);
+            return populateErrorPage(
+                res, // res
+                "501",// error_code
+                "Email not sent.", // error_message
+                "Please Try Again.", // error_response
+                '/resetPassword', // error_redirect
+                'Try Again' // error_redirect_button
+            );
+
+        }
     }
-    let token = await tokenModel.findOne({ userId: user._id });
-    if (token) {
-        await token.deleteOne()
-    };
-
-    let resetToken = crypto.randomBytes(32).toString("hex");
-
-    const hashedToken = await bcrypt.hash(resetToken, Number(bcryptSalt));
+});
 
 
-
-    await new tokenModel({
-        userId: user._id,
-        token: hashedToken,
-        createdAt: Date.now(),
-    }).save();
-
-
-    const link = `${clientURL}/passwordReset?token=${resetToken}&id=${user._id}`;
-    sendResetEmail(user.email, link);
-
-
-
-})
 
 // Get new password
 
@@ -423,22 +598,48 @@ app.post('/confirmNewPassword', async (req, res) => {
 
 
     if (newPassword !== confirmPassword) {
-        return res.send("Passwords do not match");
+        return populateErrorPage(
+            res, // res
+            '400 ', // error_code
+            'Error: Passwords do not match.', // error_message
+            'Please Retry with Your Email Link.', // error_response
+        );
+
     }
 
     const user = await usersModel.findOne({ _id: id });
     if (!user) {
-        return res.send("User does not exist");
+        return populateErrorPage(
+            res, // res
+            '404', // error_code
+            'Error: User does not exist.', // error_message
+            'Please Retry with Your Email Link.', // error_response
+        );
     }
 
     const tokenDoc = await tokenModel.findOne({ userId: user._id });
     if (!tokenDoc) {
-        return res.send("Invalid or expired token");
+        return populateErrorPage(
+            res, // res
+            '403', // error_code
+            'Error: Reset Token does not exist or has expired.', // error_message
+            'Your password reset link has expired. Please resubmit your email address to receive a new password reset link.', // error_response
+            '/resetPassword', // error_redirect
+            'Get New Reset Link' // error_redirect_button
+        );
+
     }
 
     const isValid = await bcrypt.compare(token, tokenDoc.token);
     if (!isValid) {
-        return res.send("Invalid or expired token");
+        return populateErrorPage(
+            res, // res
+            '403', // error_code
+            'Error: Reset Token does not exist or has expired.', // error_message
+            'Your password reset link has expired. Please resubmit your email address to receive a new password reset link.', // error_response
+            '/resetPassword', // error_redirect
+            'Get New Reset Link' // error_redirect_button
+        );
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, Number(bcryptSalt));
@@ -454,16 +655,9 @@ app.post('/confirmNewPassword', async (req, res) => {
 
 });
 
-
-// app.get('/passwordReset', (req, res) => {
-
-//     res.render('./savedRoadmaps.ejs', { savedList: roadmapsTemp });
-// });
-
 app.get('/newpassword', (req, res) => {
     res.render('./newpassword.ejs')
 })
-
 
 app.get('/savedRoadmaps', async (req, res) => {
 
@@ -472,7 +666,14 @@ app.get('/savedRoadmaps', async (req, res) => {
         const user = await usersModel.findOne({ username: req.session.loggedUsername });
 
         if (!user) {
-            throw new Error("User does not exist");
+            return populateErrorPage(
+                res, // res
+                '404', // error_code
+                'Error: User does not exist.', // error_message
+                'Please register or login to continue.', // error_response
+                '/login', // error_redirect
+                'Log In' // error_redirect_button
+            );
         }
 
         const roadmapsList = user.savedRoadmaps;
@@ -483,7 +684,14 @@ app.get('/savedRoadmaps', async (req, res) => {
 
     }
     else {
-        res.redirect('/login')
+        populateErrorPage(
+            res, // res
+            '401', // error_code
+            'Error: You are not logged in', // error_message
+            'Please Log In', // error_response
+            '/login', // error_redirect
+            'Log In' // error_redirect_button
+        );
     }
 });
 
@@ -643,7 +851,7 @@ app.post('/deleteBookmark', async (req, res) => {
         const user = await usersModel.findOne({ username: req.session.loggedUsername });
 
         if (!user) {
-            throw new Error("User does not exist");
+            return res.render('error502usernotexist.ejs');
         }
 
         await usersModel.updateOne(
@@ -657,7 +865,8 @@ app.post('/deleteBookmark', async (req, res) => {
     }
 })
 
-app.get('/logout', function (req, res, next) {
+// Route: logout 
+app.post('/logout', function (req, res, next) {
     console.log("Before Logout: Session User:", req.session.loggedUsername, "; ", "Session Password: ", req.session.loggedPassword);
     console.log("Logging out. . .")
     req.session.loggedUsername = null;
@@ -674,12 +883,8 @@ app.get('/logout', function (req, res, next) {
     });
 })
 
-
-
-
 // sending an sharing email
-
-const sendShareEmail = async (email, payload) => {
+const sendShareEmail = async (email, payload, req) => {
     try {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -692,15 +897,22 @@ const sendShareEmail = async (email, payload) => {
         var mailOptions = {
             from: process.env.GMAIL_EMAIL,
             to: email,
-            subject: 'Someone sent you a helpful Roadmap!',
-            text: payload
+            subject: `${req.session.loggedUsername} sent you a helpful Roadmap!`,
+            html: payload,
+            attachments: [
+                {
+                    filename: 'LogoHeaderBar.png',
+                    path: `${__dirname}/./public/LogoHeaderBar.png`,
+                    cid: 'logo1'
+                }
+            ]
         };
 
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                 console.log(error);
             } else {
-                console.log('Email sent: ' + info.response);
+                console.log('Email sent: ' + info.response + ' to ' + email);
             }
         });
     } catch (error) {
@@ -708,26 +920,29 @@ const sendShareEmail = async (email, payload) => {
     }
 }
 
-
-
 app.post('/sendShareEmail', async (req, res) => {
     console.log('Form submission received');
     try {
         const recipient = req.body.inputShareEmailToSend;
+        const emailBody = "I'm using this awesome app to track my progress on my roadmap. Check it out here: "
+        const emailLink = req.body.inputShareMapLink;
 
-        const content = req.body.inputShareEmailContent;
+        console.log(emailLink);
+        console.log(recipient);
 
-        // if email is successfully sent, have a popup that says "Email sent successfully"
+        ejs.renderFile('views/components/emailtemplate.ejs', { emailBody: emailBody, mapLink: emailLink }, async function (err, data) {
+            if (err) {
+                console.log(err);
+                return;
+            }
 
+            await sendShareEmail(recipient, data, req); // Use the rendered template content
 
-
-        await sendShareEmail(recipient, content);
-  
-
-        res.render('200emailsuccess.ejs');
+            res.render('200emailsuccess.ejs');
+        });
     } catch (error) {
         console.log(error);
-        res.status(500).json({ error: 'Failed to send email' });
+        res.render('error501emailnotsent.ejs');
     }
 });
 
