@@ -89,6 +89,7 @@ List technologies (with version numbers), API's, icons, fonts, images, media or 
 * We used Javascript, JQuery, and CSS. 
 * We used Figma for our ideation (using a figjam board) and for clickable wireframes.
 * We used VS Code version 1.74.2 to work locally on the project.
+* We used cyclic to host our app.
 * Here are the npm packages we used and their versions: 
 ├── axios@1.4.0
 ├── bcrypt@5.1.0
