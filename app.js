@@ -342,13 +342,8 @@ app.post('/sendAdditionalRequest', async (req, res) => {
         const additionalSteps = prefix.concat(req.body.additionalSteps);
         console.log(additionalSteps);
 
-<<<<<<< HEAD
         let returnMessage = await getMessage(additionalSteps, req.session.loggedCity, res);
 
-=======
-        let returnMessage = await getMessage(additionalSteps, req.session.loggedCity);
-        // console.log("app.post('/sendAdditionalRequest'): Prompt submitted by", req.session.loggedUsername);
->>>>>>> 2713c9624f14f5a9874c6aea753d295cb91a024e
         if (returnMessage.error !== undefined) {
             console.log(returnMessage.error);
             return populateErrorPage(
@@ -459,13 +454,9 @@ function createRoadmapObject(message) {
 app.post('/sendRequest', async (req, res) => {
     var userInput = req.body.hiddenField || req.body.textInput;
 
-<<<<<<< HEAD
     let returnMessage = await getMessage(userInput, req.session.loggedCity, res);
-
-=======
-    let returnMessage = await getMessage(userInput, req.session.loggedCity);
+    
     console.log("app.post('/sendRequest'): Prompt submitted by", req.session.loggedUsername);
->>>>>>> 2713c9624f14f5a9874c6aea753d295cb91a024e
     if (returnMessage.error !== undefined || returnMessage.message !== undefined) {
         console.log(returnMessage.error);
         return populateErrorPage(
