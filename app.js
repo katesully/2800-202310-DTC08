@@ -408,9 +408,16 @@ async function getMessage(message, userCity, res) {
         })
     }
     try {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', options)
+        const response = await fetch('https://api.openai.com/v1/chat/completions', options);
+        console.log("Response code: " + response.status);
+        if (response.status >= 400) {
+            const errorResponse = await response.json();
+            const errorMessage = errorResponse.message;
+            console.log(`API Error: ${errorMessage}`);
+            return { error: { code: response.status, message: errorMessage, type: "Please Try Again." } }
+        };
+        
         const data = await response.json();
-        console.log(data);
         return data;
     }
     catch (error) {
@@ -419,8 +426,8 @@ async function getMessage(message, userCity, res) {
         return populateErrorPage(
             res, // res
             "503",// error_code
-            "Service Unavailable", // error_message
-            "Please Try Again", // error_response
+            "Service Unavailable.", // error_message
+            "Please Try Again.", // error_response
             '/main', // error_redirect
             'Try Again' // error_redirect_button
         );
@@ -455,6 +462,7 @@ app.post('/sendRequest', async (req, res) => {
     var userInput = req.body.hiddenField || req.body.textInput;
 
     let returnMessage = await getMessage(userInput, req.session.loggedCity, res);
+    console.log(returnMessage);
     
     console.log("app.post('/sendRequest'): Prompt submitted by", req.session.loggedUsername);
     if (returnMessage.error !== undefined || returnMessage.message !== undefined) {
@@ -462,7 +470,7 @@ app.post('/sendRequest', async (req, res) => {
         return populateErrorPage(
             res, // res
             returnMessage.error.code || "503",// error_code
-            returnMessage.error.message || "Service Unavailable", // error_message
+            "Service Unavailable.", // error_message
             returnMessage.error.type || "Please Try Again.", // error_response
             '/main', // error_redirect
             'Try Again' // error_redirect_button
