@@ -386,13 +386,8 @@ app.post('/sendAdditionalRequest', async (req, res) => {
 });
 
 // Interface with OpenAI API
-<<<<<<< HEAD
 async function getMessage(message, userCity, res) {
     console.log("app.post('/sendAdditionalRequest'): Prompt submitted");
-=======
-async function getMessage(message, userCity) {
-    // console.log("app.post('/sendAdditionalRequest'): Prompt submitted");
->>>>>>> 2713c9624f14f5a9874c6aea753d295cb91a024e
     // console.log('message:' + message.trim() + "test");
     let city = userCity;
     const options = {
