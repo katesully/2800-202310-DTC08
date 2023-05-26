@@ -343,7 +343,7 @@ app.post('/sendAdditionalRequest', async (req, res) => {
         console.log(additionalSteps);
 
         let returnMessage = await getMessage(additionalSteps, req.session.loggedCity);
-
+        // console.log("app.post('/sendAdditionalRequest'): Prompt submitted by", req.session.loggedUsername);
         if (returnMessage.error !== undefined) {
             console.log(returnMessage.error);
             return populateErrorPage(
@@ -382,7 +382,7 @@ app.post('/sendAdditionalRequest', async (req, res) => {
 
 // Interface with OpenAI API
 async function getMessage(message, userCity) {
-    console.log("app.post('/sendAdditionalRequest'): Prompt submitted");
+    // console.log("app.post('/sendAdditionalRequest'): Prompt submitted");
     // console.log('message:' + message.trim() + "test");
     let city = userCity;
     const options = {
@@ -445,7 +445,7 @@ app.post('/sendRequest', async (req, res) => {
     var userInput = req.body.hiddenField || req.body.textInput;
 
     let returnMessage = await getMessage(userInput, req.session.loggedCity);
-
+    console.log("app.post('/sendRequest'): Prompt submitted by", req.session.loggedUsername);
     if (returnMessage.error !== undefined || returnMessage.message !== undefined) {
         console.log(returnMessage.error);
         return populateErrorPage(
