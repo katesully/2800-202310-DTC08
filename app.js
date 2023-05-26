@@ -342,7 +342,7 @@ app.post('/sendAdditionalRequest', async (req, res) => {
         const additionalSteps = prefix.concat(req.body.additionalSteps);
         console.log(additionalSteps);
 
-        let returnMessage = await getMessage(additionalSteps, req.session.loggedCity);
+        let returnMessage = await getMessage(additionalSteps, req.session.loggedCity, res);
 
         if (returnMessage.error !== undefined) {
             console.log(returnMessage.error);
@@ -381,7 +381,7 @@ app.post('/sendAdditionalRequest', async (req, res) => {
 });
 
 // Interface with OpenAI API
-async function getMessage(message, userCity) {
+async function getMessage(message, userCity, res) {
     console.log("app.post('/sendAdditionalRequest'): Prompt submitted");
     // console.log('message:' + message.trim() + "test");
     let city = userCity;
@@ -414,7 +414,17 @@ async function getMessage(message, userCity) {
         return data;
     }
     catch (error) {
-        return { error: error };
+        console.log(error);
+
+        return populateErrorPage(
+            res, // res
+            "503",// error_code
+            "Service Unavailable", // error_message
+            "Please Try Again", // error_response
+            '/main', // error_redirect
+            'Try Again' // error_redirect_button
+        );
+
     }
 }
 
@@ -444,7 +454,7 @@ function createRoadmapObject(message) {
 app.post('/sendRequest', async (req, res) => {
     var userInput = req.body.hiddenField || req.body.textInput;
 
-    let returnMessage = await getMessage(userInput, req.session.loggedCity);
+    let returnMessage = await getMessage(userInput, req.session.loggedCity, res);
 
     if (returnMessage.error !== undefined || returnMessage.message !== undefined) {
         console.log(returnMessage.error);
